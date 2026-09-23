@@ -68,6 +68,20 @@ npm run seed
 the emulators persist state between runs via `--export-on-exit` /
 `--import`.
 
+## Firestore indexes
+
+`firestore.indexes.json` declares composite indexes for the two report list
+queries (`viewerEmails array-contains` + `status ==` + `orderBy(updatedAt)`,
+and the same for `externalEmails`).
+
+> ⚠️ The **Firestore emulator does not enforce indexes** — a query missing
+> an index still runs locally. The same query fails in production with a
+> "the query requires an index" error until the index is deployed (step
+> 9.4). If you add a new query with `array-contains`/`in` combined with
+> another filter or an `orderBy`, add its index here so it's ready before
+> you deploy, and test it for real with `npm run test:rules` (which runs
+> against the real emulator, not a mock).
+
 ## Where config lives
 
 See [`architecture.md` §A4](plan/architecture.md#a4-configuration--secrets)

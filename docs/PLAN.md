@@ -87,7 +87,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 2.3 | Access computation helpers      | ✅     |
 | 2.4 | Search helper                   | ✅     |
 | 2.5 | Firestore Security Rules        | ✅     |
-| 2.6 | Firestore indexes               | ⬜     |
+| 2.6 | Firestore indexes               | ✅     |
 | 2.7 | Security-rules tests (24 cases) | ⬜     |
 | 2.8 | CI workflow (GitHub Actions)    | ⬜     |
 
