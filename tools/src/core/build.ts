@@ -176,7 +176,10 @@ export async function runBuildData(folder: string): Promise<string | null> {
     return `${stdout}${stderr}`.trim();
   } catch (error) {
     const e = error as { stderr?: string; stdout?: string; message: string };
-    const detail = (e.stderr || e.stdout || e.message).trim().split('\n').slice(-5).join('\n');
+    // Lead with the thrown error's own line ("Error: …"), not the tail of the stack trace.
+    const lines = (e.stderr || e.stdout || e.message).trim().split('\n');
+    const errorLine = lines.find((line) => /^\s*\w*Error\b/.test(line));
+    const detail = errorLine ? errorLine.trim() : lines.slice(-5).join('\n');
     throw new Error(`build-data.mjs failed:\n${detail}`, { cause: error });
   }
 }

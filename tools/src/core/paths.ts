@@ -1,14 +1,22 @@
 // Resolved from import.meta.url, not process.cwd() — the MCP server can be
 // launched by a client (Claude Desktop/Code) from any working directory.
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const REPO_ROOT = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '..', // src
-  '..', // tools
-  '..', // repo root
-);
+// Walks up to the folder containing firebase.json, so this works both from source
+// (tools/src/core/) and from the bundled tools/dist/*.js.
+function findRepoRoot(start: string): string {
+  let dir = start;
+  while (!existsSync(path.join(dir, 'firebase.json'))) {
+    const parent = path.dirname(dir);
+    if (parent === dir) throw new Error(`Could not find the repository root above ${start}`);
+    dir = parent;
+  }
+  return dir;
+}
+
+export const REPO_ROOT = findRepoRoot(path.dirname(fileURLToPath(import.meta.url)));
 
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9-]{1,60}$/;
 

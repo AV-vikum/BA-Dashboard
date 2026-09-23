@@ -31,5 +31,16 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  {
+    // stdout is the MCP protocol channel: the server may only log to stderr, and the shared
+    // core (used by both CLI and MCP) returns data instead of printing.
+    files: ['tools/src/mcp.ts'],
+    rules: { 'no-console': ['error', { allow: ['error'] }] },
+  },
+  {
+    files: ['tools/src/core/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: { 'no-console': 'error' },
+  },
   eslintConfigPrettier,
 );

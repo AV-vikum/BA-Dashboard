@@ -149,8 +149,8 @@ The agent picks the next open step, does it, updates the status here, commits, a
 
 | #   | Step                                         | Status |
 | --- | -------------------------------------------- | ------ |
-| 7.1 | Server skeleton and build                    | ⬜     |
-| 7.2 | Tools                                        | ⬜     |
+| 7.1 | Server skeleton and build                    | ✅     |
+| 7.2 | Tools                                        | ✅     |
 | 7.3 | Safety                                       | ⬜     |
 | 7.4 | Client configuration (Claude Code / Desktop) | ⬜     |
 | 7.5 | End-to-end test with Claude Code             | ⬜     |

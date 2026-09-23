@@ -6,10 +6,11 @@
   "scripts": {
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit",
-    "build": "echo tools build not configured yet"
+    "build": "tsup"
   },
   "dependencies": {
     "@ba/shared": "*",
+    "@modelcontextprotocol/sdk": "^1.30.1",
     "commander": "^15.0.0",
     "dotenv": "^18.0.3",
     "firebase-admin": "^14.4.0",
@@ -17,6 +18,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^26.6.2"
+    "@types/node": "^26.6.2",
+    "tsup": "^8.5.1"
   }
 }
