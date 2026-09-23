@@ -200,3 +200,5 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 6. Delete it.
 
 **Acceptance:** all six pass.
+
+> 👤 (2026-09-24): this step is a manual browser walkthrough by design and hasn't been run yet — every step in this phase was built and checked with `npm run check` + the production build only (see the note under 4.1: the emulators weren't started this session to avoid colliding with what looked like your own running `npm run dev`). Please run through the checklist above with `npm run dev` (admin@example.com) and record the result here. Given the amount built without a live check, it's worth going through the whole phase's acceptance checks (4.1–4.10), not just this one, especially: the Access panel (4.6, the largest/riskiest piece — external-sharing-off toast, expiry picker, Save/Discard against a draft), and View-as (4.10, whose stated acceptance is exactly this cross-check against the seed script's table).
