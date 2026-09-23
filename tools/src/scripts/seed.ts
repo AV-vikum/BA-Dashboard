@@ -3,10 +3,8 @@
 //
 // Emulator target only — refuses to run against production. Idempotent:
 // every document uses a fixed ID and is overwritten on each run.
-//
-// TODO(step 2.3): replace the inline viewerEmails computation with
-// computeViewerEmails() from @ba/shared once it exists.
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+import { computeViewerEmails, type Group, type WithId } from '@ba/shared';
 import { assertEmulatorRunning, getDb } from '../core/firebase.js';
 import { env } from '../core/env.js';
 
@@ -15,7 +13,10 @@ if (env.target !== 'emulator') {
   process.exit(1);
 }
 
-const GROUPS = {
+const GROUPS: Record<
+  string,
+  Omit<WithId<Group>, 'id' | 'createdAt' | 'updatedAt' | 'updatedBy'>
+> = {
   'demo-finance': {
     name: 'Finance',
     description: 'Finance team',
@@ -26,12 +27,7 @@ const GROUPS = {
     description: 'Management team',
     memberEmails: ['carol@example.com'],
   },
-} as const;
-
-function computeViewerEmails(directEmails: string[], groupIds: string[]): string[] {
-  const members = groupIds.flatMap((id) => [...GROUPS[id as keyof typeof GROUPS].memberEmails]);
-  return [...new Set([...directEmails, ...members])];
-}
+};
 
 function placeholderHtml(title: string): string {
   return `<!doctype html>
@@ -134,8 +130,16 @@ async function main(): Promise<void> {
     });
   }
 
+  const groupsWithId: WithId<Group>[] = Object.entries(GROUPS).map(([id, group]) => ({
+    id,
+    ...group,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+    updatedBy,
+  }));
+
   for (const report of REPORTS) {
-    const viewerEmails = computeViewerEmails(report.directEmails, report.groupIds);
+    const viewerEmails = computeViewerEmails(report.directEmails, report.groupIds, groupsWithId);
     const html = placeholderHtml(report.title);
 
     await db.doc(`reports/${report.id}`).set({
