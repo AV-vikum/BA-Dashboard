@@ -184,6 +184,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** results for every demo user match the table printed by the seed script (step 1.5).
 
+> Note (2026-09-24): `reportsVisibleTo` was already extracted into `@ba/shared` in step 4.7 (pulled forward since the People page needed the identical logic) — this step reuses it as specified rather than duplicating it. Links open `/admin/reports/:id` (the admin preview/detail page), not `/r/:id`, since `/r/:id` is gated by the *admin's own* access, not the viewed person's — the spec's "links open the admin preview" phrasing. The email picker reuses `EmailCombobox` from 4.6, suggesting known profile + admin emails; a via badge (internal/external) is shown per report, and a banner calls out when the viewed person is an admin or external. `npm run check` and the production build pass; the live emulator walk-through (checked against the seed script's printed table) wasn't run this session (see the note under 4.1) — worth checking specifically since it's this step's stated acceptance criterion.
+
 ---
 
 ## 4.11 Admin end-to-end check
