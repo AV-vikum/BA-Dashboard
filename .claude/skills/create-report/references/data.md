@@ -85,6 +85,7 @@ const change = (now, before) => (before ? (now - before) / before : null);
       "deltaLabel": "vs Apr – Jun 2026"
     }
   ],
+  "text": { "trendTitle": "Revenue up 6% on the previous quarter" },
   "series": { "monthly": { "labels": ["2026-07", "2026-08"], "values": [1853560, 1560635] } },
   "tables": { "topProducts": [{ "product": "…", "units": 8, "revenue": 1886500, "share": 0.341 }] }
 }

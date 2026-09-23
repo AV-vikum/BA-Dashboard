@@ -42,7 +42,7 @@ Rules:
 ## Words
 
 - **Titles as statements** where the data supports one: "Revenue up 12% vs last quarter",
-  "Western region drives 35% of sales" — computed in the report script from `Report.data`,
+  "Western region drives 35% of sales" — computed in `build-data.mjs` (as `data.json` → `text.*`),
   never typed as a fixed number.
 - Every chart card has an `r-note`: period and unit/currency ("Jul – Sep 2026, LKR").
 - Sentence case everywhere. Plain words; spell out abbreviations once.
