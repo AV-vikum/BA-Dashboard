@@ -126,6 +126,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance (emulator):** add `eve@example.com` → Eve sees the report; add group Management → Carol sees it; add `someone@gmail.test` → offered as external; set external expiry to yesterday → partner can't open content; remove Finance → Alice loses it (unless direct).
 
+> Note (2026-09-24): built as a local `AccessDraft` (Save/Discard against a draft, not writing on every click) diffed against the original to produce an `AccessChange` for `updateReportAccess`. The people combobox (`EmailCombobox`, cmdk `Command` in a `Popover`) suggests emails from user profiles + group members, accepts pasted lists via `parseEmailList`, and routes an outside-domain email to External automatically (blocked with a toast if external sharing is off, per this step's spec). External rows use a `Calendar`-backed expiry popover ("No expiry" clears it) and an Active/Expired badge computed locally so it updates as the admin edits, before Save. The component is keyed by `report.id` from the parent (same reasoning as the Details tab in 4.5) so a live snapshot update doesn't clobber an in-progress draft. `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under 4.1) — this is the step most worth a careful manual pass given its size, especially the external-sharing-off toast path and the expiry date picker.
+
 ---
 
 ## 4.7 People page

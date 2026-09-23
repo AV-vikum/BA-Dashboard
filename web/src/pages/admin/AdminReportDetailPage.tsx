@@ -38,14 +38,8 @@ import {
   updateReportDetails,
 } from '@/lib/firestore/admin';
 import { getReportContent } from '@/lib/firestore/reports';
+import { AccessTab } from './AccessTab';
 import { ReplaceHtmlDialog } from './ReplaceHtmlDialog';
-
-function AccessTabPlaceholder() {
-  // Built out in step 4.6.
-  return (
-    <p className="p-4 text-sm text-muted-foreground">Access management — coming in step 4.6.</p>
-  );
-}
 
 function InfoTab({ report }: { report: WithId<Report> }) {
   const rows: { label: string; value: string }[] = [
@@ -328,7 +322,7 @@ export function AdminReportDetailPage() {
               <DetailsTab key={report.id} report={report} />
             </TabsContent>
             <TabsContent value="access">
-              <AccessTabPlaceholder />
+              <AccessTab key={report.id} report={report} />
             </TabsContent>
             <TabsContent value="info">
               <InfoTab report={report} />
