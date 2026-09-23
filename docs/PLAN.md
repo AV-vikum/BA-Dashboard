@@ -143,7 +143,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 6.3 | `report list` and `report groups`    | ✅     |
 | 6.4 | `report access`                      | ✅     |
 | 6.5 | `report pull` and `report unpublish` | ✅     |
-| 6.6 | Tests (unit + emulator integration)  | ⬜     |
+| 6.6 | Tests (unit + emulator integration)  | ✅     |
 
 ### Phase 7 — MCP server · [details](plan/phase-7-mcp-server.md)
 
