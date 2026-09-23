@@ -9,7 +9,10 @@
     "build": "echo tools build not configured yet"
   },
   "dependencies": {
-    "@ba/shared": "*"
+    "@ba/shared": "*",
+    "dotenv": "^18.0.3",
+    "firebase-admin": "^14.4.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^26.6.2"
