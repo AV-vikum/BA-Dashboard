@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "New report",
+    "subtitle": "",
+    "asOf": "2026-01-01",
+    "currency": "USD",
+    "locale": "en-US",
+    "source": ""
+  },
+  "kpis": [
+    {
+      "label": "Total",
+      "value": 1234,
+      "format": "number",
+      "delta": 0.05,
+      "deltaLabel": "vs last month"
+    }
+  ],
+  "series": {
+    "trend": { "labels": ["2026-01", "2026-02", "2026-03"], "values": [400, 380, 454] }
+  },
+  "tables": {
+    "details": [
+      { "label": "2026-01", "value": 400 },
+      { "label": "2026-02", "value": 380 },
+      { "label": "2026-03", "value": 454 }
+    ]
+  }
+}

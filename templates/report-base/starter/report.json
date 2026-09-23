@@ -1,0 +1,12 @@
+{
+  "reportId": null,
+  "title": "New report",
+  "description": "",
+  "tags": [],
+  "status": "published",
+  "access": {
+    "emails": [],
+    "groups": [],
+    "external": []
+  }
+}

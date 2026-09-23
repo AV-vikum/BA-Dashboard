@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Report</title>
+    <!-- @include base.css -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <main class="r-page">
+      <header class="r-header"></header>
+
+      <section class="r-kpis" id="kpis"></section>
+
+      <section class="r-grid">
+        <div class="r-card r-span-2">
+          <h2>Trend</h2>
+          <div class="r-chart" id="chart-trend"></div>
+        </div>
+        <div class="r-card r-span-2">
+          <h2>Details</h2>
+          <div id="table-details"></div>
+        </div>
+      </section>
+
+      <footer class="r-footer"></footer>
+    </main>
+
+    <!-- @data -->
+    <!-- @include base.js -->
+    <script>
+      // Report-specific code: use only Report.* helpers and Report.data (never hard-code numbers).
+      var d = Report.data;
+      Report.header();
+
+      Report.kpis('kpis', d.kpis || []);
+
+      if (d.series && d.series.trend) {
+        Report.chart(
+          'chart-trend',
+          {
+            xAxis: { type: 'category', data: d.series.trend.labels },
+            yAxis: { type: 'value' },
+            series: [{ type: 'line', name: 'Value', data: d.series.trend.values, areaStyle: {} }],
+          },
+          { format: 'number' },
+        );
+      }
+
+      Report.table('table-details', {
+        columns: [
+          { key: 'label', label: 'Period' },
+          { key: 'value', label: 'Value', format: 'number' },
+        ],
+        rows: (d.tables && d.tables.details) || [],
+      });
+    </script>
+  </body>
+</html>
