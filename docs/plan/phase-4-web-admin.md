@@ -59,6 +59,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** `npm run check` passes.
 
+> Note (2026-09-24): `subscribeAllReports`/`subscribeReport` already existed in `reports.ts` (built for the admin-sees-everything case in `useMyReports`) — re-exported from `admin.ts` instead of duplicating them. Pure helpers (`byteLength`, `normalizeTags`, batch-chunking) live in a separate `admin-helpers.ts` so they're unit-testable without a Firestore mock; `admin.ts` itself (all reads/writes) is not yet imported by any page, so it'll be exercised manually starting step 4.3.
+
 ---
 
 ## 4.3 Reports page
