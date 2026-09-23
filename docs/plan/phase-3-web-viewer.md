@@ -172,6 +172,12 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 
 **Acceptance (emulator):** Alice opens _Sales Overview_ → the placeholder report renders and its inline script output is visible (scripts run); in DevTools, running `parent.document` inside the iframe console throws a cross-origin error (sandbox works); toggling the theme re-renders the report in dark mode.
 
+> Note (2026-09-24): `ReportViewerPage` ships a single `ReportUnavailable` fallback for now, covering both "no such doc" and "read denied" — step 3.8 formalizes the other error states (expired external access, unpublished-while-open, network errors) on top of this. The back arrow reads `location.state.from`, which `ReportCard` sets to the list page's full path + query string (so the search/tags/sort filter survives going back), falling back to `/` when absent (e.g. navigating here directly). The iframe's `sandbox`/`referrerPolicy` attributes are exactly A8's spec (no `allow-same-origin`).
+>
+> `withTheme` has 6 unit tests (plain tag, existing attributes preserved, existing `data-theme` replaced, case-insensitive tag matching, no-`<html>` wrapping, only the first of multiple `<html>` tags touched) — now `web`'s first real test suite, picked up by `npm run test -w web`.
+>
+> Verified against the real emulators (not mocked): read `reports/demo-sales` and `reports/demo-sales/content/main` as `alice@example.com` — both succeed (200), content's `html` field is the seed's actual 355-byte placeholder report (inline `<script>` included, so the "scripts run" check is meaningful once viewed). The same metadata read as `stranger@gmail.test` returns 403, exercising the path that renders `ReportUnavailable`. Ran `withTheme` against that exact seed HTML — correctly injects `data-theme="dark"` on its `<html>` tag. The sandbox's cross-origin isolation itself (`parent.document` throwing in the iframe console) is a browser-enforced guarantee of the `sandbox` attribute without `allow-same-origin`, not something this session's code could weaken — but it still needs a real browser to click through. **Manual check for the user:** the acceptance line above, plus confirm the Copy link button copies the URL (toast appears) and the Manage button/`/admin/reports/:id` link (not yet a real page — Phase 4) is only visible for `admin@example.com`.
+
 ---
 
 ## 3.8 Error pages

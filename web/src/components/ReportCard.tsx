@@ -1,12 +1,15 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { Badge } from '@/components/ui/badge';
 import { RelativeDate } from '@/components/RelativeDate';
 import type { Report, WithId } from '@ba/shared';
 
 export function ReportCard({ report }: { report: WithId<Report> }) {
+  const location = useLocation();
+
   return (
     <Link
       to={`/r/${report.id}`}
+      state={{ from: location.pathname + location.search }}
       className="flex flex-col gap-2 rounded-lg border p-4 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <h2 className="font-semibold">{report.title}</h2>

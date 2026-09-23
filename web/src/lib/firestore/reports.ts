@@ -2,13 +2,21 @@
 // Firestore directly (conventions.md §5).
 import {
   collection,
+  doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
   where,
   type Unsubscribe,
 } from 'firebase/firestore';
-import { COLLECTIONS, type Report, type WithId } from '@ba/shared';
+import {
+  COLLECTIONS,
+  REPORT_CONTENT_DOC,
+  type Report,
+  type ReportContent,
+  type WithId,
+} from '@ba/shared';
 import { db } from '@/lib/firebase';
 
 function toReport(snap: { id: string; data(): unknown }): WithId<Report> {
@@ -50,4 +58,26 @@ export function subscribeAllReports(
     (snap) => cb(snap.docs.map(toReport)),
     (error) => onError?.(error),
   );
+}
+
+// Live metadata for one report — so unpublishing it while a viewer has it
+// open takes effect immediately (see step 3.8's error states).
+export function subscribeReport(
+  id: string,
+  cb: (report: WithId<Report> | null) => void,
+  onError?: (error: unknown) => void,
+): Unsubscribe {
+  return onSnapshot(
+    doc(db, COLLECTIONS.reports, id),
+    (snap) => cb(snap.exists() ? toReport(snap) : null),
+    (error) => onError?.(error),
+  );
+}
+
+// One-time read of the report's HTML. Fetched separately from metadata
+// (a much bigger document) and only once the metadata read has confirmed
+// access, per architecture.md §A5.
+export async function getReportContent(id: string): Promise<ReportContent | null> {
+  const snap = await getDoc(doc(db, COLLECTIONS.reports, id, 'content', REPORT_CONTENT_DOC));
+  return snap.exists() ? (snap.data() as ReportContent) : null;
 }
