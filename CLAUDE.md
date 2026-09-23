@@ -8,6 +8,7 @@ Private report portal: admins build dashboard reports with Claude and publish th
 - Before any work, read **`docs/plan/conventions.md`** — it defines the step workflow, hard rules, libraries, and Definition of Done.
 - Work one step at a time, update its status in `docs/PLAN.md`, commit as `Step X.Y: <title>`.
 - Stop at 🔑 / 👤 steps and tell the user what to do (`docs/plan/user-checkpoints.md`).
+- Otherwise decide implementation details yourself (see conventions §1 hard rules) — note deviations under the step instead of asking.
 
 ## Hard rules
 

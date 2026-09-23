@@ -169,3 +169,22 @@ current Claude Desktop docs for where to enable it.
 `BA_TARGET` in the MCP config decides: `emulator` (default) while developing the app,
 `production` once the app is live (Phase 9, step 9.10). Every tool result starts with
 the target, e.g. `[emulator (demo-ba-dashboard)]`.
+
+### The `create-report` skill
+
+`.claude/skills/create-report/` teaches Claude the report workflow, design rules and
+`Report.*` helpers. **Claude Code** loads it automatically in this repo.
+
+**Claude Desktop** needs it uploaded once:
+
+1. Zip the skill folder so `create-report/SKILL.md` is inside the zip:
+   ```powershell
+   Compress-Archive -Path .claude\skills\create-report -DestinationPath create-report-skill.zip -Force
+   ```
+2. In Claude Desktop open **Settings → Capabilities → Skills**, choose **Upload skill** and
+   pick the zip (menu names change — check the current Claude docs if you don't see it).
+3. Delete the zip afterwards (`*.zip` isn't needed in the repo), and re-upload after
+   changing the skill.
+
+The skill only contains instructions. To actually build and publish, Claude Desktop also
+needs the MCP server and file access to `reports/` (see above).

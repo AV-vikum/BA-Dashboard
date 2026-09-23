@@ -30,6 +30,7 @@ Read this file **before every work session**. It applies to every phase.
 - Don't change a decision in the Decision log silently — ask the user.
 - Don't skip acceptance checks. If a check can't be run (e.g. needs a browser), say so and describe how the user can check it.
 - Keep changes scoped to the current step.
+- **Decide implementation details yourself.** When the plan is unclear or a library differs from it, pick the option that best fits the plan's intent, keeps step boundaries, and gets the acceptance check genuinely tested; note it under the step (and in the Decision log if it changes a decision) and continue. Only stop for 🔑 / 👤 steps, deploys or production writes, and choices that weaken security or cost money.
 
 ---
 

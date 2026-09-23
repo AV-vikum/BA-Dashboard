@@ -163,7 +163,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 8.2 | `SKILL.md` workflow               | ✅     |
 | 8.3 | Reference files                   | ✅     |
 | 8.4 | End-to-end test                   | ✅     |
-| 8.5 | Using the skill in Claude Desktop | ⬜     |
+| 8.5 | Using the skill in Claude Desktop | ✅     |
 
 ### Phase 9 — Going live · [details](plan/phase-9-go-live.md)
 
