@@ -49,6 +49,8 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 
 **Acceptance:** app loads with the dev env; temporarily removing `VITE_FIREBASE_PROJECT_ID` shows the configuration error screen (restore it afterwards).
 
+> Note (2026-09-23): Verified `tsc -b` typecheck and `vite build --mode development` succeed with the committed `.env.development`, and confirmed by inspection that `envResult.ok === false` (e.g. with `VITE_FIREBASE_PROJECT_ID` blank) routes `main.tsx` to `<ConfigError>` before any Firebase import runs. No headless-browser tool was available in this session to screenshot the rendered page (no `chromium-cli`, no `playwright` installed) — conventions.md §1 allows describing a browser-only check for the user instead of installing new tooling mid-step. **Manual check for the user:** run `npm run dev -w web`, open the printed local URL — the app should render `<h1>BA Dashboard</h1>` with a small "Emulator mode" badge bottom-left; then comment out `VITE_FIREBASE_PROJECT_ID` in `web/.env.development`, restart, confirm the "Configuration error" screen lists it, and restore the line afterwards.
+
 ---
 
 ## 3.3 Routing and app shell
