@@ -56,7 +56,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 |---|---|---|
 | 0.1 | Development plan and CLAUDE.md | ✅ |
 | 0.2 | Check prerequisites (Node, Java, Git) 👤 if missing | ✅ |
-| 0.3 | Root npm workspace | ⬜ |
+| 0.3 | Root npm workspace | ✅ |
 | 0.4 | `.gitignore` (secrets, env files, reports) | ⬜ |
 | 0.5 | `shared` package skeleton | ⬜ |
 | 0.6 | `tools` package skeleton | ⬜ |

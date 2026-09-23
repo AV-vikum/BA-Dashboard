@@ -1,0 +1,53 @@
+# Docs (excluded from version control per project decision)
+docs/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.key.json
+serviceAccountKey*.json
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+firestore-debug.log
+ui-debug.log
+pubsub-debug.log
+database-debug.log
+*.emulator-data/
+.runtimeconfig.json
+
+# Real report data (never goes into git — see CLAUDE.md)
+reports/*
+!reports/_example
+!reports/_example/**
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Misc
+*.local
