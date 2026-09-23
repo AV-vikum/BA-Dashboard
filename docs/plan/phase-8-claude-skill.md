@@ -1,6 +1,7 @@
 # Phase 8 — Claude skill for building reports
 
 ## Context
+
 A **skill** is a folder of instructions Claude loads when relevant. It makes every report follow the same workflow, design and quality checks, and keeps token use low. Claude Code loads project skills from `.claude/skills/`. Keep `SKILL.md` short (≈150 lines) and put details in `references/` files that Claude reads only when needed.
 
 Check the current Claude Code skills docs for the exact frontmatter format.
@@ -8,7 +9,9 @@ Check the current Claude Code skills docs for the exact frontmatter format.
 ---
 
 ## 8.1 Skill structure
+
 **Do:** create
+
 ```
 .claude/skills/create-report/
 ├─ SKILL.md
@@ -17,7 +20,9 @@ Check the current Claude Code skills docs for the exact frontmatter format.
    ├─ design.md      layout, chart choice, colours, formatting rules
    └─ data.md        build-data.mjs patterns (CSV, Excel, aggregation)
 ```
+
 `SKILL.md` frontmatter:
+
 ```yaml
 ---
 name: create-report
@@ -30,6 +35,7 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 ---
 
 ## 8.2 `SKILL.md` — workflow
+
 **Do:** write these sections:
 
 1. **Golden rules**
@@ -50,8 +56,8 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
    8. `build_report` → fix errors/warnings → `preview_report` → ask the user to check.
    9. `publish_report` → give the user the URL.
 3. **Update / refresh**
-   - *New data, same design:* replace files in `data/` → run `build-data.mjs` → `build_report` → `publish_report`. Do **not** touch `report.html`.
-   - *Design change:* targeted edits to `report.html` → build → preview → publish.
+   - _New data, same design:_ replace files in `data/` → run `build-data.mjs` → `build_report` → `publish_report`. Do **not** touch `report.html`.
+   - _Design change:_ targeted edits to `report.html` → build → preview → publish.
 4. **Access** — use `set_access` / `get_access`. Emails outside allowed domains must be added as external (ask the user for an expiry date). Never change access on re-publish.
 5. **Quality checklist (before publish)**
    - [ ] KPI totals match a direct calculation from the source (state the check you did)
@@ -67,8 +73,10 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 ---
 
 ## 8.3 Reference files
+
 **Do:**
-1. `references/helpers.md` — every `Report.*` function: signature, options table, one short example each (generated from/kept in sync with `base.js` JSDoc; add a note in `base.js`: *"Update .claude/skills/create-report/references/helpers.md when changing this API."*).
+
+1. `references/helpers.md` — every `Report.*` function: signature, options table, one short example each (generated from/kept in sync with `base.js` JSDoc; add a note in `base.js`: _"Update .claude/skills/create-report/references/helpers.md when changing this API."_).
 2. `references/design.md`:
    - Layout order: header → KPI row (3–6 KPIs) → main trend chart (full width) → 2-column breakdown charts → detail table(s) → footer with source notes.
    - Chart choice: trend over time → line/area; compare categories → horizontal bar (sorted); share of total (≤ 6 parts) → donut, otherwise bar; distribution → histogram; two measures → combo bar+line with two axes only if units differ.
@@ -87,7 +95,9 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 ---
 
 ## 8.4 End-to-end test
+
 **Do:** in a **new** Claude Code conversation (emulator target) ask:
+
 > "Using reports/_example/data/sales.csv, create a new report `test-skill` focused on regional performance, and share it with Alice."
 
 Check: the skill was used; raw CSV was **not** dumped into the chat; `data.json` is aggregated; checklist was followed; report published and visible to Alice. Note token usage and any improvements to the skill, apply them, then delete the test report and folder.
@@ -97,6 +107,7 @@ Check: the skill was used; raw CSV was **not** dumped into the chat; `data.json`
 ---
 
 ## 8.5 Using the skill in Claude Desktop
+
 **Do:** add to `docs/DEVELOPMENT.md` how to package the skill folder as a `.zip` and upload it in Claude Desktop / claude.ai skill settings (check current Claude docs for the exact menu path). Note that Desktop needs both the MCP server (7.4) and file access to `reports/`.
 
 **Acceptance:** instructions written; tested in Claude Desktop if available.

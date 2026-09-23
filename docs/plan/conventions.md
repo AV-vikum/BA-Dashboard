@@ -10,9 +10,9 @@ Read this file **before every work session**. It applies to every phase.
 2. Open the phase file for that step (linked from PLAN.md) and read:
    - the phase **Context** section, and
    - the step itself.
-   Read [`architecture.md`](architecture.md) sections only when the step references them.
+     Read [`architecture.md`](architecture.md) sections only when the step references them.
 3. Set the step's status in `docs/PLAN.md` to 🔄.
-4. Do the step exactly as written. Where the plan says *"check the current docs"*, do so — library APIs change.
+4. Do the step exactly as written. Where the plan says _"check the current docs"_, do so — library APIs change.
 5. Run the step's **Acceptance checks** and `npm run check` (once it exists — from step 0.7).
 6. Set the status to ✅. If you deviated from the plan, add a one-line note under the step in the phase file (`> Note (YYYY-MM-DD): …`) and, if it changes a decision, add a row to the Decision log in PLAN.md.
 7. Commit: `git add -A && git commit -m "Step X.Y: <step title>"`.
@@ -23,6 +23,7 @@ Read this file **before every work session**. It applies to every phase.
 9. At the end of a phase, give the user a short summary: what was built, how to try it, anything they must decide.
 
 ### Hard rules
+
 - **Never** create, request, print, or commit secrets. Never ask the user to paste a service-account key into the chat — only its **file path**.
 - **Never** run anything against a real Firebase project before Phase 9. Everything before Phase 9 uses the **emulators** with the demo project ID `demo-ba-dashboard`.
 - **Never** run `firebase deploy` or any command that changes a real project without asking the user first in that session.
@@ -34,12 +35,12 @@ Read this file **before every work session**. It applies to every phase.
 
 ## 2. Prerequisites (checked in step 0.2)
 
-| Tool | Version | Why |
-|---|---|---|
-| Node.js | 22 LTS or newer (24 LTS recommended) | Everything |
-| npm | 10+ (comes with Node) | Workspaces |
-| Java JDK | 21 or newer | The Firestore emulator runs on Java |
-| Git | any recent | Version control |
+| Tool     | Version                              | Why                                 |
+| -------- | ------------------------------------ | ----------------------------------- |
+| Node.js  | 22 LTS or newer (24 LTS recommended) | Everything                          |
+| npm      | 10+ (comes with Node)                | Workspaces                          |
+| Java JDK | 21 or newer                          | The Firestore emulator runs on Java |
+| Git      | any recent                           | Version control                     |
 
 `firebase-tools` is installed as a **root devDependency** and used through npm scripts / `npx firebase` — no global install.
 
@@ -53,32 +54,32 @@ Read this file **before every work session**. It applies to every phase.
 
 ### Chosen libraries
 
-| Area | Package(s) |
-|---|---|
-| Language / build | `typescript`, `tsx` (run TS directly), `tsup` (bundle tools) |
-| Lint / format | `eslint`, `@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `globals`, `prettier`, `eslint-config-prettier` |
-| Tests | `vitest`, `@firebase/rules-unit-testing` |
-| Git hooks / secrets | `lefthook`, `secretlint`, `@secretlint/secretlint-rule-preset-recommend` |
-| Dev orchestration | `concurrently`, `firebase-tools` |
-| Web | `react`, `react-dom`, `vite`, `@vitejs/plugin-react`, `react-router` (v7, data mode), `tailwindcss` + `@tailwindcss/vite` (v4), shadcn/ui components, `lucide-react`, `sonner`, `firebase` (modular SDK) |
-| Tools (CLI + MCP) | `firebase-admin`, `commander`, `zod`, `dotenv`, `@modelcontextprotocol/sdk`, `open`, `csv-parse`, `exceljs` |
-| Report charts | Apache ECharts from `cdn.jsdelivr.net` (pin the exact version in the template) |
+| Area                | Package(s)                                                                                                                                                                                               |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Language / build    | `typescript`, `tsx` (run TS directly), `tsup` (bundle tools)                                                                                                                                             |
+| Lint / format       | `eslint`, `@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `globals`, `prettier`, `eslint-config-prettier`                                                 |
+| Tests               | `vitest`, `@firebase/rules-unit-testing`                                                                                                                                                                 |
+| Git hooks / secrets | `lefthook`, `secretlint`, `@secretlint/secretlint-rule-preset-recommend`                                                                                                                                 |
+| Dev orchestration   | `concurrently`, `firebase-tools`                                                                                                                                                                         |
+| Web                 | `react`, `react-dom`, `vite`, `@vitejs/plugin-react`, `react-router` (v7, data mode), `tailwindcss` + `@tailwindcss/vite` (v4), shadcn/ui components, `lucide-react`, `sonner`, `firebase` (modular SDK) |
+| Tools (CLI + MCP)   | `firebase-admin`, `commander`, `zod`, `dotenv`, `@modelcontextprotocol/sdk`, `open`, `csv-parse`, `exceljs`                                                                                              |
+| Report charts       | Apache ECharts from `cdn.jsdelivr.net` (pin the exact version in the template)                                                                                                                           |
 
 ---
 
 ## 4. Workspace layout & naming
 
-| Workspace | Package name | Purpose |
-|---|---|---|
+| Workspace | Package name | Purpose                                              |
+| --------- | ------------ | ---------------------------------------------------- |
 | `shared/` | `@ba/shared` | Types, constants, pure helpers (no Firebase imports) |
-| `web/` | `@ba/web` | React app |
-| `tools/` | `@ba/tools` | CLI + MCP server + scripts (setup, seed) |
+| `web/`    | `@ba/web`    | React app                                            |
+| `tools/`  | `@ba/tools`  | CLI + MCP server + scripts (setup, seed)             |
 
 - All packages are ESM (`"type": "module"`), TypeScript `strict: true`.
 - `@ba/shared` exports its TypeScript source directly (`"exports": { ".": "./src/index.ts" }`). Vite compiles it for `web`; `tsup` bundles it into `tools/dist` (`noExternal: ['@ba/shared']`); `tsx` handles it in dev.
 - File names: `kebab-case.ts` for modules, `PascalCase.tsx` for React components, `useThing.ts` for hooks.
 - Named exports only (except where a tool requires a default export, e.g. `vite.config.ts`).
-- Comments explain *why*, not *what*. Keep them short.
+- Comments explain _why_, not _what_. Keep them short.
 
 ---
 
@@ -98,19 +99,19 @@ Read this file **before every work session**. It applies to every phase.
 
 ## 6. Standard commands (final state)
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Emulators + web app (http://localhost:5173), emulator UI at http://localhost:4000 |
-| `npm run emulators` | Emulators only (data persisted in `.emulator-data/`) |
-| `npm run emulators:reset` | Delete persisted emulator data |
-| `npm run seed` | Load demo data into the emulators |
-| `npm run setup -- --domains … --admins …` | Write access config (emulator by default) |
-| `npm run check` | Lint + typecheck + unit tests (must pass before a step is ✅) |
-| `npm run test:rules` | Security-rules tests against the Firestore emulator |
-| `npm run report -- <command>` | Report CLI (new, build, preview, publish, list, access, …) |
-| `npm run build` | Build all packages |
-| `npm run preview:hosting` | Build web for emulators and serve it from the Hosting emulator (tests real headers/CSP) |
-| `npm run deploy` | Phase 9+: build and deploy to the real project (ask the user first) |
+| Command                                   | What it does                                                                            |
+| ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| `npm run dev`                             | Emulators + web app (http://localhost:5173), emulator UI at http://localhost:4000       |
+| `npm run emulators`                       | Emulators only (data persisted in `.emulator-data/`)                                    |
+| `npm run emulators:reset`                 | Delete persisted emulator data                                                          |
+| `npm run seed`                            | Load demo data into the emulators                                                       |
+| `npm run setup -- --domains … --admins …` | Write access config (emulator by default)                                               |
+| `npm run check`                           | Lint + typecheck + unit tests (must pass before a step is ✅)                           |
+| `npm run test:rules`                      | Security-rules tests against the Firestore emulator                                     |
+| `npm run report -- <command>`             | Report CLI (new, build, preview, publish, list, access, …)                              |
+| `npm run build`                           | Build all packages                                                                      |
+| `npm run preview:hosting`                 | Build web for emulators and serve it from the Hosting emulator (tests real headers/CSP) |
+| `npm run deploy`                          | Phase 9+: build and deploy to the real project (ask the user first)                     |
 
 ---
 

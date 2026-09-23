@@ -1,30 +1,36 @@
 # Phase 0 — Repository foundation
 
 ## Context
+
 Set up an npm-workspaces monorepo (`shared`, `web`, `tools`), code-quality tooling, git-ignore rules that keep secrets and company data out of git, and a pre-commit secret scanner. **No Firebase yet.** Read [conventions.md](conventions.md) first.
 
 ---
 
 ## 0.1 Development plan and CLAUDE.md ✅
+
 Done: `docs/PLAN.md`, `docs/plan/*`, `CLAUDE.md`.
 
 ---
 
 ## 0.2 Check prerequisites 👤 (only if something is missing)
+
 **Do:**
+
 1. Run `node -v`, `npm -v`, `java -version`, `git --version`.
 2. Compare against [conventions §2](conventions.md#2-prerequisites-checked-in-step-02).
 3. If something is missing or too old, **stop** and tell the user what to install. On Windows:
    - Node: `winget install OpenJS.NodeJS.LTS`
    - Java 21: `winget install EclipseAdoptium.Temurin.21.JDK` (open a new terminal afterwards)
-   The user installs it; then continue.
+     The user installs it; then continue.
 
 **Acceptance:** all four commands print versions that meet the minimums.
 
 ---
 
 ## 0.3 Root workspace
+
 **Do:**
+
 1. Create root `package.json`:
    ```json
    {
@@ -45,7 +51,9 @@ Done: `docs/PLAN.md`, `docs/plan/*`, `CLAUDE.md`.
 ---
 
 ## 0.4 `.gitignore`
+
 **Do:** create `.gitignore` with exactly these sections (add framework defaults as needed):
+
 ```gitignore
 # Dependencies & builds
 node_modules/
@@ -100,7 +108,9 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.5 `shared` package skeleton
+
 **Do:**
+
 1. `shared/package.json`:
    ```json
    {
@@ -123,7 +133,11 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.6 `tools` package skeleton
+
+> Note (2026-09-23): `tools`' `test` script uses `vitest run --passWithNoTests` (not plain `vitest run`) since it has no test files yet — vitest exits non-zero otherwise, which would break `npm run check` until Phase 6/7 add tests.
+
 **Do:**
+
 1. `tools/package.json` (`@ba/tools`, private, ESM) with dependency `"@ba/shared": "*"` and scripts `test`, `typecheck`, `build` (tsup — configured in 6.x/7.x; for now `"build": "echo tools build not configured yet"`).
 2. `tools/tsconfig.json` extends base, `"types": ["node"]`; install `@types/node` as a dev dependency.
 3. `tools/src/cli.ts` printing `ba-dashboard tools` (placeholder).
@@ -136,7 +150,11 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.7 Lint, format, typecheck, `npm run check`
+
+> Note (2026-09-23): root `typescript` was installed at latest (7.0.2) in step 0.3, but `typescript-eslint@8.70.1` (also latest) only supports `typescript` `>=4.8.4 <6.1.0`. Downgraded root `typescript` to `6.0.3` (latest version inside that supported range) so `npm install` for the lint toolchain resolves without `--force`/`--legacy-peer-deps`. Revisit when `typescript-eslint` widens its peer range.
+
 **Do:**
+
 1. Install root dev deps: `eslint @eslint/js typescript-eslint globals prettier eslint-config-prettier eslint-plugin-react-hooks eslint-plugin-react-refresh`.
 2. `eslint.config.js` (flat config): recommended JS + typescript-eslint recommended for `**/*.{ts,tsx}`; react-hooks + react-refresh for `web/**/*.tsx`; `eslint-config-prettier` last; ignore `**/dist`, `**/node_modules`, `.emulator-data`, `reports/**/dist`, `templates/**` (plain browser JS is linted separately in 5.3 if needed).
 3. `.prettierrc.json`: `{ "singleQuote": true, "semi": true, "printWidth": 100, "trailingComma": "all" }` and `.prettierignore` (dist, coverage, package-lock.json, .emulator-data).
@@ -155,10 +173,12 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.8 Example config files
+
 **Do:** create these files with **placeholder** values and a comment on every line explaining it (use the tables in [architecture A4](architecture.md#a4-configuration--secrets)):
-1. `web/.env.example` — all `VITE_*` variables, with a header comment: *"Copy to `.env.production.local` for your real Firebase project. Never commit that file."*
-2. `web/.env.development` — the **demo** values from A4 (`demo-api-key`, `demo-ba-dashboard`, `VITE_USE_EMULATORS=true`). Header comment: *"Demo values for the local emulators. Safe to commit — contains no secrets."*
-3. `tools/.env.example` — all tools variables, header: *"Copy to `tools/.env.production` when going live (Phase 9). GOOGLE_APPLICATION_CREDENTIALS must point to a file OUTSIDE this repository."*
+
+1. `web/.env.example` — all `VITE_*` variables, with a header comment: _"Copy to `.env.production.local` for your real Firebase project. Never commit that file."_
+2. `web/.env.development` — the **demo** values from A4 (`demo-api-key`, `demo-ba-dashboard`, `VITE_USE_EMULATORS=true`). Header comment: _"Demo values for the local emulators. Safe to commit — contains no secrets."_
+3. `tools/.env.example` — all tools variables, header: _"Copy to `tools/.env.production` when going live (Phase 9). GOOGLE_APPLICATION_CREDENTIALS must point to a file OUTSIDE this repository."_
 4. `.firebaserc.example`:
    ```json
    { "projects": { "default": "your-firebase-project-id" } }
@@ -170,7 +190,9 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.9 Pre-commit secret scanning
+
 **Do:**
+
 1. Install root dev deps `lefthook secretlint @secretlint/secretlint-rule-preset-recommend`.
 2. `.secretlintrc.json`: `{ "rules": [{ "id": "@secretlint/secretlint-rule-preset-recommend" }] }`
 3. `lefthook.yml`:
@@ -178,13 +200,14 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
    pre-commit:
      commands:
        secretlint:
-         glob: "*"
+         glob: '*'
          run: npx secretlint {staged_files}
    ```
 4. Add root script `"prepare": "lefthook install"` and run `npm run prepare`.
 5. Add root script `"secrets:scan": "secretlint \"**/*\""`.
 
 **Acceptance:**
+
 1. Create `tmp-secret-test.txt` containing a fake private key block (a line `-----BEGIN PRIVATE KEY-----`, a line of random base64 text, a line `-----END PRIVATE KEY-----`), `git add` it, try to commit → the commit is **blocked**.
 2. `git reset tmp-secret-test.txt` and delete the file.
 3. `npm run secrets:scan` reports nothing.
@@ -192,7 +215,9 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 ---
 
 ## 0.10 License and README skeleton 👤 (confirm license)
+
 **Do:**
+
 1. Ask the user to confirm: license **MIT** (proposed) and the **copyright holder name** to use.
 2. Create `LICENSE` with the confirmed text and year 2026.
 3. Replace `README.md` with a skeleton: project name, one-paragraph description, "Status: in development", links to `docs/PLAN.md` and `docs/DEVELOPMENT.md` (created in 1.6). The full README comes in Phase 10.

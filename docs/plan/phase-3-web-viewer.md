@@ -1,6 +1,7 @@
 # Phase 3 — Web app: viewer experience
 
 ## Context
+
 The React app that every user sees: Google sign-in, "My reports" list with search, and the report viewer. Runs against the emulators (`web/.env.development`). Reference: [architecture A5–A8](architecture.md#a5-data-model-firestore), [conventions §5](conventions.md#5-coding-rules).
 
 Demo accounts from the seed (step 1.5) are used for all manual checks. In the Auth emulator's Google popup, click **"Add new account"** and type the email.
@@ -8,7 +9,9 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.1 Scaffold the web app + `npm run dev`
+
 **Do:**
+
 1. Remove the placeholder `web/package.json`, then from the repo root: `npm create vite@latest web -- --template react-ts`. Set the package name to `@ba/web`; add dependency `"@ba/shared": "*"`; run `npm install` from the root.
 2. Delete the Vite demo content (counter, logos, `App.css`).
 3. Make `web/tsconfig*.json` extend/align with `tsconfig.base.json` (keep Vite's `tsconfig.app.json` / `tsconfig.node.json` split).
@@ -28,7 +31,9 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.2 Firebase initialization and env validation
+
 **Do:**
+
 1. `web/src/vite-env.d.ts`: type all `VITE_*` variables (see [A4](architecture.md#environment-variables)).
 2. `web/src/lib/env.ts`: read + validate with zod; if invalid, export the list of problems.
 3. `web/src/lib/firebase.ts`:
@@ -43,28 +48,29 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.3 Routing and app shell
+
 **Do:**
+
 1. `web/src/router.tsx` using React Router v7 **data mode** (`createBrowserRouter` + `RouterProvider`; check current docs for import paths):
 
-| Path | Component | Guard |
-|---|---|---|
-| `/login` | `LoginPage` | public (redirects to `/` if already signed in) |
-| `/` | `MyReportsPage` | `RequireAuth` |
-| `/r/:reportId` | `ReportViewerPage` | `RequireAuth` |
-| `/admin` | `AdminLayout` (Phase 4) | `RequireAuth` + `RequireAdmin` |
-| `*` | `NotFoundPage` | public |
+| Path           | Component               | Guard                                          |
+| -------------- | ----------------------- | ---------------------------------------------- |
+| `/login`       | `LoginPage`             | public (redirects to `/` if already signed in) |
+| `/`            | `MyReportsPage`         | `RequireAuth`                                  |
+| `/r/:reportId` | `ReportViewerPage`      | `RequireAuth`                                  |
+| `/admin`       | `AdminLayout` (Phase 4) | `RequireAuth` + `RequireAdmin`                 |
+| `*`            | `NotFoundPage`          | public                                         |
 
-   Admin child routes are added in Phase 4 — for now `/admin` renders a placeholder.
-2. `AppShell` layout (for `/` and `/r/:id`): top bar with logo/app name (from env) linking to `/`, an **Admin** link (only if `isAdmin`), and a user menu (avatar, name, email, theme toggle, Sign out). The report viewer uses a slimmer bar (step 3.7).
-3. Add `<Toaster />` (sonner) once at the root.
-4. Set `document.title` per page (`<page> · <APP_NAME>`).
+Admin child routes are added in Phase 4 — for now `/admin` renders a placeholder. 2. `AppShell` layout (for `/` and `/r/:id`): top bar with logo/app name (from env) linking to `/`, an **Admin** link (only if `isAdmin`), and a user menu (avatar, name, email, theme toggle, Sign out). The report viewer uses a slimmer bar (step 3.7). 3. Add `<Toaster />` (sonner) once at the root. 4. Set `document.title` per page (`<page> · <APP_NAME>`).
 
 **Acceptance:** navigating to each path renders the right placeholder; unknown paths show Not Found.
 
 ---
 
 ## 3.4 Authentication
+
 **Do:**
+
 1. `web/src/auth/AuthProvider.tsx` exposing via context:
    ```ts
    {
@@ -93,6 +99,7 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.5 "No access" page
+
 **Do:** in `MyReportsPage` (or a wrapper): if the user is **not internal** and has **zero** external reports → render `NoAccessPage`: "You don't have access to any reports", shows the signed-in email, button **Use a different account** (signs out then opens sign-in).
 
 **Acceptance:** `stranger@gmail.test` sees this page; `partner@outside.test` does not.
@@ -100,7 +107,9 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.6 My reports page
+
 **Do:**
+
 1. `web/src/lib/firestore/reports.ts`:
    - `subscribeMyReports(email, isInternal, cb)`:
      - internal: `query(reports, where('viewerEmails','array-contains',email), where('status','==','published'), orderBy('updatedAt','desc'))`
@@ -115,15 +124,17 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
    - Sort: "Recently updated" (default) / "Title A–Z".
    - Search, tags and sort stored in the URL (`?q=&tags=a,b&sort=title`) so back/forward and sharing work.
    - Responsive card grid (1 / 2 / 3 columns): title, description (2-line clamp), tags as badges, "Updated 3 days ago" (tooltip with the exact date). The whole card is a link to `/r/:id`.
-   - Loading: 6 skeleton cards. Empty states: *"No reports have been shared with you yet."* / *"No reports match your search."* + Clear button.
+   - Loading: 6 skeleton cards. Empty states: _"No reports have been shared with you yet."_ / _"No reports match your search."_ + Clear button.
 4. Use `filterReports` from `@ba/shared` (no custom search code in the component).
 
-**Acceptance (emulator):** Alice sees exactly *Sales Overview* and *Partner Summary*; typing "sales" narrows to one; clicking a tag filters; the URL updates; reloading keeps the filter; `partner@outside.test` sees only *Partner Summary*.
+**Acceptance (emulator):** Alice sees exactly _Sales Overview_ and _Partner Summary_; typing "sales" narrows to one; clicking a tag filters; the URL updates; reloading keeps the filter; `partner@outside.test` sees only _Partner Summary_.
 
 ---
 
 ## 3.7 Report viewer
+
 **Do:**
+
 1. `web/src/lib/firestore/reports.ts`: `subscribeReport(id, cb, onError)` (live metadata — so unpublishing takes effect) and `getReportContent(id)` (one-time `getDoc` of `content/main`).
 2. `web/src/lib/report-frame.ts`: `withTheme(html, theme)` — adds/replaces `data-theme="…"` on the first `<html` tag (string manipulation, handle missing `<html>` by wrapping). Unit-test it.
 3. `ReportViewerPage`:
@@ -133,28 +144,31 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
    - Error states (step 3.8).
 4. Never render report HTML with `dangerouslySetInnerHTML` — only via the sandboxed iframe.
 
-**Acceptance (emulator):** Alice opens *Sales Overview* → the placeholder report renders and its inline script output is visible (scripts run); in DevTools, running `parent.document` inside the iframe console throws a cross-origin error (sandbox works); toggling the theme re-renders the report in dark mode.
+**Acceptance (emulator):** Alice opens _Sales Overview_ → the placeholder report renders and its inline script output is visible (scripts run); in DevTools, running `parent.document` inside the iframe console throws a cross-origin error (sandbox works); toggling the theme re-renders the report in dark mode.
 
 ---
 
 ## 3.8 Error pages
+
 **Do:** a shared `MessagePage` component (icon, title, text, actions). Cases in the viewer:
 
-| Situation | How detected | Message |
-|---|---|---|
-| Not found **or** no access | metadata read fails with `permission-denied` or doc missing | "Report not available — it doesn't exist or it hasn't been shared with you." + Back to my reports |
-| External access expired | metadata OK, user is external and `isExternalActive` is false (or content read denied) | "Your access to this report has expired. Contact the person who shared it." |
-| Report unpublished while open | live metadata changes to `status: 'draft'` (non-admin) | same as "not available" |
-| Network/other error | anything else | "Something went wrong" + Retry |
+| Situation                     | How detected                                                                           | Message                                                                                           |
+| ----------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Not found **or** no access    | metadata read fails with `permission-denied` or doc missing                            | "Report not available — it doesn't exist or it hasn't been shared with you." + Back to my reports |
+| External access expired       | metadata OK, user is external and `isExternalActive` is false (or content read denied) | "Your access to this report has expired. Contact the person who shared it."                       |
+| Report unpublished while open | live metadata changes to `status: 'draft'` (non-admin)                                 | same as "not available"                                                                           |
+| Network/other error           | anything else                                                                          | "Something went wrong" + Retry                                                                    |
 
 **Acceptance (emulator):** Eve opening `/r/demo-sales` → "not available"; partner opening `/r/demo-expired` → "expired"; admin unpublishing `demo-sales` in the Emulator UI while Alice has it open → Alice sees "not available".
 
 ---
 
 ## 3.9 Security headers and CSP (tested on the Hosting emulator)
+
 **Why:** the `srcdoc` iframe inherits the app's CSP, so the policy must allow report needs. v1 trade-off (Decision log): `script-src` includes `'unsafe-inline'` and the chart CDNs. The app itself never injects HTML, and the report iframe is sandboxed, which limits the risk. Backlog B.7 removes the trade-off.
 
 **Do:**
+
 1. In `firebase.json` → `hosting.headers`, for `"source": "**"`:
    - `Content-Security-Policy` (start from this and adjust **only** if something breaks — note any change):
      ```
@@ -179,8 +193,10 @@ Demo accounts from the seed (step 1.5) are used for all manual checks. In the Au
 ---
 
 ## 3.10 Theme, responsiveness, accessibility
+
 **Do:**
-1. Theme: `light | dark | system`, stored in `localStorage` (wrapped in try/catch), applied as the `dark` class on `<html>` per shadcn's Vite dark-mode guide. The viewer passes the *resolved* theme to `withTheme`.
+
+1. Theme: `light | dark | system`, stored in `localStorage` (wrapped in try/catch), applied as the `dark` class on `<html>` per shadcn's Vite dark-mode guide. The viewer passes the _resolved_ theme to `withTheme`.
 2. Check every page at **375px** width: no horizontal scroll; the top bar collapses sensibly (user menu holds secondary actions).
 3. Keyboard: all actions reachable with Tab; visible focus; `Esc` closes dialogs/menus.
 4. Labels: search input has an accessible label; icon-only buttons have `aria-label`.

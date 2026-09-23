@@ -118,41 +118,41 @@ BA-Dashboard/
 
 ## A3. Environments
 
-| | Emulator (default) | Production (Phase 9+) |
-|---|---|---|
-| Project ID | `demo-ba-dashboard` (the `demo-` prefix means: no real project, no credentials, emulators can't reach the internet) | The user's real project ID |
-| Web config | `web/.env.development` (committed, fake values) | `web/.env.production.local` (git-ignored) |
-| Tools target | `BA_TARGET` unset or `emulator` → `tools/.env` (optional) | `BA_TARGET=production` → `tools/.env.production` (git-ignored) |
-| Credentials | none | service-account JSON **outside the repo**, path in `GOOGLE_APPLICATION_CREDENTIALS` |
-| Data | `.emulator-data/` (git-ignored) | Cloud Firestore |
-| Firestore indexes | **not enforced** by the emulator | enforced — must be deployed (step 9.4) |
+|                   | Emulator (default)                                                                                                  | Production (Phase 9+)                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Project ID        | `demo-ba-dashboard` (the `demo-` prefix means: no real project, no credentials, emulators can't reach the internet) | The user's real project ID                                                          |
+| Web config        | `web/.env.development` (committed, fake values)                                                                     | `web/.env.production.local` (git-ignored)                                           |
+| Tools target      | `BA_TARGET` unset or `emulator` → `tools/.env` (optional)                                                           | `BA_TARGET=production` → `tools/.env.production` (git-ignored)                      |
+| Credentials       | none                                                                                                                | service-account JSON **outside the repo**, path in `GOOGLE_APPLICATION_CREDENTIALS` |
+| Data              | `.emulator-data/` (git-ignored)                                                                                     | Cloud Firestore                                                                     |
+| Firestore indexes | **not enforced** by the emulator                                                                                    | enforced — must be deployed (step 9.4)                                              |
 
 ### Emulator ports
 
-| Emulator | Port |
-|---|---|
-| Auth | 9099 |
-| Firestore | 8080 |
-| Hosting | 5000 |
-| Emulator UI | 4000 |
+| Emulator        | Port |
+| --------------- | ---- |
+| Auth            | 9099 |
+| Firestore       | 8080 |
+| Hosting         | 5000 |
+| Emulator UI     | 4000 |
 | Vite dev server | 5173 |
 
 ---
 
 ## A4. Configuration & secrets
 
-| What | Where | In git? |
-|---|---|---|
-| Web Firebase config (dev) | `web/.env.development` — fake demo values | ✅ (safe) |
-| Web Firebase config (prod) | `web/.env.production.local` | ❌ |
-| Branding (`VITE_APP_NAME`, `VITE_APP_LOGO_URL`, `VITE_APP_PRIMARY_COLOR`) | same env files | dev ✅ / prod ❌ |
-| Firebase project alias | `.firebaserc` | ❌ (`.firebaserc.example` ✅) |
-| Allowed domains, external-sharing switch | Firestore `config/access` | — (edited in Admin → Settings) |
-| Admin emails | Firestore `config/admins` | — (edited in Admin → Settings) |
-| Service-account key | JSON file outside the repo | ❌ never |
-| Tools production settings | `tools/.env.production` | ❌ (`tools/.env.example` ✅) |
-| MCP client config | `.mcp.json` / Claude Desktop config | ❌ (`.mcp.json.example` ✅) |
-| Report sources & data | `reports/<slug>/` | ❌ (except `reports/_example/`) |
+| What                                                                      | Where                                     | In git?                         |
+| ------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------- |
+| Web Firebase config (dev)                                                 | `web/.env.development` — fake demo values | ✅ (safe)                       |
+| Web Firebase config (prod)                                                | `web/.env.production.local`               | ❌                              |
+| Branding (`VITE_APP_NAME`, `VITE_APP_LOGO_URL`, `VITE_APP_PRIMARY_COLOR`) | same env files                            | dev ✅ / prod ❌                |
+| Firebase project alias                                                    | `.firebaserc`                             | ❌ (`.firebaserc.example` ✅)   |
+| Allowed domains, external-sharing switch                                  | Firestore `config/access`                 | — (edited in Admin → Settings)  |
+| Admin emails                                                              | Firestore `config/admins`                 | — (edited in Admin → Settings)  |
+| Service-account key                                                       | JSON file outside the repo                | ❌ never                        |
+| Tools production settings                                                 | `tools/.env.production`                   | ❌ (`tools/.env.example` ✅)    |
+| MCP client config                                                         | `.mcp.json` / Claude Desktop config       | ❌ (`.mcp.json.example` ✅)     |
+| Report sources & data                                                     | `reports/<slug>/`                         | ❌ (except `reports/_example/`) |
 
 **The web `apiKey` is not a secret** — it's sent to every browser. Security comes from Security Rules, Auth authorized domains, and API-key website restrictions (Phase 9).
 
@@ -160,27 +160,27 @@ BA-Dashboard/
 
 `web/.env.*`
 
-| Variable | Dev value | Notes |
-|---|---|---|
-| `VITE_FIREBASE_API_KEY` | `demo-api-key` | |
-| `VITE_FIREBASE_AUTH_DOMAIN` | `demo-ba-dashboard.firebaseapp.com` | |
-| `VITE_FIREBASE_PROJECT_ID` | `demo-ba-dashboard` | |
-| `VITE_FIREBASE_APP_ID` | `demo-app-id` | |
-| `VITE_USE_EMULATORS` | `true` | `false` in production |
-| `VITE_APP_NAME` | `BA Dashboard` | |
-| `VITE_APP_LOGO_URL` | *(empty)* | optional |
-| `VITE_APP_PRIMARY_COLOR` | *(empty)* | optional, hex |
+| Variable                    | Dev value                           | Notes                 |
+| --------------------------- | ----------------------------------- | --------------------- |
+| `VITE_FIREBASE_API_KEY`     | `demo-api-key`                      |                       |
+| `VITE_FIREBASE_AUTH_DOMAIN` | `demo-ba-dashboard.firebaseapp.com` |                       |
+| `VITE_FIREBASE_PROJECT_ID`  | `demo-ba-dashboard`                 |                       |
+| `VITE_FIREBASE_APP_ID`      | `demo-app-id`                       |                       |
+| `VITE_USE_EMULATORS`        | `true`                              | `false` in production |
+| `VITE_APP_NAME`             | `BA Dashboard`                      |                       |
+| `VITE_APP_LOGO_URL`         | _(empty)_                           | optional              |
+| `VITE_APP_PRIMARY_COLOR`    | _(empty)_                           | optional, hex         |
 
 `tools/.env.production` (and optional `tools/.env` for emulator overrides)
 
-| Variable | Example | Notes |
-|---|---|---|
-| `FIREBASE_PROJECT_ID` | `my-company-reports` | emulator default: `demo-ba-dashboard` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | `C:\secure\ba-dashboard\service-account.json` | production only |
-| `APP_URL` | `https://my-company-reports.web.app` | emulator default: `http://localhost:5173` |
-| `REPORTS_DIR` | `../reports` | relative to the repo root; default `reports` |
-| `PUBLISHER_EMAIL` | `you@company.com` | written to `updatedBy` as `cli:<email>` |
-| `FIRESTORE_EMULATOR_HOST` | `127.0.0.1:8080` | emulator only; set automatically |
+| Variable                         | Example                                       | Notes                                        |
+| -------------------------------- | --------------------------------------------- | -------------------------------------------- |
+| `FIREBASE_PROJECT_ID`            | `my-company-reports`                          | emulator default: `demo-ba-dashboard`        |
+| `GOOGLE_APPLICATION_CREDENTIALS` | `C:\secure\ba-dashboard\service-account.json` | production only                              |
+| `APP_URL`                        | `https://my-company-reports.web.app`          | emulator default: `http://localhost:5173`    |
+| `REPORTS_DIR`                    | `../reports`                                  | relative to the repo root; default `reports` |
+| `PUBLISHER_EMAIL`                | `you@company.com`                             | written to `updatedBy` as `cli:<email>`      |
+| `FIRESTORE_EMULATOR_HOST`        | `127.0.0.1:8080`                              | emulator only; set automatically             |
 
 ---
 
@@ -189,6 +189,7 @@ BA-Dashboard/
 All emails lower-case. All timestamps are Firestore `Timestamp`.
 
 ### `config/access` — readable by any signed-in user
+
 ```ts
 {
   allowedDomains: string[];        // ["example.com"] — lower-case, no "@"
@@ -198,17 +199,26 @@ All emails lower-case. All timestamps are Firestore `Timestamp`.
 ```
 
 ### `config/admins` — admins only
+
 ```ts
 { emails: string[]; updatedAt: Timestamp; updatedBy: string; }
 ```
+
 The web app finds out whether the user is an admin by trying to read this document (success = admin).
 
 ### `users/{uid}` — profile, written by the user on sign-in
+
 ```ts
-{ email: string; displayName: string | null; photoURL: string | null; lastLoginAt: Timestamp; }
+{
+  email: string;
+  displayName: string | null;
+  photoURL: string | null;
+  lastLoginAt: Timestamp;
+}
 ```
 
 ### `groups/{groupId}` — admins only
+
 ```ts
 {
   name: string;                    // unique (case-insensitive)
@@ -219,6 +229,7 @@ The web app finds out whether the user is an admin by trying to read this docume
 ```
 
 ### `reports/{reportId}` — metadata (small)
+
 ```ts
 {
   title: string;                   // 1–120 chars
@@ -238,9 +249,14 @@ The web app finds out whether the user is an admin by trying to read this docume
 ```
 
 ### `reports/{reportId}/content/main` — the report HTML
+
 ```ts
-{ html: string; updatedAt: Timestamp; }
+{
+  html: string;
+  updatedAt: Timestamp;
+}
 ```
+
 Limit: the built HTML must be ≤ `REPORT_MAX_BYTES` = **900,000 bytes** (Firestore's document limit is 1 MiB).
 
 ---
@@ -317,11 +333,12 @@ service cloud.firestore {
 ```
 
 **Why queries work:** Firestore only allows a list query if the rule is provably true for every possible result.
+
 - Internal users query `where('viewerEmails','array-contains',email) + where('status','==','published')`.
 - External users query `where('externalEmails','array-contains',email) + where('status','==','published')`.
 - Admins can query anything.
 
-**Known limitation:** list queries cannot check expiry, so an external user whose access expired can still read the report's *metadata* (title etc.); the app hides it. The *content* is blocked by the rules. Admins can clean up expired entries (step 4.9).
+**Known limitation:** list queries cannot check expiry, so an external user whose access expired can still read the report's _metadata_ (title etc.); the app hides it. The _content_ is blocked by the rules. Admins can clean up expired entries (step 4.9).
 
 **Bootstrapping:** the Admin SDK (setup/seed scripts, CLI) bypasses rules, which is how the first `config/*` documents are created.
 
@@ -338,7 +355,8 @@ service cloud.firestore {
 - Admins see every report (published and draft).
 
 ### Who owns what: report folder vs. web UI
-- `report.json` (in the local folder) is the source of truth for **content, title, description, tags**. Publishing overwrites them in Firestore. The admin UI shows a note on reports that have a `slug`: *"Managed from a local folder — edits to details here are overwritten on the next publish."*
+
+- `report.json` (in the local folder) is the source of truth for **content, title, description, tags**. Publishing overwrites them in Firestore. The admin UI shows a note on reports that have a `slug`: _"Managed from a local folder — edits to details here are overwritten on the next publish."_
 - **Access** is applied from `report.json` **only when the report is first created**. After that, access is managed in the web UI or with `report access` / the `set_access` MCP tool; a normal re-publish never changes access. `report pull` refreshes the `access` block in `report.json` from Firestore.
 
 ---
@@ -347,14 +365,19 @@ service cloud.firestore {
 
 - The viewer loads `content/main.html` and renders it in:
   ```html
-  <iframe sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-          referrerpolicy="no-referrer" srcdoc="…" title="<report title>">
+  <iframe
+    sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+    referrerpolicy="no-referrer"
+    srcdoc="…"
+    title="<report title>"
+  ></iframe>
   ```
   **No `allow-same-origin`** → the report runs in an opaque origin and cannot read the app's cookies, storage, auth tokens, or Firestore.
 - Theme: before setting `srcdoc`, the app injects `data-theme="light|dark"` on the report's `<html>` tag (`web/src/lib/report-frame.ts`).
 - A `srcdoc` iframe **inherits the parent page's Content-Security-Policy**, so the app's CSP must allow what reports need (inline scripts, the chart CDN). The v1 trade-off and exact policy are in step 3.9. Serving reports from a separate origin (backlog B.7) would remove this trade-off.
 
 ### Report file format (details in Phase 5)
+
 ```
 reports/<slug>/
 ├─ report.json      metadata + initial access + reportId (after first publish)
@@ -369,12 +392,12 @@ reports/<slug>/
 
 ## A9. Free-plan (Spark) budget
 
-| Resource | Free limit | Expected use |
-|---|---|---|
-| Firestore storage | 1 GiB | ~100–300 KB per report → thousands of reports |
-| Firestore reads | 50,000 / day | Home list ≈ 1 read per report + 2 config; opening a report ≈ 2–4 reads (includes rule `get()`s) |
-| Firestore writes | 20,000 / day | Admin actions + one profile write per sign-in |
-| Hosting | 10 GB storage, 360 MB/day transfer | Only the app shell |
-| Auth | Google sign-in is free | — |
+| Resource          | Free limit                         | Expected use                                                                                    |
+| ----------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Firestore storage | 1 GiB                              | ~100–300 KB per report → thousands of reports                                                   |
+| Firestore reads   | 50,000 / day                       | Home list ≈ 1 read per report + 2 config; opening a report ≈ 2–4 reads (includes rule `get()`s) |
+| Firestore writes  | 20,000 / day                       | Admin actions + one profile write per sign-in                                                   |
+| Hosting           | 10 GB storage, 360 MB/day transfer | Only the app shell                                                                              |
+| Auth              | Google sign-in is free             | —                                                                                               |
 
 Cloud Functions and new Cloud Storage buckets need the Blaze plan, so v1 uses neither.

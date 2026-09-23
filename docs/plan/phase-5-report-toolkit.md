@@ -1,7 +1,9 @@
 # Phase 5 — Report authoring toolkit
 
 ## Context
+
 A standard way to build reports so they look consistent and Claude writes as little as possible:
+
 - a **base template** (CSS + a `window.Report` helper API) that is inlined at build time,
 - a **report folder format** (`report.json`, `report.html`, `data.json`, `build-data.mjs`),
 - a **build** step producing one self-contained HTML file,
@@ -12,21 +14,25 @@ Reference: [A8 report rendering](architecture.md#a8-report-rendering), [A7 owner
 ---
 
 ## 5.1 `report.json` schema
+
 **Do:** `shared/src/report-json.ts` (zod) + tests:
+
 ```jsonc
 {
-  "reportId": null,                    // filled by the first publish — do not edit
-  "title": "Sales Overview Q3 2026",    // 1–120
-  "description": "Revenue, orders and top products for Q3.",   // 0–500
-  "tags": ["sales", "quarterly"],      // lower-case, max 10
-  "status": "published",               // "published" | "draft" — used on publish
-  "access": {                          // applied ONLY on first publish (see A7)
+  "reportId": null, // filled by the first publish — do not edit
+  "title": "Sales Overview Q3 2026", // 1–120
+  "description": "Revenue, orders and top products for Q3.", // 0–500
+  "tags": ["sales", "quarterly"], // lower-case, max 10
+  "status": "published", // "published" | "draft" — used on publish
+  "access": {
+    // applied ONLY on first publish (see A7)
     "emails": ["alice@example.com"],
-    "groups": ["Finance"],             // group NAMES (resolved to ids by the CLI)
-    "external": [{ "email": "partner@outside.test", "expires": "2026-12-31" }]  // expires optional
-  }
+    "groups": ["Finance"], // group NAMES (resolved to ids by the CLI)
+    "external": [{ "email": "partner@outside.test", "expires": "2026-12-31" }], // expires optional
+  },
 }
 ```
+
 Export `ReportJsonSchema`, `type ReportJson`, and `parseReportJson(text)` with friendly error messages (path + problem).
 
 **Acceptance:** tests for a valid file, missing title, bad email, bad date, upper-case tags (normalized).
@@ -34,7 +40,9 @@ Export `ReportJsonSchema`, `type ReportJson`, and `parseReportJson(text)` with f
 ---
 
 ## 5.2 Base styles — `templates/report-base/base.css`
+
 **Do:** plain CSS (no build tools), designed for dashboards:
+
 1. Design tokens as CSS variables on `:root` (light) and `[data-theme="dark"]` + `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { … } }`: background, surface, border, text, muted text, accent, positive, negative, and an 8-colour categorical chart palette (colour-blind friendly, readable in both themes).
 2. System font stack; tabular numbers (`font-variant-numeric: tabular-nums`) for KPIs and tables.
 3. Layout classes: `.r-page` (max-width 1400px, 16px side padding on mobile), `.r-header` (title, subtitle, "Data as of"), `.r-kpis` (auto-fit grid, min 180px), `.r-kpi` (label, value, delta with ▲/▼ colour), `.r-grid` (1 column mobile, 2 columns ≥ 900px; `.r-span-2` for full width), `.r-card` (surface, border, radius, padding, `h2` title + optional `.r-note`), `.r-chart` (height 320px default; `.r-chart--tall` 420px), `.r-table` styles (sticky header, zebra rows, right-aligned numeric columns, horizontal scroll wrapper on mobile), `.r-footer` (source notes).
@@ -45,6 +53,7 @@ Export `ReportJsonSchema`, `type ReportJson`, and `parseReportJson(text)` with f
 ---
 
 ## 5.3 Helper API — `templates/report-base/base.js`
+
 **Do:** plain browser JavaScript (no modules, no build), exposing `window.Report`. Must work inside the sandboxed iframe (no `localStorage`, no `fetch` of local files). JSDoc every function — this file doubles as the reference Claude reads (step 8.3).
 
 ```js
@@ -70,7 +79,9 @@ Report.table(el, {
 })
 Report.onThemeChange(cb)          // re-render charts on theme change
 ```
+
 Rules:
+
 - `el` accepts an element or an id string.
 - Charts: read colours from the CSS variables; set `backgroundColor: 'transparent'`, sensible grid/tooltip/legend defaults; observe container size with `ResizeObserver`.
 - Theme source: `<html data-theme>` (set by the app) else `prefers-color-scheme`.
@@ -82,43 +93,54 @@ Rules:
 ---
 
 ## 5.4 Starter files — `templates/report-base/starter/`
+
 **Do:**
+
 1. `report.html`:
    ```html
    <!doctype html>
    <html lang="en">
-   <head>
-     <meta charset="utf-8" />
-     <meta name="viewport" content="width=device-width, initial-scale=1" />
-     <title>Report</title>
-     <!-- @include base.css -->
-     <script src="https://cdn.jsdelivr.net/npm/echarts@<PINNED_VERSION>/dist/echarts.min.js"></script>
-   </head>
-   <body>
-     <main class="r-page">
-       <header class="r-header"></header>
-       <section class="r-kpis" id="kpis"></section>
-       <section class="r-grid">
-         <div class="r-card"><h2>Trend</h2><div class="r-chart" id="chart-trend"></div></div>
-         <div class="r-card"><h2>Breakdown</h2><div class="r-chart" id="chart-breakdown"></div></div>
-         <div class="r-card r-span-2"><h2>Details</h2><div id="table-details"></div></div>
-       </section>
-       <footer class="r-footer"></footer>
-     </main>
-     <!-- @data -->
-     <!-- @include base.js -->
-     <script>
-       // Report-specific code: only uses Report.* helpers and Report.data
-       Report.header();
-       // Report.kpis('kpis', [...]); Report.chart('chart-trend', {...}); Report.table('table-details', {...});
-     </script>
-   </body>
+     <head>
+       <meta charset="utf-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <title>Report</title>
+       <!-- @include base.css -->
+       <script src="https://cdn.jsdelivr.net/npm/echarts@<PINNED_VERSION>/dist/echarts.min.js"></script>
+     </head>
+     <body>
+       <main class="r-page">
+         <header class="r-header"></header>
+         <section class="r-kpis" id="kpis"></section>
+         <section class="r-grid">
+           <div class="r-card">
+             <h2>Trend</h2>
+             <div class="r-chart" id="chart-trend"></div>
+           </div>
+           <div class="r-card">
+             <h2>Breakdown</h2>
+             <div class="r-chart" id="chart-breakdown"></div>
+           </div>
+           <div class="r-card r-span-2">
+             <h2>Details</h2>
+             <div id="table-details"></div>
+           </div>
+         </section>
+         <footer class="r-footer"></footer>
+       </main>
+       <!-- @data -->
+       <!-- @include base.js -->
+       <script>
+         // Report-specific code: only uses Report.* helpers and Report.data
+         Report.header();
+         // Report.kpis('kpis', [...]); Report.chart('chart-trend', {...}); Report.table('table-details', {...});
+       </script>
+     </body>
    </html>
    ```
    Pin ECharts to the **current latest exact version** (look it up; record it in the Decision log).
 2. `data.json`: `{ "meta": { "title": "…", "subtitle": "", "asOf": "2026-01-01", "currency": "USD", "locale": "en-US", "source": "" } }` plus example series.
 3. `report.json`: template from 5.1 with empty access.
-4. `build-data.mjs`: Node script that reads `data/*.csv` (via `csv-parse/sync`) or `data/*.xlsx` (via `exceljs`), aggregates, and writes `data.json`. Starter shows a small example with comments: *"Aggregate here. Never paste raw rows into data.json — keep it small."* Install `csv-parse exceljs` in `@ba/tools` (hoisted, so report folders can import them).
+4. `build-data.mjs`: Node script that reads `data/*.csv` (via `csv-parse/sync`) or `data/*.xlsx` (via `exceljs`), aggregates, and writes `data.json`. Starter shows a small example with comments: _"Aggregate here. Never paste raw rows into data.json — keep it small."_ Install `csv-parse exceljs` in `@ba/tools` (hoisted, so report folders can import them).
 5. `data/.gitkeep`.
 
 **Acceptance:** files exist; `node templates/report-base/starter/build-data.mjs` runs with no data files (prints "no data files found, keeping data.json").
@@ -126,7 +148,9 @@ Rules:
 ---
 
 ## 5.5 Build, validate, and CLI commands `new` / `build` / `preview`
+
 **Do:**
+
 1. Install in tools: `commander open`. Turn `tools/src/cli.ts` into a commander program `report` with a global header line `[target: …]` (from `targetLabel()`), printed only by commands that touch Firestore.
 2. `tools/src/core/build.ts` → `buildReport(slug)`:
    1. Read + validate `report.json` (5.1) and `data.json` (valid JSON, has `meta`).
@@ -146,7 +170,9 @@ Rules:
 ---
 
 ## 5.6 Example report — `reports/_example/`
+
 **Do:**
+
 1. `npm run report -- new _example --title "Example Sales Dashboard"` (allow `_example` in slug validation — already in 1.3).
 2. `reports/_example/scripts/make-fake-data.mjs`: generates `data/sales.csv` deterministically (seeded PRNG): ~600 rows, columns `date, region, product, category, units, revenue`, 12 months, 4 regions, 15 products, currency LKR, locale `en-LK`. Commit the script **and** the CSV (fake data only).
 3. `build-data.mjs`: aggregate to: KPI totals (revenue, units, orders, avg order value) with deltas vs previous period; monthly revenue series; revenue by region; revenue by category; top 10 products table.
@@ -158,6 +184,7 @@ Rules:
 ---
 
 ## 5.7 Seed uses the example report
+
 **Do:** update `seed.ts` so `demo-sales` uses the **built** `_example` HTML (build it inside the seed via `buildReport('_example')`). Then re-run the CSP check from step 3.9 with this real ECharts report on the Hosting emulator and record the result.
 
-**Acceptance:** after `npm run seed`, Alice opens *Sales Overview* in the app and sees the full example dashboard; `npm run preview:hosting` shows it with no CSP errors.
+**Acceptance:** after `npm run seed`, Alice opens _Sales Overview_ in the app and sees the full example dashboard; `npm run preview:hosting` shows it with no CSP errors.
