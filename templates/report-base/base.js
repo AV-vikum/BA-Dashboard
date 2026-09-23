@@ -295,7 +295,7 @@
       backgroundColor: 'transparent',
       animationDuration: 400,
       textStyle: { fontFamily: cssVar('--r-font') || 'system-ui', color: cssVar('--r-text-2') },
-      grid: { left: 8, right: 16, top: named >= 2 ? 40 : 16, bottom: 8, containLabel: true },
+      grid: { left: 8, right: 28, top: named >= 2 ? 40 : 16, bottom: 8, containLabel: true },
       legend: {
         show: named >= 2 || (pieLike && series[0] && asArray(series[0].data).length > 1),
         top: 0,
@@ -375,13 +375,13 @@
   }
 
   // Derives a table (for the accessible "Table" view) from simple category/value charts.
-  function tableFromOption(option, kind) {
+  function tableFromOption(option, kind, categoryLabel) {
     var series = asArray(option.series);
     if (!series.length) return null;
     if (series[0].type === 'pie') {
       return {
         columns: [
-          { key: 'name', label: series[0].name || 'Name' },
+          { key: 'name', label: categoryLabel || series[0].name || 'Name' },
           { key: 'value', label: 'Value', format: kind || 'number' },
         ],
         rows: asArray(series[0].data).map(function (d) {
@@ -393,7 +393,9 @@
       asArray(option.xAxis).filter(isCategoryAxis)[0] ||
       asArray(option.yAxis).filter(isCategoryAxis)[0];
     if (!catAxis || !Array.isArray(catAxis.data)) return null;
-    var columns = [{ key: 'category', label: catAxis.name || 'Category', format: dateLabel }];
+    var columns = [
+      { key: 'category', label: categoryLabel || catAxis.name || 'Category', format: dateLabel },
+    ];
     series.forEach(function (s, i) {
       columns.push({ key: 's' + i, label: s.name || 'Value', format: kind || 'number' });
     });
@@ -405,6 +407,8 @@
       });
       return r;
     });
+    // Horizontal bars list categories bottom-to-top; the table should read top-to-bottom like the chart.
+    if (!asArray(option.xAxis).some(isCategoryAxis)) rows.reverse();
     return { columns: columns, rows: rows };
   }
 
@@ -451,6 +455,7 @@
   /**
    * Renders an ECharts option with the report theme applied underneath it.
    * opts: { format: 'number'|'currency'|'percent' (axis + tooltip values),
+   *         categoryLabel: header for the category column of the table view,
    *         table: false | { columns, rows } (override the auto-derived table view) }
    * Returns the ECharts instance (or null if ECharts failed to load).
    */
@@ -486,7 +491,10 @@
       );
 
     if (opts.table !== false)
-      addTableToggle(node, opts.table || tableFromOption(userOption, opts.format));
+      addTableToggle(
+        node,
+        opts.table || tableFromOption(userOption, opts.format, opts.categoryLabel),
+      );
     return instance;
   }
 

@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "title": "Example Sales Dashboard",
+    "subtitle": "Fake data for demonstration · Jul 2026 – Sep 2026",
+    "asOf": "2026-09-30",
+    "currency": "LKR",
+    "locale": "en-LK",
+    "source": "reports/_example/data/sales.csv (generated fake orders)",
+    "period": "Jul 2026 – Sep 2026"
+  },
+  "kpis": [
+    {
+      "label": "Revenue",
+      "value": 5535665,
+      "format": "currency",
+      "delta": 0.060196002574042014,
+      "deltaLabel": "vs Apr 2026 – Jun 2026"
+    },
+    {
+      "label": "Orders",
+      "value": 178,
+      "format": "number",
+      "delta": 0.18666666666666668,
+      "deltaLabel": "vs Apr 2026 – Jun 2026"
+    },
+    {
+      "label": "Units sold",
+      "value": 403,
+      "format": "number",
+      "delta": 0.16473988439306358,
+      "deltaLabel": "vs Apr 2026 – Jun 2026"
+    },
+    {
+      "label": "Average order value",
+      "value": 31099,
+      "format": "currency",
+      "delta": -0.10657640232524544,
+      "deltaLabel": "vs Apr 2026 – Jun 2026"
+    }
+  ],
+  "series": {
+    "monthlyRevenue": {
+      "labels": [
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "values": [
+        1491610,
+        1969255,
+        1282370,
+        558145,
+        822160,
+        1179750,
+        2087090,
+        1011860,
+        2122410,
+        1853560,
+        1560635,
+        2121470
+      ]
+    },
+    "revenueByRegion": {
+      "labels": [
+        "Western",
+        "Southern",
+        "Northern",
+        "Central"
+      ],
+      "values": [
+        1914235,
+        1903360,
+        1022420,
+        695650
+      ]
+    },
+    "revenueByCategory": {
+      "labels": [
+        "Electronics",
+        "Home & Kitchen",
+        "Grocery",
+        "Apparel"
+      ],
+      "values": [
+        4090150,
+        743800,
+        411105,
+        290610
+      ]
+    }
+  },
+  "tables": {
+    "topProducts": [
+      {
+        "product": "Laptop Pro 14",
+        "category": "Electronics",
+        "units": 8,
+        "revenue": 1886500,
+        "share": 0.3407901309056816
+      },
+      {
+        "product": "Smartphone X2",
+        "category": "Electronics",
+        "units": 15,
+        "revenue": 1299400,
+        "share": 0.23473241245631735
+      },
+      {
+        "product": "Smart Watch",
+        "category": "Electronics",
+        "units": 15,
+        "revenue": 554800,
+        "share": 0.10022282779033774
+      },
+      {
+        "product": "Wireless Earbuds",
+        "category": "Electronics",
+        "units": 25,
+        "revenue": 349450,
+        "share": 0.06312701364696022
+      },
+      {
+        "product": "Rice Cooker",
+        "category": "Home & Kitchen",
+        "units": 22,
+        "revenue": 262500,
+        "share": 0.04741977702769225
+      },
+      {
+        "product": "Basmati Rice 5kg",
+        "category": "Grocery",
+        "units": 64,
+        "revenue": 200000,
+        "share": 0.03612935392586076
+      },
+      {
+        "product": "Water Filter",
+        "category": "Home & Kitchen",
+        "units": 9,
+        "revenue": 193600,
+        "share": 0.03497321460023321
+      },
+      {
+        "product": "Ceiling Fan",
+        "category": "Home & Kitchen",
+        "units": 10,
+        "revenue": 161280,
+        "share": 0.029134711005814117
+      },
+      {
+        "product": "Ceylon Tea 400g",
+        "category": "Grocery",
+        "units": 95,
+        "revenue": 135865,
+        "share": 0.02454357335568536
+      },
+      {
+        "product": "Blender 600W",
+        "category": "Home & Kitchen",
+        "units": 13,
+        "revenue": 126420,
+        "share": 0.022837364616536585
+      }
+    ]
+  }
+}

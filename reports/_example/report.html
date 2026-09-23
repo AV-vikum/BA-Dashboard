@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Report</title>
+    <!-- @include base.css -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <main class="r-page">
+      <header class="r-header"></header>
+
+      <section class="r-kpis" id="kpis"></section>
+
+      <section class="r-grid">
+        <div class="r-card r-span-2">
+          <h2 id="trend-title">Monthly revenue</h2>
+          <p class="r-note">Last 12 months, LKR</p>
+          <div class="r-chart" id="chart-trend"></div>
+        </div>
+        <div class="r-card">
+          <h2>Revenue by region</h2>
+          <p class="r-note" data-period></p>
+          <div class="r-chart" id="chart-region"></div>
+        </div>
+        <div class="r-card">
+          <h2>Revenue by category</h2>
+          <p class="r-note" data-period></p>
+          <div class="r-chart" id="chart-category"></div>
+        </div>
+        <div class="r-card r-span-2">
+          <h2>Top 10 products</h2>
+          <p class="r-note" data-period></p>
+          <div id="table-products"></div>
+        </div>
+      </section>
+
+      <footer class="r-footer"></footer>
+    </main>
+
+    <!-- @data -->
+    <!-- @include base.js -->
+    <script>
+      var d = Report.data;
+      Report.header();
+      document.querySelectorAll('[data-period]').forEach(function (el) {
+        el.textContent = Report.meta.period + ', LKR';
+      });
+
+      Report.kpis('kpis', d.kpis);
+
+      // Headline as a statement: change from the first to the latest month.
+      var trend = d.series.monthlyRevenue;
+      var last = trend.values[trend.values.length - 1];
+      var first = trend.values[0];
+      document.getElementById('trend-title').textContent =
+        'Monthly revenue ' +
+        (last >= first ? 'up ' : 'down ') +
+        Report.fmt.percent(Math.abs(last - first) / first, { decimals: 0 }) +
+        ' over 12 months';
+
+      Report.chart(
+        'chart-trend',
+        {
+          xAxis: { type: 'category', data: trend.labels, boundaryGap: false },
+          yAxis: { type: 'value' },
+          series: [{ type: 'line', name: 'Revenue', data: trend.values, areaStyle: {} }],
+        },
+        { format: 'currency', categoryLabel: 'Month' },
+      );
+
+      // Categories compared → horizontal bars, sorted, one colour.
+      function barOption(series) {
+        return {
+          grid: { left: 8, right: 24 },
+          xAxis: { type: 'value' },
+          yAxis: { type: 'category', data: series.labels.slice().reverse() },
+          series: [{ type: 'bar', name: 'Revenue', data: series.values.slice().reverse() }],
+        };
+      }
+      Report.chart('chart-region', barOption(d.series.revenueByRegion), {
+        format: 'currency',
+        categoryLabel: 'Region',
+      });
+      Report.chart('chart-category', barOption(d.series.revenueByCategory), {
+        format: 'currency',
+        categoryLabel: 'Category',
+      });
+
+      Report.table('table-products', {
+        caption: 'Top 10 products by revenue',
+        columns: [
+          { key: 'product', label: 'Product' },
+          { key: 'category', label: 'Category' },
+          { key: 'units', label: 'Units', format: 'number' },
+          { key: 'revenue', label: 'Revenue', format: 'currency' },
+          { key: 'share', label: 'Share of revenue', format: 'percent' },
+        ],
+        rows: d.tables.topProducts,
+        sort: { key: 'revenue', dir: 'desc' },
+        search: true,
+        totals: ['units', 'revenue', 'share'],
+      });
+    </script>
+  </body>
+</html>

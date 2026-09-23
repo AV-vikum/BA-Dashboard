@@ -131,7 +131,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 5.3 | Helper API (`base.js`)                                | ✅     |
 | 5.4 | Starter files                                         | ✅     |
 | 5.5 | Build/validate + `new` / `build` / `preview` commands | ✅     |
-| 5.6 | Example report (fake data)                            | ⬜     |
+| 5.6 | Example report (fake data)                            | ✅     |
 | 5.7 | Seed uses the example report                          | ⬜     |
 
 ### Phase 6 — Publish CLI · [details](plan/phase-6-publish-cli.md)

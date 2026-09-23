@@ -1,0 +1,12 @@
+{
+  "reportId": null,
+  "title": "Example Sales Dashboard",
+  "description": "Revenue, orders and top products for the latest quarter — built from generated fake data.",
+  "tags": ["example", "sales"],
+  "status": "published",
+  "access": {
+    "emails": [],
+    "groups": ["Finance"],
+    "external": []
+  }
+}

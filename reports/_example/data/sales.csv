@@ -1,0 +1,587 @@
+date,order_id,region,product,category,units,revenue
+2025-10-01,ORD-00019,Western,Kids’ Backpack,Apparel,2,7800
+2025-10-03,ORD-00014,Western,Basmati Rice 5kg,Grocery,1,2880
+2025-10-04,ORD-00006,Central,Ceylon Tea 400g,Grocery,5,7250
+2025-10-05,ORD-00034,Central,Blender 600W,Home & Kitchen,1,9800
+2025-10-05,ORD-00035,Western,Ceiling Fan,Home & Kitchen,2,33600
+2025-10-06,ORD-00022,Western,Basmati Rice 5kg,Grocery,5,16000
+2025-10-06,ORD-00029,Central,Smartphone X2,Electronics,2,178000
+2025-10-09,ORD-00003,Southern,Ceylon Tea 400g,Grocery,6,8700
+2025-10-09,ORD-00010,Southern,Basmati Rice 5kg,Grocery,5,16000
+2025-10-10,ORD-00027,Western,Men’s Batik Shirt,Apparel,2,8100
+2025-10-10,ORD-00037,Western,Smartphone X2,Electronics,1,89000
+2025-10-11,ORD-00033,Western,Smart Watch,Electronics,1,38000
+2025-10-13,ORD-00002,Central,School Shoes,Apparel,2,10400
+2025-10-13,ORD-00020,Central,Men’s Batik Shirt,Apparel,2,9000
+2025-10-13,ORD-00026,Western,Wireless Earbuds,Electronics,2,29000
+2025-10-14,ORD-00005,Western,Basmati Rice 5kg,Grocery,5,16000
+2025-10-14,ORD-00016,Western,Blender 600W,Home & Kitchen,2,19600
+2025-10-15,ORD-00023,Central,Smart Watch,Electronics,2,76000
+2025-10-17,ORD-00025,Northern,Basmati Rice 5kg,Grocery,5,16000
+2025-10-18,ORD-00028,Northern,Wireless Earbuds,Electronics,1,14500
+2025-10-19,ORD-00018,Western,Ceylon Tea 400g,Grocery,1,1450
+2025-10-20,ORD-00008,Central,Laptop Pro 14,Electronics,2,490000
+2025-10-20,ORD-00021,Central,School Shoes,Apparel,1,5200
+2025-10-21,ORD-00017,Western,Wireless Earbuds,Electronics,1,14500
+2025-10-25,ORD-00001,Northern,Rice Cooker,Home & Kitchen,1,12500
+2025-10-25,ORD-00012,Western,School Shoes,Apparel,2,10400
+2025-10-25,ORD-00036,Central,Smart Watch,Electronics,2,76000
+2025-10-26,ORD-00004,Southern,Men’s Batik Shirt,Apparel,2,9000
+2025-10-26,ORD-00007,Western,Ceiling Fan,Home & Kitchen,2,30240
+2025-10-26,ORD-00015,Western,Smartphone X2,Electronics,2,178000
+2025-10-26,ORD-00031,Southern,Coconut Oil 1L,Grocery,4,4400
+2025-10-27,ORD-00009,Western,Cotton Saree,Apparel,2,15600
+2025-10-27,ORD-00024,Central,Blender 600W,Home & Kitchen,1,9800
+2025-10-28,ORD-00013,Northern,Kids’ Backpack,Apparel,2,7800
+2025-10-28,ORD-00030,Western,Basmati Rice 5kg,Grocery,3,9600
+2025-10-28,ORD-00038,Southern,School Shoes,Apparel,1,4680
+2025-10-30,ORD-00011,Western,Coconut Oil 1L,Grocery,3,3300
+2025-10-31,ORD-00032,Southern,Kids’ Backpack,Apparel,1,3510
+2025-11-01,ORD-00071,Western,Basmati Rice 5kg,Grocery,5,16000
+2025-11-02,ORD-00057,Western,Kids’ Backpack,Apparel,2,7800
+2025-11-03,ORD-00076,Northern,Wireless Earbuds,Electronics,2,29000
+2025-11-05,ORD-00050,Northern,Water Filter,Home & Kitchen,1,22000
+2025-11-06,ORD-00059,Western,Rice Cooker,Home & Kitchen,1,11250
+2025-11-07,ORD-00041,Southern,Basmati Rice 5kg,Grocery,2,6400
+2025-11-07,ORD-00049,Western,Ceylon Tea 400g,Grocery,2,2900
+2025-11-07,ORD-00061,Central,Basmati Rice 5kg,Grocery,1,3200
+2025-11-07,ORD-00073,Western,Water Filter,Home & Kitchen,2,44000
+2025-11-08,ORD-00053,Western,Wireless Earbuds,Electronics,2,26100
+2025-11-08,ORD-00080,Northern,Coconut Oil 1L,Grocery,5,5500
+2025-11-11,ORD-00052,Southern,Smartphone X2,Electronics,2,160200
+2025-11-13,ORD-00048,Southern,Ceylon Tea 400g,Grocery,3,3915
+2025-11-13,ORD-00063,Western,Cotton Saree,Apparel,1,7020
+2025-11-14,ORD-00040,Western,Smart Watch,Electronics,2,68400
+2025-11-16,ORD-00074,Central,Laptop Pro 14,Electronics,1,245000
+2025-11-17,ORD-00044,Central,Wireless Earbuds,Electronics,1,13050
+2025-11-17,ORD-00067,Western,Kids’ Backpack,Apparel,1,3900
+2025-11-18,ORD-00043,Southern,Wireless Earbuds,Electronics,1,14500
+2025-11-18,ORD-00055,Central,Rice Cooker,Home & Kitchen,1,12500
+2025-11-18,ORD-00075,Western,Laptop Pro 14,Electronics,2,441000
+2025-11-18,ORD-00078,Southern,Wireless Earbuds,Electronics,1,14500
+2025-11-19,ORD-00046,Western,Wireless Earbuds,Electronics,1,13050
+2025-11-19,ORD-00054,Central,Men’s Batik Shirt,Apparel,1,4500
+2025-11-20,ORD-00060,Central,Blender 600W,Home & Kitchen,1,9800
+2025-11-20,ORD-00066,Northern,Kids’ Backpack,Apparel,1,3900
+2025-11-20,ORD-00079,Central,Water Filter,Home & Kitchen,2,44000
+2025-11-21,ORD-00064,Western,Basmati Rice 5kg,Grocery,4,12800
+2025-11-21,ORD-00070,Northern,Cotton Saree,Apparel,1,7800
+2025-11-22,ORD-00047,Southern,Rice Cooker,Home & Kitchen,2,25000
+2025-11-22,ORD-00062,Western,Basmati Rice 5kg,Grocery,4,11520
+2025-11-23,ORD-00039,Western,Laptop Pro 14,Electronics,2,490000
+2025-11-23,ORD-00042,Western,Kids’ Backpack,Apparel,2,7800
+2025-11-23,ORD-00045,Western,Basmati Rice 5kg,Grocery,5,16000
+2025-11-23,ORD-00056,Western,Wireless Earbuds,Electronics,1,14500
+2025-11-24,ORD-00072,Central,Cotton Saree,Apparel,1,7800
+2025-11-25,ORD-00051,Western,Ceiling Fan,Home & Kitchen,1,16800
+2025-11-27,ORD-00058,Western,Men’s Batik Shirt,Apparel,1,4050
+2025-11-28,ORD-00077,Western,Basmati Rice 5kg,Grocery,4,12800
+2025-11-29,ORD-00068,Western,Smartphone X2,Electronics,1,89000
+2025-11-30,ORD-00065,Central,Coconut Oil 1L,Grocery,4,4400
+2025-11-30,ORD-00069,Southern,Cotton Saree,Apparel,2,15600
+2025-12-01,ORD-00088,Western,Coconut Oil 1L,Grocery,5,5500
+2025-12-01,ORD-00103,Western,Ceylon Tea 400g,Grocery,3,4350
+2025-12-01,ORD-00122,Northern,Rice Cooker,Home & Kitchen,1,12500
+2025-12-02,ORD-00133,Northern,Ceylon Tea 400g,Grocery,6,7830
+2025-12-04,ORD-00086,Southern,Basmati Rice 5kg,Grocery,3,9600
+2025-12-04,ORD-00094,Southern,Rice Cooker,Home & Kitchen,1,12500
+2025-12-05,ORD-00106,Western,Men’s Batik Shirt,Apparel,2,9000
+2025-12-06,ORD-00115,Western,Cotton Saree,Apparel,2,15600
+2025-12-06,ORD-00123,Southern,Coconut Oil 1L,Grocery,2,2200
+2025-12-07,ORD-00104,Central,Basmati Rice 5kg,Grocery,1,3200
+2025-12-07,ORD-00107,Western,Wireless Earbuds,Electronics,1,14500
+2025-12-07,ORD-00134,Western,Smartphone X2,Electronics,1,89000
+2025-12-07,ORD-00136,Southern,Cotton Saree,Apparel,2,15600
+2025-12-08,ORD-00099,Western,Ceylon Tea 400g,Grocery,4,5800
+2025-12-08,ORD-00121,Northern,Rice Cooker,Home & Kitchen,1,12500
+2025-12-08,ORD-00124,Central,School Shoes,Apparel,2,10400
+2025-12-09,ORD-00091,Central,Blender 600W,Home & Kitchen,2,19600
+2025-12-09,ORD-00114,Central,Coconut Oil 1L,Grocery,3,3300
+2025-12-09,ORD-00118,Central,Basmati Rice 5kg,Grocery,5,16000
+2025-12-09,ORD-00132,Western,Smart Watch,Electronics,2,76000
+2025-12-10,ORD-00084,Central,Kids’ Backpack,Apparel,1,3510
+2025-12-10,ORD-00135,Western,Ceiling Fan,Home & Kitchen,1,15120
+2025-12-11,ORD-00100,Northern,Coconut Oil 1L,Grocery,6,6600
+2025-12-12,ORD-00089,Western,Coconut Oil 1L,Grocery,1,1100
+2025-12-14,ORD-00085,Northern,Basmati Rice 5kg,Grocery,5,16000
+2025-12-14,ORD-00102,Southern,Water Filter,Home & Kitchen,2,44000
+2025-12-15,ORD-00119,Western,Smartphone X2,Electronics,2,178000
+2025-12-17,ORD-00090,Western,Smart Watch,Electronics,1,38000
+2025-12-17,ORD-00129,Western,Coconut Oil 1L,Grocery,5,4950
+2025-12-18,ORD-00087,Southern,Rice Cooker,Home & Kitchen,1,12500
+2025-12-18,ORD-00098,Western,Ceylon Tea 400g,Grocery,3,4350
+2025-12-18,ORD-00126,Western,Coconut Oil 1L,Grocery,6,6600
+2025-12-19,ORD-00093,Central,Coconut Oil 1L,Grocery,4,4400
+2025-12-19,ORD-00112,Central,Coconut Oil 1L,Grocery,6,6600
+2025-12-20,ORD-00110,Western,Coconut Oil 1L,Grocery,3,3300
+2025-12-21,ORD-00109,Western,Smart Watch,Electronics,1,38000
+2025-12-22,ORD-00108,Western,Ceylon Tea 400g,Grocery,1,1450
+2025-12-22,ORD-00113,Southern,Coconut Oil 1L,Grocery,1,1100
+2025-12-24,ORD-00131,Western,Ceylon Tea 400g,Grocery,2,2900
+2025-12-25,ORD-00081,Northern,Cotton Saree,Apparel,1,7800
+2025-12-25,ORD-00096,Western,School Shoes,Apparel,2,10400
+2025-12-25,ORD-00125,Central,Smart Watch,Electronics,2,76000
+2025-12-26,ORD-00092,Southern,Smartphone X2,Electronics,2,178000
+2025-12-26,ORD-00097,Western,Cotton Saree,Apparel,2,14040
+2025-12-26,ORD-00101,Western,Coconut Oil 1L,Grocery,6,5940
+2025-12-26,ORD-00127,Southern,Kids’ Backpack,Apparel,2,7020
+2025-12-27,ORD-00083,Southern,Kids’ Backpack,Apparel,1,3510
+2025-12-28,ORD-00105,Northern,Ceiling Fan,Home & Kitchen,1,16800
+2025-12-28,ORD-00117,Western,Smartphone X2,Electronics,1,89000
+2025-12-29,ORD-00128,Western,School Shoes,Apparel,2,10400
+2025-12-29,ORD-00130,Western,Kids’ Backpack,Apparel,1,3900
+2025-12-30,ORD-00095,Western,Smart Watch,Electronics,2,76000
+2025-12-30,ORD-00116,Central,Ceiling Fan,Home & Kitchen,2,33600
+2025-12-30,ORD-00120,Southern,Basmati Rice 5kg,Grocery,2,6400
+2025-12-31,ORD-00082,Central,Coconut Oil 1L,Grocery,1,1100
+2025-12-31,ORD-00111,Northern,Men’s Batik Shirt,Apparel,2,9000
+2026-01-04,ORD-00138,Western,Kids’ Backpack,Apparel,1,3900
+2026-01-04,ORD-00141,Western,Coconut Oil 1L,Grocery,4,4400
+2026-01-04,ORD-00146,Northern,Ceylon Tea 400g,Grocery,1,1305
+2026-01-04,ORD-00170,Central,Cotton Saree,Apparel,1,7800
+2026-01-05,ORD-00161,Southern,Ceylon Tea 400g,Grocery,5,7250
+2026-01-06,ORD-00166,Southern,School Shoes,Apparel,2,10400
+2026-01-07,ORD-00148,Western,Rice Cooker,Home & Kitchen,1,12500
+2026-01-07,ORD-00165,Western,Coconut Oil 1L,Grocery,1,1100
+2026-01-08,ORD-00168,Northern,Basmati Rice 5kg,Grocery,5,16000
+2026-01-08,ORD-00169,Northern,Smartphone X2,Electronics,2,178000
+2026-01-08,ORD-00172,Southern,Men’s Batik Shirt,Apparel,1,4050
+2026-01-09,ORD-00159,Western,Water Filter,Home & Kitchen,1,19800
+2026-01-10,ORD-00137,Central,Blender 600W,Home & Kitchen,2,19600
+2026-01-10,ORD-00153,Southern,Basmati Rice 5kg,Grocery,3,9600
+2026-01-10,ORD-00163,Central,Water Filter,Home & Kitchen,1,22000
+2026-01-11,ORD-00156,Western,Kids’ Backpack,Apparel,2,7800
+2026-01-12,ORD-00162,Central,School Shoes,Apparel,1,4680
+2026-01-14,ORD-00144,Western,Basmati Rice 5kg,Grocery,2,6400
+2026-01-14,ORD-00151,Northern,Basmati Rice 5kg,Grocery,1,3200
+2026-01-14,ORD-00152,Western,Basmati Rice 5kg,Grocery,5,16000
+2026-01-18,ORD-00143,Western,Coconut Oil 1L,Grocery,2,2200
+2026-01-18,ORD-00160,Northern,Wireless Earbuds,Electronics,1,14500
+2026-01-18,ORD-00164,Northern,Blender 600W,Home & Kitchen,2,19600
+2026-01-18,ORD-00171,Western,Ceiling Fan,Home & Kitchen,1,16800
+2026-01-19,ORD-00158,Western,Basmati Rice 5kg,Grocery,2,5760
+2026-01-20,ORD-00140,Central,Rice Cooker,Home & Kitchen,2,25000
+2026-01-21,ORD-00145,Western,Ceylon Tea 400g,Grocery,4,5800
+2026-01-21,ORD-00154,Southern,School Shoes,Apparel,2,10400
+2026-01-22,ORD-00142,Northern,Ceylon Tea 400g,Grocery,2,2900
+2026-01-26,ORD-00150,Western,Basmati Rice 5kg,Grocery,2,6400
+2026-01-27,ORD-00147,Western,Basmati Rice 5kg,Grocery,3,9600
+2026-01-28,ORD-00139,Western,Cotton Saree,Apparel,1,7800
+2026-01-28,ORD-00155,Western,Ceiling Fan,Home & Kitchen,1,16800
+2026-01-29,ORD-00149,Western,Ceiling Fan,Home & Kitchen,2,33600
+2026-01-30,ORD-00157,Northern,Basmati Rice 5kg,Grocery,1,3200
+2026-01-30,ORD-00167,Southern,Water Filter,Home & Kitchen,1,22000
+2026-02-01,ORD-00209,Northern,Basmati Rice 5kg,Grocery,4,12800
+2026-02-02,ORD-00173,Southern,Rice Cooker,Home & Kitchen,2,25000
+2026-02-02,ORD-00176,Southern,Smartphone X2,Electronics,2,160200
+2026-02-02,ORD-00183,Central,Basmati Rice 5kg,Grocery,6,19200
+2026-02-02,ORD-00192,Central,Basmati Rice 5kg,Grocery,3,9600
+2026-02-02,ORD-00205,Central,Water Filter,Home & Kitchen,1,19800
+2026-02-03,ORD-00181,Western,Kids’ Backpack,Apparel,2,7020
+2026-02-03,ORD-00196,Northern,Coconut Oil 1L,Grocery,2,2200
+2026-02-04,ORD-00179,Central,Cotton Saree,Apparel,2,15600
+2026-02-04,ORD-00195,Western,Ceiling Fan,Home & Kitchen,1,16800
+2026-02-05,ORD-00207,Western,Blender 600W,Home & Kitchen,2,19600
+2026-02-06,ORD-00174,Western,Ceylon Tea 400g,Grocery,3,4350
+2026-02-06,ORD-00201,Central,Smartphone X2,Electronics,1,80100
+2026-02-07,ORD-00182,Central,Coconut Oil 1L,Grocery,5,5500
+2026-02-07,ORD-00208,Western,Ceiling Fan,Home & Kitchen,1,15120
+2026-02-08,ORD-00204,Central,Kids’ Backpack,Apparel,2,7020
+2026-02-08,ORD-00210,Central,Rice Cooker,Home & Kitchen,2,25000
+2026-02-11,ORD-00211,Western,Coconut Oil 1L,Grocery,4,4400
+2026-02-12,ORD-00197,Central,Men’s Batik Shirt,Apparel,2,8100
+2026-02-12,ORD-00202,Central,Men’s Batik Shirt,Apparel,1,4500
+2026-02-14,ORD-00188,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-02-14,ORD-00203,Western,Ceylon Tea 400g,Grocery,1,1450
+2026-02-15,ORD-00206,Western,Coconut Oil 1L,Grocery,4,3960
+2026-02-18,ORD-00191,Southern,Men’s Batik Shirt,Apparel,2,8100
+2026-02-19,ORD-00200,Central,Smartphone X2,Electronics,1,89000
+2026-02-20,ORD-00186,Southern,Basmati Rice 5kg,Grocery,2,6400
+2026-02-20,ORD-00194,Western,Smart Watch,Electronics,2,76000
+2026-02-21,ORD-00175,Western,Water Filter,Home & Kitchen,1,19800
+2026-02-21,ORD-00193,Northern,Ceylon Tea 400g,Grocery,5,7250
+2026-02-22,ORD-00198,Western,Kids’ Backpack,Apparel,1,3900
+2026-02-24,ORD-00180,Central,Coconut Oil 1L,Grocery,1,1100
+2026-02-24,ORD-00190,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-02-25,ORD-00189,Southern,Coconut Oil 1L,Grocery,3,3300
+2026-02-25,ORD-00199,Western,Basmati Rice 5kg,Grocery,2,6400
+2026-02-26,ORD-00177,Western,Ceiling Fan,Home & Kitchen,1,15120
+2026-02-27,ORD-00184,Central,Cotton Saree,Apparel,1,7800
+2026-02-28,ORD-00178,Western,Rice Cooker,Home & Kitchen,1,11250
+2026-02-28,ORD-00185,Western,Coconut Oil 1L,Grocery,1,1100
+2026-02-28,ORD-00187,Western,Smart Watch,Electronics,2,76000
+2026-02-28,ORD-00212,Western,Blender 600W,Home & Kitchen,1,8820
+2026-03-01,ORD-00224,Central,Coconut Oil 1L,Grocery,1,1100
+2026-03-01,ORD-00231,Southern,Wireless Earbuds,Electronics,1,14500
+2026-03-03,ORD-00226,Southern,Smartphone X2,Electronics,2,178000
+2026-03-03,ORD-00229,Central,Basmati Rice 5kg,Grocery,1,2880
+2026-03-05,ORD-00251,Southern,Smartphone X2,Electronics,1,89000
+2026-03-06,ORD-00249,Central,Cotton Saree,Apparel,2,15600
+2026-03-06,ORD-00256,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-03-08,ORD-00228,Central,Kids’ Backpack,Apparel,2,7800
+2026-03-08,ORD-00232,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-03-08,ORD-00244,Central,Water Filter,Home & Kitchen,2,39600
+2026-03-08,ORD-00247,Western,Smart Watch,Electronics,2,76000
+2026-03-09,ORD-00227,Western,Coconut Oil 1L,Grocery,5,5500
+2026-03-10,ORD-00213,Northern,Wireless Earbuds,Electronics,2,29000
+2026-03-10,ORD-00230,Western,Water Filter,Home & Kitchen,1,22000
+2026-03-11,ORD-00216,Western,Wireless Earbuds,Electronics,2,29000
+2026-03-11,ORD-00218,Northern,Cotton Saree,Apparel,1,7800
+2026-03-12,ORD-00215,Central,Coconut Oil 1L,Grocery,1,990
+2026-03-12,ORD-00225,Central,Cotton Saree,Apparel,1,7800
+2026-03-12,ORD-00243,Western,Smart Watch,Electronics,2,76000
+2026-03-13,ORD-00217,Northern,Coconut Oil 1L,Grocery,2,1980
+2026-03-15,ORD-00219,Western,Basmati Rice 5kg,Grocery,6,19200
+2026-03-16,ORD-00253,Southern,Laptop Pro 14,Electronics,1,220500
+2026-03-17,ORD-00221,Western,Wireless Earbuds,Electronics,1,14500
+2026-03-17,ORD-00245,Northern,Smart Watch,Electronics,1,38000
+2026-03-17,ORD-00254,Central,Rice Cooker,Home & Kitchen,1,12500
+2026-03-17,ORD-00255,Central,Men’s Batik Shirt,Apparel,2,8100
+2026-03-18,ORD-00234,Central,Blender 600W,Home & Kitchen,2,19600
+2026-03-19,ORD-00233,Northern,Ceiling Fan,Home & Kitchen,2,33600
+2026-03-19,ORD-00235,Western,Ceylon Tea 400g,Grocery,3,4350
+2026-03-19,ORD-00238,Western,Coconut Oil 1L,Grocery,2,2200
+2026-03-19,ORD-00239,Western,Kids’ Backpack,Apparel,2,7800
+2026-03-19,ORD-00240,Southern,Ceylon Tea 400g,Grocery,4,5800
+2026-03-19,ORD-00248,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-03-20,ORD-00214,Central,Coconut Oil 1L,Grocery,1,990
+2026-03-21,ORD-00241,Southern,Kids’ Backpack,Apparel,2,7800
+2026-03-23,ORD-00242,Southern,Blender 600W,Home & Kitchen,1,9800
+2026-03-23,ORD-00246,Central,Basmati Rice 5kg,Grocery,3,9600
+2026-03-23,ORD-00257,Western,Men’s Batik Shirt,Apparel,1,4050
+2026-03-24,ORD-00220,Southern,Coconut Oil 1L,Grocery,4,3960
+2026-03-25,ORD-00237,Southern,Basmati Rice 5kg,Grocery,4,11520
+2026-03-26,ORD-00252,Central,Ceiling Fan,Home & Kitchen,2,33600
+2026-03-27,ORD-00223,Central,Basmati Rice 5kg,Grocery,6,17280
+2026-03-29,ORD-00222,Southern,Wireless Earbuds,Electronics,1,14500
+2026-03-30,ORD-00236,Central,School Shoes,Apparel,1,5200
+2026-03-30,ORD-00250,Western,Wireless Earbuds,Electronics,1,13050
+2026-03-31,ORD-00258,Western,Basmati Rice 5kg,Grocery,6,19200
+2026-04-01,ORD-00260,Central,Kids’ Backpack,Apparel,1,3900
+2026-04-01,ORD-00270,Northern,Basmati Rice 5kg,Grocery,6,19200
+2026-04-01,ORD-00302,Southern,Kids’ Backpack,Apparel,1,3510
+2026-04-02,ORD-00274,Western,Basmati Rice 5kg,Grocery,4,12800
+2026-04-02,ORD-00291,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-04-02,ORD-00304,Central,Ceylon Tea 400g,Grocery,2,2900
+2026-04-03,ORD-00266,Central,Basmati Rice 5kg,Grocery,3,9600
+2026-04-03,ORD-00288,Southern,Rice Cooker,Home & Kitchen,1,12500
+2026-04-03,ORD-00299,Western,Coconut Oil 1L,Grocery,4,4400
+2026-04-03,ORD-00301,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-04-04,ORD-00285,Western,Wireless Earbuds,Electronics,1,14500
+2026-04-04,ORD-00297,Central,Cotton Saree,Apparel,1,7800
+2026-04-05,ORD-00268,Central,Rice Cooker,Home & Kitchen,2,22500
+2026-04-05,ORD-00292,Western,Smartphone X2,Electronics,1,89000
+2026-04-07,ORD-00265,Western,School Shoes,Apparel,2,9360
+2026-04-07,ORD-00298,Northern,Laptop Pro 14,Electronics,1,245000
+2026-04-08,ORD-00271,Central,Laptop Pro 14,Electronics,1,245000
+2026-04-09,ORD-00264,Western,Basmati Rice 5kg,Grocery,5,14400
+2026-04-11,ORD-00287,Western,Wireless Earbuds,Electronics,2,29000
+2026-04-11,ORD-00294,Western,Laptop Pro 14,Electronics,2,490000
+2026-04-11,ORD-00296,Central,Ceylon Tea 400g,Grocery,4,5800
+2026-04-12,ORD-00272,Western,Basmati Rice 5kg,Grocery,3,9600
+2026-04-12,ORD-00310,Central,Ceiling Fan,Home & Kitchen,2,33600
+2026-04-13,ORD-00295,Western,Coconut Oil 1L,Grocery,5,5500
+2026-04-15,ORD-00278,Southern,Laptop Pro 14,Electronics,1,245000
+2026-04-15,ORD-00284,Western,School Shoes,Apparel,1,5200
+2026-04-17,ORD-00259,Central,Basmati Rice 5kg,Grocery,3,9600
+2026-04-17,ORD-00267,Western,School Shoes,Apparel,2,9360
+2026-04-17,ORD-00293,Western,School Shoes,Apparel,1,4680
+2026-04-18,ORD-00290,Central,Kids’ Backpack,Apparel,1,3900
+2026-04-18,ORD-00308,Southern,Coconut Oil 1L,Grocery,4,3960
+2026-04-19,ORD-00280,Northern,Ceylon Tea 400g,Grocery,2,2900
+2026-04-19,ORD-00281,Central,Wireless Earbuds,Electronics,2,29000
+2026-04-19,ORD-00286,Central,Water Filter,Home & Kitchen,1,19800
+2026-04-20,ORD-00300,Western,Ceiling Fan,Home & Kitchen,2,33600
+2026-04-21,ORD-00261,Western,Ceiling Fan,Home & Kitchen,1,16800
+2026-04-21,ORD-00277,Central,Water Filter,Home & Kitchen,1,22000
+2026-04-22,ORD-00283,Western,Smartphone X2,Electronics,1,89000
+2026-04-22,ORD-00306,Central,Basmati Rice 5kg,Grocery,2,6400
+2026-04-23,ORD-00305,Western,Coconut Oil 1L,Grocery,3,3300
+2026-04-24,ORD-00276,Central,Cotton Saree,Apparel,2,15600
+2026-04-24,ORD-00282,Western,Coconut Oil 1L,Grocery,5,5500
+2026-04-24,ORD-00303,Western,Smart Watch,Electronics,2,76000
+2026-04-25,ORD-00262,Central,School Shoes,Apparel,2,10400
+2026-04-25,ORD-00289,Western,Blender 600W,Home & Kitchen,1,9800
+2026-04-27,ORD-00263,Western,Basmati Rice 5kg,Grocery,6,19200
+2026-04-27,ORD-00279,Southern,Ceiling Fan,Home & Kitchen,2,33600
+2026-04-28,ORD-00269,Western,School Shoes,Apparel,1,5200
+2026-04-28,ORD-00273,Central,Wireless Earbuds,Electronics,2,29000
+2026-04-28,ORD-00307,Central,Basmati Rice 5kg,Grocery,2,6400
+2026-04-30,ORD-00275,Central,Cotton Saree,Apparel,1,7020
+2026-04-30,ORD-00309,Central,Rice Cooker,Home & Kitchen,2,25000
+2026-05-01,ORD-00326,Central,Basmati Rice 5kg,Grocery,5,16000
+2026-05-02,ORD-00351,Western,Wireless Earbuds,Electronics,1,14500
+2026-05-03,ORD-00334,Central,Cotton Saree,Apparel,1,7800
+2026-05-04,ORD-00349,Central,School Shoes,Apparel,2,10400
+2026-05-05,ORD-00357,Western,Basmati Rice 5kg,Grocery,4,12800
+2026-05-07,ORD-00317,Western,Kids’ Backpack,Apparel,1,3900
+2026-05-07,ORD-00348,Western,Coconut Oil 1L,Grocery,4,4400
+2026-05-07,ORD-00354,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-05-08,ORD-00322,Northern,Laptop Pro 14,Electronics,1,245000
+2026-05-08,ORD-00333,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-05-10,ORD-00336,Northern,Wireless Earbuds,Electronics,1,13050
+2026-05-11,ORD-00347,Western,Ceylon Tea 400g,Grocery,3,4350
+2026-05-12,ORD-00319,Western,School Shoes,Apparel,1,5200
+2026-05-12,ORD-00331,Western,Wireless Earbuds,Electronics,2,29000
+2026-05-13,ORD-00321,Central,Basmati Rice 5kg,Grocery,1,3200
+2026-05-13,ORD-00356,Western,Coconut Oil 1L,Grocery,4,4400
+2026-05-14,ORD-00337,Southern,Ceylon Tea 400g,Grocery,1,1450
+2026-05-15,ORD-00316,Western,Ceiling Fan,Home & Kitchen,1,15120
+2026-05-15,ORD-00329,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-05-15,ORD-00339,Central,Smartphone X2,Electronics,1,89000
+2026-05-15,ORD-00353,Northern,Ceiling Fan,Home & Kitchen,1,16800
+2026-05-16,ORD-00325,Western,Wireless Earbuds,Electronics,2,29000
+2026-05-17,ORD-00313,Western,Ceiling Fan,Home & Kitchen,2,33600
+2026-05-17,ORD-00332,Southern,Coconut Oil 1L,Grocery,2,2200
+2026-05-17,ORD-00338,Central,Coconut Oil 1L,Grocery,2,2200
+2026-05-18,ORD-00315,Central,Rice Cooker,Home & Kitchen,1,11250
+2026-05-18,ORD-00327,Central,Wireless Earbuds,Electronics,1,14500
+2026-05-18,ORD-00344,Western,Kids’ Backpack,Apparel,2,7800
+2026-05-20,ORD-00352,Central,Rice Cooker,Home & Kitchen,2,25000
+2026-05-22,ORD-00314,Southern,Cotton Saree,Apparel,1,7800
+2026-05-24,ORD-00312,Southern,Coconut Oil 1L,Grocery,5,5500
+2026-05-24,ORD-00324,Western,Ceylon Tea 400g,Grocery,6,8700
+2026-05-24,ORD-00345,Western,Coconut Oil 1L,Grocery,5,5500
+2026-05-25,ORD-00343,Western,Cotton Saree,Apparel,2,15600
+2026-05-26,ORD-00335,Western,Ceiling Fan,Home & Kitchen,1,16800
+2026-05-26,ORD-00341,Southern,Ceiling Fan,Home & Kitchen,2,33600
+2026-05-27,ORD-00340,Central,Blender 600W,Home & Kitchen,1,9800
+2026-05-27,ORD-00350,Northern,Coconut Oil 1L,Grocery,6,5940
+2026-05-28,ORD-00318,Western,Blender 600W,Home & Kitchen,1,9800
+2026-05-28,ORD-00330,Western,School Shoes,Apparel,2,10400
+2026-05-29,ORD-00328,Southern,Rice Cooker,Home & Kitchen,1,12500
+2026-05-29,ORD-00342,Northern,Smartphone X2,Electronics,2,178000
+2026-05-29,ORD-00346,Southern,Kids’ Backpack,Apparel,2,7800
+2026-05-30,ORD-00320,Western,School Shoes,Apparel,1,5200
+2026-05-30,ORD-00323,Western,Coconut Oil 1L,Grocery,6,6600
+2026-05-30,ORD-00355,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-05-31,ORD-00311,Central,Ceylon Tea 400g,Grocery,2,2900
+2026-06-01,ORD-00364,Western,Ceiling Fan,Home & Kitchen,2,33600
+2026-06-01,ORD-00371,Western,Water Filter,Home & Kitchen,2,44000
+2026-06-01,ORD-00398,Central,Men’s Batik Shirt,Apparel,2,9000
+2026-06-01,ORD-00402,Western,Coconut Oil 1L,Grocery,5,4950
+2026-06-02,ORD-00384,Central,Smartphone X2,Electronics,1,89000
+2026-06-02,ORD-00403,Southern,Coconut Oil 1L,Grocery,5,5500
+2026-06-03,ORD-00363,Western,Ceylon Tea 400g,Grocery,5,7250
+2026-06-03,ORD-00369,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-06-04,ORD-00389,Central,Ceylon Tea 400g,Grocery,4,5800
+2026-06-04,ORD-00394,Central,Wireless Earbuds,Electronics,1,14500
+2026-06-06,ORD-00360,Northern,Ceylon Tea 400g,Grocery,5,7250
+2026-06-08,ORD-00391,Northern,Wireless Earbuds,Electronics,1,14500
+2026-06-08,ORD-00400,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-06-09,ORD-00359,Western,Smart Watch,Electronics,2,68400
+2026-06-09,ORD-00392,Western,Coconut Oil 1L,Grocery,2,2200
+2026-06-10,ORD-00372,Southern,Men’s Batik Shirt,Apparel,1,4500
+2026-06-11,ORD-00374,Southern,Cotton Saree,Apparel,2,15600
+2026-06-11,ORD-00381,Western,Coconut Oil 1L,Grocery,5,5500
+2026-06-12,ORD-00379,Western,Blender 600W,Home & Kitchen,2,19600
+2026-06-13,ORD-00378,Northern,Coconut Oil 1L,Grocery,2,1980
+2026-06-13,ORD-00386,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-06-13,ORD-00396,Western,Coconut Oil 1L,Grocery,5,5500
+2026-06-13,ORD-00404,Central,Ceiling Fan,Home & Kitchen,1,15120
+2026-06-14,ORD-00358,Central,Laptop Pro 14,Electronics,2,490000
+2026-06-15,ORD-00380,Central,Ceiling Fan,Home & Kitchen,1,15120
+2026-06-15,ORD-00397,Southern,Basmati Rice 5kg,Grocery,4,12800
+2026-06-16,ORD-00382,Central,Basmati Rice 5kg,Grocery,4,12800
+2026-06-16,ORD-00395,Central,Basmati Rice 5kg,Grocery,5,16000
+2026-06-16,ORD-00399,Western,Ceylon Tea 400g,Grocery,4,5800
+2026-06-17,ORD-00365,Southern,Wireless Earbuds,Electronics,1,14500
+2026-06-17,ORD-00373,Western,Rice Cooker,Home & Kitchen,2,22500
+2026-06-17,ORD-00390,Central,Rice Cooker,Home & Kitchen,1,12500
+2026-06-17,ORD-00406,Western,Water Filter,Home & Kitchen,1,22000
+2026-06-18,ORD-00388,Western,Rice Cooker,Home & Kitchen,1,12500
+2026-06-19,ORD-00370,Western,Coconut Oil 1L,Grocery,2,1980
+2026-06-19,ORD-00383,Western,Ceylon Tea 400g,Grocery,6,8700
+2026-06-20,ORD-00361,Northern,Laptop Pro 14,Electronics,1,245000
+2026-06-20,ORD-00376,Southern,Ceiling Fan,Home & Kitchen,2,33600
+2026-06-20,ORD-00385,Northern,Kids’ Backpack,Apparel,2,7020
+2026-06-20,ORD-00408,Western,Coconut Oil 1L,Grocery,3,3300
+2026-06-21,ORD-00387,Western,Coconut Oil 1L,Grocery,2,2200
+2026-06-22,ORD-00405,Western,Laptop Pro 14,Electronics,2,490000
+2026-06-23,ORD-00393,Central,Basmati Rice 5kg,Grocery,2,6400
+2026-06-24,ORD-00362,Western,Ceylon Tea 400g,Grocery,6,8700
+2026-06-25,ORD-00368,Northern,Ceiling Fan,Home & Kitchen,1,16800
+2026-06-25,ORD-00377,Western,Smartphone X2,Electronics,2,178000
+2026-06-26,ORD-00401,Central,Cotton Saree,Apparel,2,14040
+2026-06-27,ORD-00407,Northern,Wireless Earbuds,Electronics,1,14500
+2026-06-28,ORD-00375,Central,Ceylon Tea 400g,Grocery,2,2900
+2026-06-29,ORD-00366,Central,Ceiling Fan,Home & Kitchen,1,16800
+2026-06-30,ORD-00367,Central,Basmati Rice 5kg,Grocery,6,19200
+2026-07-01,ORD-00450,Central,Wireless Earbuds,Electronics,1,14500
+2026-07-02,ORD-00431,Western,Coconut Oil 1L,Grocery,3,3300
+2026-07-03,ORD-00420,Western,Smart Watch,Electronics,1,38000
+2026-07-03,ORD-00424,Northern,Ceylon Tea 400g,Grocery,4,5800
+2026-07-03,ORD-00440,Western,Cotton Saree,Apparel,1,7800
+2026-07-03,ORD-00463,Western,Smart Watch,Electronics,1,34200
+2026-07-04,ORD-00412,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-07-05,ORD-00460,Central,Ceylon Tea 400g,Grocery,6,7830
+2026-07-06,ORD-00416,Southern,Laptop Pro 14,Electronics,1,220500
+2026-07-06,ORD-00444,Northern,Blender 600W,Home & Kitchen,2,19600
+2026-07-06,ORD-00447,Southern,Ceylon Tea 400g,Grocery,6,8700
+2026-07-07,ORD-00441,Central,Blender 600W,Home & Kitchen,1,9800
+2026-07-07,ORD-00457,Southern,Men’s Batik Shirt,Apparel,1,4500
+2026-07-08,ORD-00429,Western,Laptop Pro 14,Electronics,1,220500
+2026-07-09,ORD-00413,Northern,Laptop Pro 14,Electronics,1,245000
+2026-07-09,ORD-00443,Western,Coconut Oil 1L,Grocery,4,4400
+2026-07-11,ORD-00423,Northern,Wireless Earbuds,Electronics,2,29000
+2026-07-11,ORD-00425,Western,Water Filter,Home & Kitchen,1,19800
+2026-07-11,ORD-00437,Central,Blender 600W,Home & Kitchen,2,19600
+2026-07-13,ORD-00451,Central,Basmati Rice 5kg,Grocery,1,2880
+2026-07-14,ORD-00439,Western,Rice Cooker,Home & Kitchen,2,22500
+2026-07-14,ORD-00442,Southern,Ceylon Tea 400g,Grocery,3,4350
+2026-07-14,ORD-00452,Northern,Men’s Batik Shirt,Apparel,2,8100
+2026-07-14,ORD-00454,Southern,Blender 600W,Home & Kitchen,1,9800
+2026-07-15,ORD-00427,Southern,Wireless Earbuds,Electronics,2,26100
+2026-07-15,ORD-00434,Western,Coconut Oil 1L,Grocery,6,6600
+2026-07-15,ORD-00438,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-07-15,ORD-00449,Western,Cotton Saree,Apparel,1,7800
+2026-07-16,ORD-00417,Northern,Smartphone X2,Electronics,2,178000
+2026-07-17,ORD-00455,Western,Coconut Oil 1L,Grocery,2,2200
+2026-07-17,ORD-00462,Western,Cotton Saree,Apparel,1,7800
+2026-07-19,ORD-00428,Western,Basmati Rice 5kg,Grocery,6,17280
+2026-07-19,ORD-00435,Central,Ceylon Tea 400g,Grocery,5,7250
+2026-07-21,ORD-00411,Southern,Ceylon Tea 400g,Grocery,5,7250
+2026-07-22,ORD-00432,Western,Blender 600W,Home & Kitchen,1,9800
+2026-07-22,ORD-00433,Central,Kids’ Backpack,Apparel,2,7800
+2026-07-23,ORD-00415,Western,Coconut Oil 1L,Grocery,6,6600
+2026-07-23,ORD-00422,Northern,Cotton Saree,Apparel,1,7800
+2026-07-23,ORD-00426,Central,Smartphone X2,Electronics,2,178000
+2026-07-23,ORD-00448,Northern,Basmati Rice 5kg,Grocery,4,12800
+2026-07-24,ORD-00414,Southern,Water Filter,Home & Kitchen,2,44000
+2026-07-24,ORD-00418,Western,Men’s Batik Shirt,Apparel,1,4050
+2026-07-24,ORD-00446,Western,Basmati Rice 5kg,Grocery,2,6400
+2026-07-24,ORD-00459,Southern,Wireless Earbuds,Electronics,1,14500
+2026-07-25,ORD-00421,Western,Smart Watch,Electronics,1,38000
+2026-07-25,ORD-00436,Western,Smartphone X2,Electronics,2,160200
+2026-07-26,ORD-00410,Western,Wireless Earbuds,Electronics,1,14500
+2026-07-26,ORD-00419,Central,Basmati Rice 5kg,Grocery,5,16000
+2026-07-26,ORD-00445,Southern,School Shoes,Apparel,1,5200
+2026-07-27,ORD-00430,Northern,Smart Watch,Electronics,2,76000
+2026-07-27,ORD-00453,Western,Coconut Oil 1L,Grocery,2,1980
+2026-07-27,ORD-00456,Northern,Coconut Oil 1L,Grocery,1,990
+2026-07-28,ORD-00409,Western,Basmati Rice 5kg,Grocery,1,3200
+2026-07-28,ORD-00458,Central,Coconut Oil 1L,Grocery,1,1100
+2026-07-30,ORD-00461,Western,School Shoes,Apparel,2,10400
+2026-08-01,ORD-00493,Western,Basmati Rice 5kg,Grocery,2,6400
+2026-08-01,ORD-00500,Western,Coconut Oil 1L,Grocery,3,3300
+2026-08-02,ORD-00468,Western,Coconut Oil 1L,Grocery,6,6600
+2026-08-02,ORD-00482,Western,Basmati Rice 5kg,Grocery,3,9600
+2026-08-03,ORD-00483,Western,Cotton Saree,Apparel,1,7020
+2026-08-03,ORD-00492,Southern,Ceylon Tea 400g,Grocery,4,5800
+2026-08-04,ORD-00487,Western,Basmati Rice 5kg,Grocery,6,19200
+2026-08-04,ORD-00507,Central,Water Filter,Home & Kitchen,1,22000
+2026-08-04,ORD-00513,Central,Men’s Batik Shirt,Apparel,2,9000
+2026-08-04,ORD-00522,Southern,Rice Cooker,Home & Kitchen,2,25000
+2026-08-05,ORD-00473,Northern,Men’s Batik Shirt,Apparel,2,9000
+2026-08-06,ORD-00510,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-08-06,ORD-00520,Western,Ceylon Tea 400g,Grocery,3,4350
+2026-08-07,ORD-00477,Southern,Smart Watch,Electronics,2,68400
+2026-08-07,ORD-00511,Central,Ceylon Tea 400g,Grocery,4,5220
+2026-08-08,ORD-00489,Northern,Basmati Rice 5kg,Grocery,1,2880
+2026-08-08,ORD-00497,Western,Coconut Oil 1L,Grocery,1,1100
+2026-08-08,ORD-00498,Northern,Basmati Rice 5kg,Grocery,2,6400
+2026-08-08,ORD-00512,Western,Blender 600W,Home & Kitchen,2,19600
+2026-08-09,ORD-00519,Central,Kids’ Backpack,Apparel,1,3900
+2026-08-10,ORD-00466,Western,Ceylon Tea 400g,Grocery,3,3915
+2026-08-10,ORD-00501,Central,Coconut Oil 1L,Grocery,6,6600
+2026-08-11,ORD-00476,Western,Wireless Earbuds,Electronics,1,14500
+2026-08-11,ORD-00478,Western,Basmati Rice 5kg,Grocery,6,17280
+2026-08-11,ORD-00486,Northern,Rice Cooker,Home & Kitchen,2,22500
+2026-08-12,ORD-00481,Southern,Ceylon Tea 400g,Grocery,4,5800
+2026-08-12,ORD-00505,Central,Ceylon Tea 400g,Grocery,5,7250
+2026-08-13,ORD-00488,Northern,Ceylon Tea 400g,Grocery,5,7250
+2026-08-13,ORD-00502,Southern,Laptop Pro 14,Electronics,2,490000
+2026-08-15,ORD-00467,Southern,Basmati Rice 5kg,Grocery,3,9600
+2026-08-15,ORD-00469,Central,Basmati Rice 5kg,Grocery,4,12800
+2026-08-15,ORD-00499,Central,Coconut Oil 1L,Grocery,3,3300
+2026-08-16,ORD-00471,Western,Basmati Rice 5kg,Grocery,4,12800
+2026-08-16,ORD-00475,Southern,Laptop Pro 14,Electronics,1,220500
+2026-08-16,ORD-00480,Central,Smart Watch,Electronics,1,38000
+2026-08-19,ORD-00470,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-08-20,ORD-00472,Central,Wireless Earbuds,Electronics,1,13050
+2026-08-20,ORD-00515,Western,School Shoes,Apparel,2,10400
+2026-08-21,ORD-00464,Western,Coconut Oil 1L,Grocery,5,5500
+2026-08-21,ORD-00479,Southern,Ceylon Tea 400g,Grocery,5,7250
+2026-08-21,ORD-00491,Northern,Men’s Batik Shirt,Apparel,1,4500
+2026-08-21,ORD-00506,Western,Basmati Rice 5kg,Grocery,1,2880
+2026-08-21,ORD-00508,Western,Blender 600W,Home & Kitchen,1,9800
+2026-08-21,ORD-00521,Northern,Smartphone X2,Electronics,2,160200
+2026-08-22,ORD-00504,Southern,Ceylon Tea 400g,Grocery,3,4350
+2026-08-22,ORD-00518,Central,Basmati Rice 5kg,Grocery,4,12800
+2026-08-23,ORD-00490,Central,Kids’ Backpack,Apparel,2,7800
+2026-08-23,ORD-00494,Western,Wireless Earbuds,Electronics,2,26100
+2026-08-24,ORD-00474,Central,Ceylon Tea 400g,Grocery,3,4350
+2026-08-24,ORD-00485,Western,Coconut Oil 1L,Grocery,2,2200
+2026-08-24,ORD-00509,Central,School Shoes,Apparel,1,5200
+2026-08-24,ORD-00514,Central,Coconut Oil 1L,Grocery,3,3300
+2026-08-25,ORD-00465,Western,Smart Watch,Electronics,2,76000
+2026-08-26,ORD-00496,Central,Coconut Oil 1L,Grocery,3,3300
+2026-08-28,ORD-00516,Central,Men’s Batik Shirt,Apparel,2,9000
+2026-08-29,ORD-00484,Western,Ceylon Tea 400g,Grocery,5,7250
+2026-08-30,ORD-00495,Western,Rice Cooker,Home & Kitchen,1,12500
+2026-08-30,ORD-00503,Southern,Cotton Saree,Apparel,2,14040
+2026-08-31,ORD-00517,Northern,Rice Cooker,Home & Kitchen,2,22500
+2026-09-01,ORD-00524,Western,Basmati Rice 5kg,Grocery,5,16000
+2026-09-01,ORD-00531,Central,Water Filter,Home & Kitchen,2,44000
+2026-09-01,ORD-00536,Southern,Water Filter,Home & Kitchen,1,19800
+2026-09-01,ORD-00553,Western,Ceiling Fan,Home & Kitchen,2,33600
+2026-09-01,ORD-00566,Central,Kids’ Backpack,Apparel,1,3900
+2026-09-02,ORD-00537,Western,Wireless Earbuds,Electronics,2,29000
+2026-09-02,ORD-00568,Western,Kids’ Backpack,Apparel,1,3900
+2026-09-04,ORD-00532,Western,Wireless Earbuds,Electronics,1,14500
+2026-09-04,ORD-00570,Central,Kids’ Backpack,Apparel,2,7800
+2026-09-05,ORD-00539,Northern,Ceylon Tea 400g,Grocery,4,5800
+2026-09-05,ORD-00557,Southern,Cotton Saree,Apparel,2,15600
+2026-09-06,ORD-00569,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-09-07,ORD-00573,Western,Smartphone X2,Electronics,1,89000
+2026-09-08,ORD-00526,Western,Wireless Earbuds,Electronics,1,14500
+2026-09-08,ORD-00579,Southern,Rice Cooker,Home & Kitchen,2,25000
+2026-09-09,ORD-00534,Central,Men’s Batik Shirt,Apparel,2,8100
+2026-09-09,ORD-00538,Central,School Shoes,Apparel,2,10400
+2026-09-09,ORD-00540,Central,Men’s Batik Shirt,Apparel,2,8100
+2026-09-09,ORD-00545,Central,Rice Cooker,Home & Kitchen,1,12500
+2026-09-09,ORD-00551,Southern,Coconut Oil 1L,Grocery,1,1100
+2026-09-09,ORD-00581,Southern,School Shoes,Apparel,1,5200
+2026-09-09,ORD-00583,Western,Coconut Oil 1L,Grocery,1,1100
+2026-09-10,ORD-00543,Western,Wireless Earbuds,Electronics,2,26100
+2026-09-10,ORD-00544,Western,Smartphone X2,Electronics,2,178000
+2026-09-10,ORD-00565,Central,Men’s Batik Shirt,Apparel,2,8100
+2026-09-11,ORD-00572,Northern,Wireless Earbuds,Electronics,1,14500
+2026-09-11,ORD-00580,Central,Ceiling Fan,Home & Kitchen,1,16800
+2026-09-12,ORD-00546,Western,Smart Watch,Electronics,1,38000
+2026-09-12,ORD-00584,Central,Blender 600W,Home & Kitchen,2,19600
+2026-09-13,ORD-00530,Central,Wireless Earbuds,Electronics,2,29000
+2026-09-16,ORD-00550,Western,Rice Cooker,Home & Kitchen,2,25000
+2026-09-16,ORD-00554,Western,Wireless Earbuds,Electronics,2,26100
+2026-09-16,ORD-00578,Southern,Smart Watch,Electronics,1,34200
+2026-09-17,ORD-00523,Western,School Shoes,Apparel,1,5200
+2026-09-17,ORD-00558,Central,Coconut Oil 1L,Grocery,3,2970
+2026-09-17,ORD-00576,Southern,Ceiling Fan,Home & Kitchen,2,33600
+2026-09-18,ORD-00559,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-09-18,ORD-00577,Western,Water Filter,Home & Kitchen,2,44000
+2026-09-19,ORD-00548,Western,Men’s Batik Shirt,Apparel,1,4500
+2026-09-19,ORD-00586,Central,Basmati Rice 5kg,Grocery,4,12800
+2026-09-20,ORD-00571,Southern,Rice Cooker,Home & Kitchen,2,22500
+2026-09-20,ORD-00582,Southern,Laptop Pro 14,Electronics,2,490000
+2026-09-21,ORD-00529,Northern,Ceylon Tea 400g,Grocery,4,5800
+2026-09-21,ORD-00533,Western,Wireless Earbuds,Electronics,1,14500
+2026-09-21,ORD-00556,Southern,Rice Cooker,Home & Kitchen,2,22500
+2026-09-22,ORD-00541,Central,Ceylon Tea 400g,Grocery,5,7250
+2026-09-22,ORD-00555,Central,School Shoes,Apparel,2,10400
+2026-09-22,ORD-00562,Central,Ceylon Tea 400g,Grocery,6,8700
+2026-09-23,ORD-00525,Western,Ceiling Fan,Home & Kitchen,2,30240
+2026-09-23,ORD-00542,Southern,Blender 600W,Home & Kitchen,1,8820
+2026-09-24,ORD-00560,Western,Coconut Oil 1L,Grocery,3,3300
+2026-09-25,ORD-00528,Central,Cotton Saree,Apparel,1,7800
+2026-09-25,ORD-00575,Western,Smart Watch,Electronics,1,38000
+2026-09-26,ORD-00535,Southern,Rice Cooker,Home & Kitchen,2,25000
+2026-09-26,ORD-00547,Central,Ceiling Fan,Home & Kitchen,1,16800
+2026-09-27,ORD-00527,Western,Ceylon Tea 400g,Grocery,1,1450
+2026-09-27,ORD-00561,Central,Wireless Earbuds,Electronics,2,29000
+2026-09-27,ORD-00567,Southern,Coconut Oil 1L,Grocery,4,4400
+2026-09-27,ORD-00585,Western,Men’s Batik Shirt,Apparel,2,9000
+2026-09-28,ORD-00549,Northern,Smartphone X2,Electronics,2,178000
+2026-09-28,ORD-00563,Western,Ceiling Fan,Home & Kitchen,2,30240
+2026-09-28,ORD-00564,Western,Smart Watch,Electronics,2,76000
+2026-09-29,ORD-00552,Western,Smartphone X2,Electronics,2,178000
+2026-09-30,ORD-00574,Western,Ceylon Tea 400g,Grocery,2,2900
