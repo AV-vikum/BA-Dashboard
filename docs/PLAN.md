@@ -130,7 +130,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 5.2 | Base styles (`base.css`)                              | ✅     |
 | 5.3 | Helper API (`base.js`)                                | ✅     |
 | 5.4 | Starter files                                         | ✅     |
-| 5.5 | Build/validate + `new` / `build` / `preview` commands | ⬜     |
+| 5.5 | Build/validate + `new` / `build` / `preview` commands | ✅     |
 | 5.6 | Example report (fake data)                            | ⬜     |
 | 5.7 | Seed uses the example report                          | ⬜     |
 

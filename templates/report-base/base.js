@@ -105,7 +105,7 @@
         maximumFractionDigits: opts.decimals !== undefined ? opts.decimals : opts.compact ? 1 : 0,
       })
         .format(n)
-        .replace(/ /g, ' ');
+        .replace(/[\u00a0\u202f]/g, ' ');
     },
     /** Fraction in, percent out: 0.123 → "12.3%" */
     percent: function (v, opts) {
@@ -262,8 +262,13 @@
       },
       nameTextStyle: { color: cssVar('--r-muted') },
     };
-    if (!isCategory) base.axisLabel.formatter = axisFormatter(kind);
+    // Category labels that look like dates ("2026-01", "2026-01-31") read as "Jan 2026" etc.
+    base.axisLabel.formatter = isCategory ? dateLabel : axisFormatter(kind);
     return base;
+  }
+
+  function dateLabel(v) {
+    return typeof v === 'string' && parseDate(v) ? fmt.date(v) : v;
   }
 
   function isCategoryAxis(axis) {
@@ -388,7 +393,7 @@
       asArray(option.xAxis).filter(isCategoryAxis)[0] ||
       asArray(option.yAxis).filter(isCategoryAxis)[0];
     if (!catAxis || !Array.isArray(catAxis.data)) return null;
-    var columns = [{ key: 'category', label: catAxis.name || 'Category' }];
+    var columns = [{ key: 'category', label: catAxis.name || 'Category', format: dateLabel }];
     series.forEach(function (s, i) {
       columns.push({ key: 's' + i, label: s.name || 'Value', format: kind || 'number' });
     });

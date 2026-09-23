@@ -10,12 +10,10 @@
   },
   "dependencies": {
     "@ba/shared": "*",
-    "commander": "^5.1.0",
-    "csv-parse": "^5.6.0",
+    "commander": "^15.0.0",
     "dotenv": "^18.0.3",
-    "exceljs": "^4.4.0",
     "firebase-admin": "^14.4.0",
-    "open": "^6.4.0",
+    "open": "^11.0.4",
     "zod": "^4.6.5"
   },
   "devDependencies": {

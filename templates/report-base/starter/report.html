@@ -50,7 +50,7 @@
 
       Report.table('table-details', {
         columns: [
-          { key: 'label', label: 'Period' },
+          { key: 'label', label: 'Period', format: 'date' },
           { key: 'value', label: 'Value', format: 'number' },
         ],
         rows: (d.tables && d.tables.details) || [],
