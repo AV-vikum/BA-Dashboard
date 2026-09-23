@@ -17,6 +17,7 @@
     "emulators": "node scripts/emulators.mjs --only auth,firestore",
     "emulators:all": "node scripts/emulators.mjs",
     "emulators:reset": "node scripts/emulators-reset.mjs",
+    "preview:hosting": "npm run build:emulator -w web && concurrently -n emulators,preview -c yellow,cyan \"node scripts/emulators.mjs --only auth,firestore\" \"npm run preview -w web\"",
     "setup": "tsx tools/src/scripts/setup.ts",
     "seed": "tsx tools/src/scripts/seed.ts",
     "lint": "eslint .",

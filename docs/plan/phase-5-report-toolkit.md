@@ -185,6 +185,6 @@ Rules:
 
 ## 5.7 Seed uses the example report
 
-**Do:** update `seed.ts` so `demo-sales` uses the **built** `_example` HTML (build it inside the seed via `buildReport('_example')`). Then re-run the CSP check from step 3.9 with this real ECharts report on the Hosting emulator and record the result.
+**Do:** update `seed.ts` so `demo-sales` uses the **built** `_example` HTML (build it inside the seed via `buildReport('_example')`). Then re-run the CSP check from step 3.9 with this real ECharts report — `npm run preview:hosting` (see step 3.9's note: this runs `vite preview`, not the Hosting emulator, since the emulator doesn't apply `firebase.json`'s headers) — and record the result.
 
 **Acceptance:** after `npm run seed`, Alice opens _Sales Overview_ in the app and sees the full example dashboard; `npm run preview:hosting` shows it with no CSP errors.

@@ -222,9 +222,15 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
    - `Referrer-Policy: strict-origin-when-cross-origin`
    - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
    - For `"source": "/assets/**"`: `Cache-Control: public, max-age=31536000, immutable`; for `index.html`: `Cache-Control: no-cache`.
-2. Root script: `"preview:hosting": "npm run build:emulator -w web && node scripts/emulators.mjs --only auth,firestore,hosting"`.
+2. Root script: `"preview:hosting"` — see the note below; it no longer uses the Hosting emulator.
 
-**Acceptance:** `npm run preview:hosting`, open http://localhost:5000: sign-in works, a report with an ECharts chart from `cdn.jsdelivr.net` renders (use a temporary seed report or wait for Phase 5 and re-check in 5.7), and the browser console shows **no CSP violations**. Record the result under this step.
+**Acceptance:** `npm run preview:hosting`, open the printed URL: sign-in works, a report with an ECharts chart from `cdn.jsdelivr.net` renders (use a temporary seed report or wait for Phase 5 and re-check in 5.7), and the browser console shows **no CSP violations**. Record the result under this step.
+
+> Note (2026-09-24): The **Firebase Hosting emulator does not apply `firebase.json`'s `hosting.headers`** — verified directly: three separate runs (`--only auth,firestore,hosting`, `--only hosting` alone, from a clean port state) served zero custom headers on every path, including the asset `Cache-Control` rule; only `rewrites` and static file serving work in the emulator. This means the step's original acceptance check (headers verified via the Hosting emulator) can't actually be exercised — there would be no CSP sent at all, so "no CSP violations" would trivially and misleadingly pass.
+>
+> Fixed by testing the real built app against `vite preview` instead, which does apply custom headers, sourced live from `firebase.json` so it stays the single source of truth (no second copy to drift): `web/vite.config.ts` reads `../firebase.json`'s `hosting.headers` `"source": "**"` entry at config-load time and passes it to Vite's `preview.headers`. `"preview:hosting"` is now `npm run build:emulator -w web && concurrently ... "node scripts/emulators.mjs --only auth,firestore" "npm run preview -w web"` — auth/Firestore still run as real emulators (so sign-in and data reads work), only Hosting's role is replaced by `vite preview` (default port 4173, not 5000).
+>
+> Verified: `curl -sI` against the running `vite preview` shows all 5 configured headers present and byte-identical to `firebase.json` (CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and `index.html`'s `Cache-Control: no-cache`); the served `index.html` references only same-origin `/assets/...` bundles (no inline `<script src>`), consistent with the CSP; the bundle contains the "Emulator mode" badge string, confirming it's the `--mode development` (emulator-targeting) build; both the Auth and Firestore emulators were reachable alongside it. The ECharts-from-CDN part of the check still needs step 5.7's real report (documented in the plan's own acceptance text) — nothing to verify yet. **This local check does not replace verifying the live headers again once deployed** (step 9.7/9.9) — added to the Decision log.
 
 ---
 
