@@ -1,1 +1,9 @@
-{ "mcpServers": {} }
+{
+  "mcpServers": {
+    "ba-dashboard": {
+      "command": "node",
+      "args": ["tools/dist/mcp.js"],
+      "env": { "BA_TARGET": "emulator" }
+    }
+  }
+}

@@ -26,6 +26,8 @@ Check the current `@modelcontextprotocol/sdk` README for exact API names (`McpSe
 
 **Acceptance:** `npm run build:tools` produces `tools/dist/mcp.js`; `npx @modelcontextprotocol/inspector node tools/dist/mcp.js` connects and lists 0 tools without errors.
 
+> Note (2026-09-24): `REPO_ROOT` is now found by walking up to `firebase.json` (the fixed `../../..` from `paths.ts` would be wrong inside the bundled `tools/dist/*.js`). `npm install` builds the tools (`prepare`), so `tools/dist/mcp.js` always exists. SDK 1.30.1 (`McpServer.registerTool` with zod shapes); the server also sends short `instructions` describing the workflow.
+
 ---
 
 ## 7.2 Tools
@@ -48,6 +50,8 @@ Descriptions must mention: _"Reports live in folders under reports/<slug>/ — e
 
 **Acceptance:** each tool works from the MCP Inspector against the emulator.
 
+> Note (2026-09-24): verified with a real MCP client (SDK `Client` + `StdioClientTransport`, server started from a different working directory) instead of the Inspector UI: all 9 tools listed; create → build → publish → set_access → get_access → unpublish (dry run, then confirm) → list worked against the emulator. Tool annotations mark read-only / destructive tools.
+
 ---
 
 ## 7.3 Safety
@@ -60,6 +64,8 @@ Descriptions must mention: _"Reports live in folders under reports/<slug>/ — e
 4. Errors are returned as tool errors with the one-line `✗` message, not thrown stack traces.
 
 **Acceptance:** `create_report_folder` with slug `../evil` is rejected; an error in `build-data.mjs` returns a readable error.
+
+> Note (2026-09-24): both checks done via the MCP client. A failing `build-data.mjs` now reports the thrown error line (e.g. `Error: column "revenue" missing in sales.csv`) instead of the tail of the stack trace. ESLint forbids `console.log` in `mcp.ts` and any console output in `tools/src/core/**`.
 
 ---
 
@@ -87,6 +93,8 @@ Descriptions must mention: _"Reports live in folders under reports/<slug>/ — e
    - Rebuild (`npm run build:tools`) after changing tools code.
 
 **Acceptance:** instructions tested in Claude Code at least.
+
+> Note (2026-09-24): `claude mcp list` shows `ba-dashboard: node tools/dist/mcp.js — Pending approval` with the local `.mcp.json` in place — the user approves it once when starting Claude Code in the repo. Claude Desktop instructions written, not tested here.
 
 ---
 

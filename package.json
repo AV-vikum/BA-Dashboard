@@ -27,7 +27,7 @@
     "test": "npm run test --workspaces --if-present",
     "test:rules": "firebase emulators:exec --only firestore --project demo-ba-dashboard-rules \"vitest run --config tests/rules/vitest.config.ts\"",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm run test",
-    "prepare": "lefthook install",
+    "prepare": "lefthook install && npm run build:tools",
     "secrets:scan": "secretlint \"**/*\"",
     "test:tools:int": "node scripts/test-tools-int.mjs",
     "build:tools": "npm run build -w tools",

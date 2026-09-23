@@ -108,3 +108,64 @@ secrets are needed until Phase 9.** Everything before that runs against the
 `demo-ba-dashboard` emulator, and `config/access` / `config/admins` (allowed
 domains, admin emails) live in Firestore itself, editable with
 `npm run setup -- --domains … --admins …` or later in the Admin UI.
+
+## Creating reports from the command line
+
+Reports are folders under `reports/<slug>/` (git-ignored, except the fake-data
+`reports/_example/`). With the emulators running:
+
+```sh
+npm run report -- new sales-q3 --title "Sales Q3"   # copy the starter template
+npm run report -- preview sales-q3 --data           # run build-data.mjs, build, open in browser
+npm run report -- publish sales-q3                  # create/update it in the app; prints the URL
+npm run report -- access sales-q3 --add-group Finance --add-external partner@outside.test:2026-12-31
+npm run report -- list                              # all reports
+npm run report -- --help                            # every command
+```
+
+Every Firestore command prints its target first (`[target: emulator (demo-ba-dashboard)]`).
+`npm run test:tools:int` runs the CLI's integration tests against the emulator.
+
+## Using Claude with this project
+
+The MCP server (`tools/dist/mcp.js`, built by `npm install` / `npm run build:tools`)
+gives Claude tools to create, build, preview, publish and share reports. **Rebuild
+with `npm run build:tools` after changing anything in `tools/src`.**
+
+### Claude Code
+
+```sh
+cp .mcp.json.example .mcp.json   # git-ignored; PowerShell: Copy-Item .mcp.json.example .mcp.json
+```
+
+Restart Claude Code in this folder and approve the `ba-dashboard` server when asked
+(`/mcp` shows its status). If the relative path in `args` doesn't resolve, use the
+absolute path to `tools/dist/mcp.js`.
+
+### Claude Desktop (Windows)
+
+Edit `%APPDATA%\Claude\claude_desktop_config.json` and add (absolute path, double
+backslashes):
+
+```json
+{
+  "mcpServers": {
+    "ba-dashboard": {
+      "command": "node",
+      "args": ["D:\path\to\BA-Dashboard\tools\dist\mcp.js"],
+      "env": { "BA_TARGET": "emulator" }
+    }
+  }
+}
+```
+
+Restart Claude Desktop. Claude Desktop also needs to **read and write files** in the
+repo's `reports/` folder (to edit `report.html`, `data.json`, `build-data.mjs`) — give
+it access with its filesystem extension/connector, limited to that folder. Check the
+current Claude Desktop docs for where to enable it.
+
+### Which data does Claude work on?
+
+`BA_TARGET` in the MCP config decides: `emulator` (default) while developing the app,
+`production` once the app is live (Phase 9, step 9.10). Every tool result starts with
+the target, e.g. `[emulator (demo-ba-dashboard)]`.
