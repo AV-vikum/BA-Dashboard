@@ -100,7 +100,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 3.3  | Routing and app shell                | ✅     |
 | 3.4  | Authentication (Google sign-in)      | ✅     |
 | 3.5  | "No access" page                     | ✅     |
-| 3.6  | My reports page (list, search, tags) | ⬜     |
+| 3.6  | My reports page (list, search, tags) | ✅     |
 | 3.7  | Report viewer (sandboxed iframe)     | ⬜     |
 | 3.8  | Error pages                          | ⬜     |
 | 3.9  | Security headers and CSP             | ⬜     |

@@ -151,6 +151,10 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 
 **Acceptance (emulator):** Alice sees exactly _Sales Overview_ and _Partner Summary_; typing "sales" narrows to one; clicking a tag filters; the URL updates; reloading keeps the filter; `partner@outside.test` sees only _Partner Summary_.
 
+> Note (2026-09-24): The data layer (`reports.ts`, `useMyReports.ts`) was already built in step 3.5's note — this step added the list UI: search input (`/` focuses, `Esc` clears when the input is focused), tag chips (click toggles, AND-combined via `filterReports`), sort select (Recently updated / Title A–Z), all three synced to the URL (`?q=&tags=a,b&sort=`) via `useSearchParams`, responsive card grid (`ReportCard`, `RelativeDate` with a tooltip for the exact date via `date-fns`), 6-skeleton loading state, and the two empty-state messages with a Clear-filters button. `TooltipProvider` added to `App.tsx` (needed by `RelativeDate`, per shadcn's own note when `tooltip` was added in 3.1). `date-fns` was already a declared dependency (pulled in transitively by shadcn's `calendar` component) but not yet on disk — reconciled with a plain `npm install`.
+>
+> Verified against the real Firestore emulator (not mocked): re-seeded and queried `viewerEmails array-contains 'alice@example.com'` + `status == published` via the REST API — returned exactly `Sales Overview` and `Partner Summary`, matching DEVELOPMENT.md's table. `filterReports`/`collectTags` (tag-chip AND logic, search matching) are exercised by `shared`'s own unit tests (45 passing), not re-tested here. **Manual check for the user (the part that needs a real browser):** the full acceptance line above — typing "sales", clicking a tag, confirming the URL updates and survives a reload, and comparing Alice's view against `partner@outside.test`'s.
+
 ---
 
 ## 3.7 Report viewer
