@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Navigate } from 'react-router';
+import { AdminForbiddenPage } from '@/pages/admin/AdminForbiddenPage';
 import { useAuth } from './AuthContext';
 
 // Nested inside RequireAuth by the router config, so status is always
@@ -8,7 +8,7 @@ export function RequireAdmin({ children }: { children: ReactNode }) {
   const { isAdmin } = useAuth();
 
   if (!isAdmin) {
-    return <Navigate to="/" replace />;
+    return <AdminForbiddenPage />;
   }
 
   return children;

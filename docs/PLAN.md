@@ -110,7 +110,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 
 | #    | Step                                              | Status |
 | ---- | ------------------------------------------------- | ------ |
-| 4.1  | Admin guard and layout                            | ⬜     |
+| 4.1  | Admin guard and layout                            | ✅     |
 | 4.2  | Admin data layer                                  | ⬜     |
 | 4.3  | Reports page                                      | ⬜     |
 | 4.4  | Create / replace report from HTML                 | ⬜     |

@@ -28,6 +28,8 @@ Test as `admin@example.com` in the emulator.
 
 **Acceptance:** admin can navigate all pages (placeholders); Alice gets the 403 page at `/admin/people`.
 
+> Note (2026-09-24): `RequireAdmin` previously redirected non-admins to `/`; changed it to render a new `AdminForbiddenPage` (403 `MessagePage`, "Admins only") to match this step's acceptance check. `npm run check` and `npm run build -w web` pass; the live browser walk-through (admin navigating all pages, Alice hitting the 403) wasn't run this session because the emulators weren't up and a `vite` dev server for this project was already running/connected on port 5173 — starting a second one or the emulators risked colliding with that session. Please verify in the browser with `npm run dev` when convenient.
+
 ---
 
 ## 4.2 Admin data layer
