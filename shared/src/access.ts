@@ -126,3 +126,47 @@ export function accessSummary(
     expiredExternal,
   };
 }
+
+export type VisibleReport<T> = { report: T; via: 'internal' | 'external' };
+
+// Mirrors the Security Rules read conditions exactly (architecture.md
+// §A6): admins see everything; an internal viewer sees published reports
+// where their email is in viewerEmails; an external viewer sees published
+// reports where their email is in externalEmails, external sharing is on,
+// and their access hasn't expired. Used by the People sheet (4.7) and
+// View as user (4.10) so both agree with what a user would actually see.
+export function reportsVisibleTo<
+  T extends Pick<Report, 'status' | 'viewerEmails' | 'externalEmails' | 'externalExpiry'>,
+>(
+  email: string,
+  reports: T[],
+  options: { isAdmin: boolean; isInternal: boolean; allowExternalSharing: boolean },
+  now: Date = new Date(),
+): VisibleReport<T>[] {
+  const normalized = normalizeEmail(email);
+
+  if (options.isAdmin) {
+    return reports
+      .filter((r) => r.status === 'published')
+      .map((report) => ({ report, via: 'internal' as const }));
+  }
+
+  const result: VisibleReport<T>[] = [];
+  for (const report of reports) {
+    if (report.status !== 'published') continue;
+
+    if (options.isInternal && report.viewerEmails.some((e) => normalizeEmail(e) === normalized)) {
+      result.push({ report, via: 'internal' });
+      continue;
+    }
+
+    if (
+      options.allowExternalSharing &&
+      report.externalEmails.some((e) => normalizeEmail(e) === normalized) &&
+      isExternalActive(report, normalized, now)
+    ) {
+      result.push({ report, via: 'external' });
+    }
+  }
+  return result;
+}

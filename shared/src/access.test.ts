@@ -4,6 +4,7 @@ import {
   applyAccessChange,
   computeViewerEmails,
   isExternalActive,
+  reportsVisibleTo,
 } from './access.js';
 import type { Group, Report, WithId } from './types.js';
 
@@ -188,6 +189,88 @@ describe('applyAccessChange', () => {
     expect(result.warnings).toEqual([
       'someone@gmail.com is outside allowed domains — add as external instead',
     ]);
+  });
+});
+
+describe('reportsVisibleTo', () => {
+  function report(
+    overrides: Partial<Report> = {},
+  ): Pick<Report, 'status' | 'viewerEmails' | 'externalEmails' | 'externalExpiry'> {
+    return {
+      status: 'published',
+      viewerEmails: [],
+      externalEmails: [],
+      externalExpiry: {},
+      ...overrides,
+    };
+  }
+
+  it('admins see every published report, nothing draft', () => {
+    const reports = [report({ status: 'published' }), report({ status: 'draft' })];
+    const result = reportsVisibleTo('admin@example.com', reports, {
+      isAdmin: true,
+      isInternal: true,
+      allowExternalSharing: true,
+    });
+    expect(result).toHaveLength(1);
+    expect(result[0]?.via).toBe('internal');
+  });
+
+  it('internal viewer sees published reports where they are a viewer', () => {
+    const reports = [
+      report({ viewerEmails: ['alice@example.com'] }),
+      report({ viewerEmails: ['bob@example.com'] }),
+      report({ status: 'draft', viewerEmails: ['alice@example.com'] }),
+    ];
+    const result = reportsVisibleTo('alice@example.com', reports, {
+      isAdmin: false,
+      isInternal: true,
+      allowExternalSharing: true,
+    });
+    expect(result).toHaveLength(1);
+    expect(result[0]?.via).toBe('internal');
+  });
+
+  it('external viewer sees published reports with active external access, when sharing is on', () => {
+    const future = ts(new Date(Date.now() + 86_400_000));
+    const past = ts(new Date(Date.now() - 86_400_000));
+    const reports = [
+      report({
+        externalEmails: ['ext@outside.test'],
+        externalExpiry: { 'ext@outside.test': future },
+      }),
+      report({
+        externalEmails: ['ext@outside.test'],
+        externalExpiry: { 'ext@outside.test': past },
+      }),
+    ];
+    const result = reportsVisibleTo('ext@outside.test', reports, {
+      isAdmin: false,
+      isInternal: false,
+      allowExternalSharing: true,
+    });
+    expect(result).toHaveLength(1);
+    expect(result[0]?.via).toBe('external');
+  });
+
+  it('external viewer sees nothing when external sharing is off', () => {
+    const reports = [report({ externalEmails: ['ext@outside.test'], externalExpiry: {} })];
+    const result = reportsVisibleTo('ext@outside.test', reports, {
+      isAdmin: false,
+      isInternal: false,
+      allowExternalSharing: false,
+    });
+    expect(result).toEqual([]);
+  });
+
+  it('is case-insensitive on email matching', () => {
+    const reports = [report({ viewerEmails: ['alice@example.com'] })];
+    const result = reportsVisibleTo('Alice@Example.com', reports, {
+      isAdmin: false,
+      isInternal: true,
+      allowExternalSharing: true,
+    });
+    expect(result).toHaveLength(1);
   });
 });
 

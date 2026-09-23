@@ -144,6 +144,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** Alice's sheet shows Sales Overview (via Finance) and Partner Summary (via Finance); adding Alice to HR Headcount works; bulk-add a report to `newperson@example.com` who never signed in → shown as "Not signed in yet".
 
+> Note (2026-09-24): pulled step 4.10's planned extraction forward — added `reportsVisibleTo(email, reports, { isAdmin, isInternal, allowExternalSharing }, now?)` to `@ba/shared` (with unit tests) now, since this step's own "Reports" count column and the person Sheet need the exact same "what can this email see" logic that mirrors the Security Rules read conditions; step 4.10 (View as user) will reuse it as instructed rather than rebuild it. The person Sheet shows access source (Direct/Group/External with expiry) via a small local `accessSourceLabel` helper, with remove buttons for Direct/External (Group access links to the Groups page instead, as specified) and an "Add to reports" dialog (`AddToReportsDialog`) that multi-selects candidate reports and calls `updateReportAccess` once per selection. `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under 4.1).
+
 ---
 
 ## 4.8 Groups page
