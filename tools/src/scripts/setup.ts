@@ -1,23 +1,10 @@
 // Writes config/access and config/admins — the two documents Security
 // Rules read to decide who is "internal" and who is an admin.
-//
-// TODO(step 2.2): swap the local domain/email checks below for the real
-// helpers in @ba/shared once they exist.
 import { parseArgs } from 'node:util';
 import { FieldValue } from 'firebase-admin/firestore';
+import { isValidDomain, isValidEmail, normalizeDomain, normalizeEmail } from '@ba/shared';
 import { assertEmulatorRunning, getDb } from '../core/firebase.js';
 import { env, targetLabel } from '../core/env.js';
-
-const DOMAIN_PATTERN = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function normalizeDomain(raw: string): string {
-  return raw.trim().toLowerCase().replace(/^@/, '');
-}
-
-function normalizeEmail(raw: string): string {
-  return raw.trim().toLowerCase();
-}
 
 function parseList(value: string | undefined, label: string): string[] {
   if (!value) return [];
@@ -70,13 +57,13 @@ async function main(): Promise<void> {
   const allowExternalSharing = values.external === 'on';
 
   for (const domain of domains) {
-    if (!DOMAIN_PATTERN.test(domain)) {
+    if (!isValidDomain(domain)) {
       console.error(`✗ Invalid domain: "${domain}"`);
       process.exit(1);
     }
   }
   for (const email of admins) {
-    if (!EMAIL_PATTERN.test(email)) {
+    if (!isValidEmail(email)) {
       console.error(`✗ Invalid email: "${email}"`);
       process.exit(1);
     }
