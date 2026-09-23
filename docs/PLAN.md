@@ -88,7 +88,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 2.4 | Search helper                   | ✅     |
 | 2.5 | Firestore Security Rules        | ✅     |
 | 2.6 | Firestore indexes               | ✅     |
-| 2.7 | Security-rules tests (24 cases) | ⬜     |
+| 2.7 | Security-rules tests (24 cases) | ✅     |
 | 2.8 | CI workflow (GitHub Actions)    | ⬜     |
 
 ### Phase 3 — Web app: viewer · [details](plan/phase-3-web-viewer.md)
