@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { APP_ID } from './index.js';
+import { COLLECTIONS, DEMO_PROJECT_ID } from './index.js';
 
-describe('APP_ID', () => {
-  it('is set', () => {
-    expect(APP_ID).toBe('ba-dashboard');
+describe('index exports', () => {
+  it('re-exports constants', () => {
+    expect(DEMO_PROJECT_ID).toBe('demo-ba-dashboard');
+    expect(COLLECTIONS.reports).toBe('reports');
   });
 });

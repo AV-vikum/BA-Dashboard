@@ -82,7 +82,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 
 | #   | Step                            | Status |
 | --- | ------------------------------- | ------ |
-| 2.1 | Shared types and constants      | ⬜     |
+| 2.1 | Shared types and constants      | ✅     |
 | 2.2 | Email and domain helpers        | ⬜     |
 | 2.3 | Access computation helpers      | ⬜     |
 | 2.4 | Search helper                   | ⬜     |
