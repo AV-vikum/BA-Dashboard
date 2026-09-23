@@ -99,6 +99,34 @@ function collectWarnings(source: string, built: string): string[] {
   return warnings;
 }
 
+// Catches broken aggregation before it reaches readers: text like "undefined"/"NaN"
+// (a missing key or a failed number parse) and KPIs without a value.
+export function dataWarnings(data: unknown): string[] {
+  const warnings: string[] = [];
+  const visit = (value: unknown, at: string) => {
+    if (warnings.length >= 5) return;
+    if (typeof value === 'string' && /\b(undefined|NaN)\b/.test(value)) {
+      warnings.push(
+        `data.json ${at} contains "${value.match(/undefined|NaN/)![0]}": ${value.slice(0, 80)}`,
+      );
+    } else if (Array.isArray(value)) {
+      value.forEach((v, i) => visit(v, `${at}[${i}]`));
+    } else if (value && typeof value === 'object') {
+      for (const [k, v] of Object.entries(value)) visit(v, at ? `${at}.${k}` : k);
+    }
+  };
+  visit(data, '');
+  const kpis = (data as { kpis?: unknown }).kpis;
+  if (Array.isArray(kpis)) {
+    kpis.forEach((kpi: { label?: string; value?: unknown }, i) => {
+      if (typeof kpi?.value !== 'number') {
+        warnings.push(`data.json kpis[${i}] (${kpi?.label ?? 'no label'}) has no numeric value`);
+      }
+    });
+  }
+  return warnings;
+}
+
 /** Builds reports/<slug>/ (given as an absolute folder) into dist/report.html. */
 export function buildReportFolder(folder: string): BuildResult {
   const reportJson = readReportJson(folder);
@@ -155,7 +183,8 @@ export function buildReportFolder(folder: string): BuildResult {
   const outPath = path.join(outDir, 'report.html');
   writeFileSync(outPath, html);
 
-  return { outPath, bytes, warnings: collectWarnings(source, html), reportJson, html };
+  const warnings = [...dataWarnings(data), ...collectWarnings(source, html)];
+  return { outPath, bytes, warnings, reportJson, html };
 }
 
 const execFileAsync = promisify(execFile);

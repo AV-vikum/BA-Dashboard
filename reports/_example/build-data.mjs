@@ -55,6 +55,11 @@ const periodLabel = `${monthName(current[0])} – ${monthName(current.at(-1))}`;
 const deltaLabel = `vs ${monthName(previous[0])} – ${monthName(previous.at(-1))}`;
 
 const monthly = groupSum(orders, 'month', 'revenue');
+// Headline as a statement: change from the first to the latest month.
+const firstMonth = monthly.get(months[0]);
+const lastMonth = monthly.get(months.at(-1));
+const trendChange = Math.round((Math.abs(lastMonth - firstMonth) / firstMonth) * 100);
+const trendTitle = `Monthly revenue ${lastMonth >= firstMonth ? 'up' : 'down'} ${trendChange}% over ${months.length} months`;
 const byRegion = [...groupSum(cur, 'region', 'revenue')].sort((a, b) => b[1] - a[1]);
 const byCategory = [...groupSum(cur, 'category', 'revenue')].sort((a, b) => b[1] - a[1]);
 
@@ -120,11 +125,12 @@ const data = {
     revenueByRegion: { labels: byRegion.map(([k]) => k), values: byRegion.map(([, v]) => v) },
     revenueByCategory: { labels: byCategory.map(([k]) => k), values: byCategory.map(([, v]) => v) },
   },
+  text: { trendTitle },
   tables: { topProducts },
 };
 
 writeFileSync(path.join(here, 'data.json'), `${JSON.stringify(data, null, 2)}\n`);
 console.log(
   `✓ data.json written from ${rows.length} rows (${dropped} dropped) → ${months.length} months, ` +
-    `current period revenue ${t.revenue.toLocaleString('en')}`,
+    `current period revenue ${t.revenue.toLocaleString('en')} · "${trendTitle}"`,
 );

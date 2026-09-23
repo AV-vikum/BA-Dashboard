@@ -32,6 +32,8 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 
 **Acceptance:** Claude Code lists the skill.
 
+> Note (2026-09-24): the headless test session (8.4) used the skill automatically from `.claude/skills/`.
+
 ---
 
 ## 8.2 `SKILL.md` — workflow
@@ -70,6 +72,8 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 
 **Acceptance:** file reviewed for clarity; under ~150 lines.
 
+> Note (2026-09-24): `SKILL.md` is ~90 lines; details live in `references/`. Design rules follow the dataviz guidance: **no dual axes** (the original plan text allowed a combo chart with two axes — dropped), bars over donuts, colours follow the entity.
+
 ---
 
 ## 8.3 Reference files
@@ -92,6 +96,8 @@ description: Create, update, or refresh a dashboard report (charts, KPIs, tables
 
 **Acceptance:** an agent reading only these files could build the `_example` report.
 
+> Note (2026-09-24): verified in practice — the 8.4 session built a complete multi-chart report from these files alone.
+
 ---
 
 ## 8.4 End-to-end test
@@ -104,6 +110,8 @@ Check: the skill was used; raw CSV was **not** dumped into the chat; `data.json`
 
 **Acceptance:** notes recorded under this step; improvements applied.
 
+> Note (2026-09-24): Ran as one headless session together with step 8.4: `claude -p … --model sonnet --mcp-config .mcp.json --strict-mcp-config` (only the ba-dashboard MCP server), asked to build a regional-performance report `test-skill` from `_example/data/sales.csv`, publish it and share it with alice@example.com + Finance, without asking questions. Result: 30 turns, 107 s, ≈ $0.47 on Sonnet (≈ 44k new + 875k cached input tokens, 12k output). It inspected the CSV with scripts (no raw dump), wrote an aggregated `data.json` (7.8 KB), published, set access, and independently re-summed revenue (5,535,665 — matches). The publish/access tool round-trips were a few hundred tokens each. **Issue found:** the page script built a chart title from a missing key, so the published page read "undefined is the largest region…"; the session hadn't viewed the page (it said so). **Improvements applied:** (1) the skill now says to compute headline sentences in `build-data.mjs` (`data.json` → `text.*`) and print them, and to say plainly when it can't view the preview; (2) `build_report` now warns when `data.json` contains "undefined"/"NaN" text or a KPI without a numeric value; (3) `_example` follows the same pattern. Test report and folder deleted.
+
 ---
 
 ## 8.5 Using the skill in Claude Desktop
@@ -111,3 +119,5 @@ Check: the skill was used; raw CSV was **not** dumped into the chat; `data.json`
 **Do:** add to `docs/DEVELOPMENT.md` how to package the skill folder as a `.zip` and upload it in Claude Desktop / claude.ai skill settings (check current Claude docs for the exact menu path). Note that Desktop needs both the MCP server (7.4) and file access to `reports/`.
 
 **Acceptance:** instructions written; tested in Claude Desktop if available.
+
+> Note (2026-09-24): instructions (zip + Settings → Capabilities → Skills) written in `docs/DEVELOPMENT.md`; not tested in Claude Desktop from here.

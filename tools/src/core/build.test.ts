@@ -93,3 +93,24 @@ describe('createReportFolder', () => {
     expect(() => createReportFolder(dir, '../evil', 'x')).toThrow(/Invalid report slug/);
   });
 });
+
+describe('dataWarnings', () => {
+  it('flags "undefined"/"NaN" text and KPIs without a numeric value', async () => {
+    const { dataWarnings } = await import('./build.js');
+    const warnings = dataWarnings({
+      meta: { title: 'ok' },
+      text: { trendTitle: 'undefined is the largest region' },
+      kpis: [
+        { label: 'Revenue', value: 10 },
+        { label: 'Growth', value: null },
+      ],
+      series: { a: { labels: ['NaN%'] } },
+    });
+    expect(warnings).toEqual([
+      'data.json text.trendTitle contains "undefined": undefined is the largest region',
+      'data.json series.a.labels[0] contains "NaN": NaN%',
+      'data.json kpis[1] (Growth) has no numeric value',
+    ]);
+    expect(dataWarnings({ meta: {}, kpis: [{ label: 'x', value: 1 }] })).toEqual([]);
+  });
+});

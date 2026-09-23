@@ -25,6 +25,9 @@ Every result starts with the target — **check it says what the user expects** 
 1. **Never read large raw data into the conversation.** Inspect with a tiny script: row count,
    column names, 5 sample rows, min/max of dates. Then aggregate in `build-data.mjs`.
 2. `data.json` holds **aggregated** numbers only (aim < 200 KB). No numbers hard-coded in `report.html`.
+   **Compute headline sentences in `build-data.mjs`** (e.g. `text.trendTitle: "Western leads with 35% of revenue"`)
+   and print them in its summary line — a missing key there shows up as a build warning, not as
+   "undefined" on the published page.
 3. Use the `Report.*` helpers — see [references/helpers.md](references/helpers.md). Don't write
    custom chart, table or number-format code unless a helper can't do it.
 4. Follow [references/design.md](references/design.md) for layout, chart choice and wording.
@@ -45,7 +48,8 @@ Every result starts with the target — **check it says what the user expects** 
    starter's structure; `reports/_example/` is a complete worked example.
 6. Fill `report.json`: title, one-sentence description, 1–4 lower-case tags, `access`
    (emails, group names from `list_groups`, external `{ email, expires }`).
-7. `build_report` → fix every error; review warnings → `preview_report` → ask the user to look.
+7. `build_report` → fix every error; treat `data.json … contains "undefined"` warnings as errors →
+   `preview_report` → ask the user to look. If you cannot see the preview yourself, say so plainly.
 8. Run the quality checklist below, then `publish_report` → give the user the URL.
 
 ## Update or refresh

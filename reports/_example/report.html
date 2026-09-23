@@ -50,15 +50,8 @@
 
       Report.kpis('kpis', d.kpis);
 
-      // Headline as a statement: change from the first to the latest month.
+      document.getElementById('trend-title').textContent = d.text.trendTitle;
       var trend = d.series.monthlyRevenue;
-      var last = trend.values[trend.values.length - 1];
-      var first = trend.values[0];
-      document.getElementById('trend-title').textContent =
-        'Monthly revenue ' +
-        (last >= first ? 'up ' : 'down ') +
-        Report.fmt.percent(Math.abs(last - first) / first, { decimals: 0 }) +
-        ' over 12 months';
 
       Report.chart(
         'chart-trend',
