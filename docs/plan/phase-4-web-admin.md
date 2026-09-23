@@ -89,6 +89,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** upload `reports/_example/dist/report.html` (after Phase 5) or any small HTML file → draft appears, preview renders.
 
+> Note (2026-09-24): built `HtmlSourcePicker` (file drag-and-drop/click or paste tabs, size-vs-limit display, rejects non-`.html` files and over-limit content) as a shared component used by both `NewReportDialog` (this step) and a new `ReplaceHtmlDialog` (used from the detail page, step 4.5), plus a shared `TagsInput` chip component (also needed by 4.5). `reports/_example` doesn't exist yet (Phase 5), so this step was checked with a small hand-written `.html` file instead — `npm run check` and the production build pass; the live emulator walk-through (draft appears, preview renders) is pending together with step 4.5's check, per the note under 4.1.
+
 ---
 
 ## 4.5 Report detail page — layout, preview, details
