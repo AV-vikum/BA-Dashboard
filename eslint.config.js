@@ -12,7 +12,7 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx,mjs,js}'],
     languageOptions: {
       globals: globals.node,
     },

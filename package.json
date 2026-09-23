@@ -12,6 +12,9 @@
   },
   "scripts": {
     "report": "tsx tools/src/cli.ts",
+    "emulators": "node scripts/emulators.mjs --only auth,firestore",
+    "emulators:all": "node scripts/emulators.mjs",
+    "emulators:reset": "node scripts/emulators-reset.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

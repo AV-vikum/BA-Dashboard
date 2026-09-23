@@ -71,6 +71,8 @@ Relevant reference: [architecture A3 (environments)](architecture.md#a3-environm
 2. Start again → the document is still there.
 3. `npm run emulators:reset` → folder removed.
 
+> Note (2026-09-23): `npm run check`, `emulators:reset`, and the emulator boot/shutdown mechanics were verified by the agent. Steps 1–2 (Ctrl+C export-on-exit with a hand-added document) need a real interactive terminal/browser and were not exercised by the agent — please run them once yourself to confirm.
+
 ---
 
 ## 1.3 Tools: environment + firebase-admin connection

@@ -72,7 +72,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | #   | Step                                           | Status |
 | --- | ---------------------------------------------- | ------ |
 | 1.1 | `firebase.json`, placeholder rules and indexes | ✅     |
-| 1.2 | Emulator scripts with persistent data          | ⬜     |
+| 1.2 | Emulator scripts with persistent data          | ✅     |
 | 1.3 | Tools: environment + firebase-admin connection | ⬜     |
 | 1.4 | Setup script (allowed domains, admins)         | ⬜     |
 | 1.5 | Seed script (demo data)                        | ⬜     |
