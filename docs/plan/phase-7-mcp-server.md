@@ -107,3 +107,5 @@ Descriptions must mention: _"Reports live in folders under reports/<slug>/ — e
 Verify: folder created, built, published; Alice sees it in the web app. Record the approximate token usage of the publish round-trip (tool call + result). Delete the test report afterwards (web admin) and the folder.
 
 **Acceptance:** flow works end-to-end; notes recorded under this step.
+
+> Note (2026-09-24): Ran as one headless session together with step 8.4: `claude -p … --model sonnet --mcp-config .mcp.json --strict-mcp-config` (only the ba-dashboard MCP server), asked to build a regional-performance report `test-skill` from `_example/data/sales.csv`, publish it and share it with alice@example.com + Finance, without asking questions. Result: 30 turns, 107 s, ≈ $0.47 on Sonnet (≈ 44k new + 875k cached input tokens, 12k output). It inspected the CSV with scripts (no raw dump), wrote an aggregated `data.json` (7.8 KB), published, set access, and independently re-summed revenue (5,535,665 — matches). The publish/access tool round-trips were a few hundred tokens each.

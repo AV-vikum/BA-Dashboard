@@ -153,7 +153,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 7.2 | Tools                                        | ✅     |
 | 7.3 | Safety                                       | ✅     |
 | 7.4 | Client configuration (Claude Code / Desktop) | ✅     |
-| 7.5 | End-to-end test with Claude Code             | ⬜     |
+| 7.5 | End-to-end test with Claude Code             | ✅     |
 
 ### Phase 8 — Claude skill · [details](plan/phase-8-claude-skill.md)
 
