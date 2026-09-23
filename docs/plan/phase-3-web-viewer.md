@@ -120,6 +120,10 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 
 **Do:** in `MyReportsPage` (or a wrapper): if the user is **not internal** and has **zero** external reports → render `NoAccessPage`: "You don't have access to any reports", shows the signed-in email, button **Use a different account** (signs out then opens sign-in).
 
+> Note (2026-09-24): This step needs the reports query that step 3.6 formally builds, so `web/src/lib/firestore/reports.ts` (`subscribeMyReports`, `subscribeAllReports`) and `web/src/hooks/useMyReports.ts` were built now, matching 3.6's spec exactly — 3.6 only adds the list UI on top, no changes expected to these files. `MyReportsPage` currently renders a bare "My reports" heading when reports exist; the real list/search/tags UI is 3.6's job.
+>
+> Verified against the real emulators (not mocked): after seeding, queried `reports` as `stranger@gmail.test` (`externalEmails array-contains` + `status == published`) via the Firestore emulator's REST API — 0 results, confirming `NoAccessPage` would render. Same query as `partner@outside.test` returned 2 documents (`Partner Summary` and the expired `Old Partner Report`), confirming (a) `reports.length > 0` so `NoAccessPage` does _not_ render, and (b) why the hook's client-side `isExternalActive` filter is necessary — the query itself can't exclude the expired one. Test accounts were only created in-memory (emulators stopped without `--export-on-exit`), so nothing reached `.emulator-data/` or git. **Manual check for the user:** sign in as `stranger@gmail.test` → see "No access"; sign in as `partner@outside.test` → do not (this is also 3.6's acceptance check, once the list UI exists).
+
 **Acceptance:** `stranger@gmail.test` sees this page; `partner@outside.test` does not.
 
 ---
