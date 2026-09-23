@@ -1,5 +1,6 @@
 // Loads demo data into the emulator: access config, two groups, and five
 // reports covering published/draft/group/direct/external/expired access.
+// "Sales Overview" uses the built reports/_example dashboard.
 //
 // Emulator target only — refuses to run against production. Idempotent:
 // every document uses a fixed ID and is overwritten on each run.
@@ -7,6 +8,8 @@ import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { computeViewerEmails, type Group, type WithId } from '@ba/shared';
 import { assertEmulatorRunning, getDb } from '../core/firebase.js';
 import { env } from '../core/env.js';
+import { buildReportFolder } from '../core/build.js';
+import { reportFolder, resolveReportsDir } from '../core/paths.js';
 
 if (env.target !== 'emulator') {
   console.error('✗ npm run seed only runs against the emulator (BA_TARGET=production refused).');
@@ -106,6 +109,7 @@ async function main(): Promise<void> {
   const db = getDb();
   const updatedBy = `cli:${env.PUBLISHER_EMAIL}`;
   const now = FieldValue.serverTimestamp();
+  const exampleHtml = buildReportFolder(reportFolder(resolveReportsDir(env), '_example')).html;
 
   await db.doc('config/access').set({
     allowedDomains: ['example.com'],
@@ -140,7 +144,8 @@ async function main(): Promise<void> {
 
   for (const report of REPORTS) {
     const viewerEmails = computeViewerEmails(report.directEmails, report.groupIds, groupsWithId);
-    const html = placeholderHtml(report.title);
+    // Sales Overview shows the real example dashboard (built from reports/_example).
+    const html = report.id === 'demo-sales' ? exampleHtml : placeholderHtml(report.title);
 
     await db.doc(`reports/${report.id}`).set({
       title: report.title,

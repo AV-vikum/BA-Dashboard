@@ -49,6 +49,8 @@ function loadEmulatorEnv(): Env {
   // since firebase-admin picks these up from process.env directly.
   process.env.FIRESTORE_EMULATOR_HOST = parsed.FIRESTORE_EMULATOR_HOST;
   process.env.FIREBASE_AUTH_EMULATOR_HOST = parsed.FIREBASE_AUTH_EMULATOR_HOST;
+  // No Google Cloud metadata server locally — skip the probe (it only adds a timeout warning).
+  process.env.METADATA_SERVER_DETECTION ??= 'none';
 
   return {
     target: 'emulator',

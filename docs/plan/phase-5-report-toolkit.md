@@ -50,6 +50,8 @@ Export `ReportJsonSchema`, `type ReportJson`, and `parseReportJson(text)` with f
 
 **Acceptance:** a scratch HTML page using every class looks right at 375px and 1400px in both themes (open in a browser; delete the scratch page).
 
+> Note (2026-09-24): palette and chart chrome use the validated reference palette from the dataviz guidance (colour-blind-safe order, separate dark-mode steps). Checked with headless Chrome screenshots of the starter and `_example` reports in light/dark at 1280px and inside a 375px iframe (headless Chrome cannot shrink its window below ~500px, so a plain 375px screenshot is misleading).
+
 ---
 
 ## 5.3 Helper API — `templates/report-base/base.js`
@@ -89,6 +91,8 @@ Rules:
 - If ECharts failed to load, render a readable message in the chart box instead of throwing.
 
 **Acceptance:** a scratch page with fake data exercises every function in both themes; console has no errors.
+
+> Note (2026-09-24): added beyond the plan — every `Report.chart` gets an automatic **Table** toggle (accessible table view derived from the chart option; `categoryLabel` / `table` options override it); category labels shaped like `YYYY-MM` / `YYYY-MM-DD` are shown as dates; bar/line/pie marks follow the thin-mark spec (24px max bar, 4px rounded ends, 2px lines, 10% area wash); a legend only appears for 2+ series. Also exposed `Report.format`, `Report.colors()`, `Report.isDark()`.
 
 ---
 
@@ -145,6 +149,8 @@ Rules:
 
 **Acceptance:** files exist; `node templates/report-base/starter/build-data.mjs` runs with no data files (prints "no data files found, keeping data.json").
 
+> Note (2026-09-24): `csv-parse` and `exceljs` are **root** devDependencies (not `@ba/tools`), so `reports/<slug>/build-data.mjs` always resolves the current versions — installed under tools, npm hoisted an older copy from firebase-tools instead. Same issue made npm pick commander 5 / open 6 for tools; they are now pinned to the current majors.
+
 ---
 
 ## 5.5 Build, validate, and CLI commands `new` / `build` / `preview`
@@ -167,6 +173,8 @@ Rules:
 
 **Acceptance:** `npm run report -- new test-report --title "Test"` → `npm run report -- preview test-report` opens a working page; delete `reports/test-report`; tests pass.
 
+> Note (2026-09-24): `report build` / `preview` accept `--data` to run `build-data.mjs` first (the MCP `build_report` always does). Generated `reports/**/data.json` files are in `.prettierignore`.
+
 ---
 
 ## 5.6 Example report — `reports/_example/`
@@ -181,6 +189,8 @@ Rules:
 
 **Acceptance:** `node reports/_example/build-data.mjs && npm run report -- preview _example` shows a polished dashboard in both themes at 375px and desktop; built size well under the limit.
 
+> Note (2026-09-24): "revenue by category" uses a sorted horizontal bar instead of a donut (dataviz guidance: bars compare categories more accurately; donuts only for ≤ 6 parts at a glance). KPIs compare the latest 3 months with the 3 before. ECharts pinned to 6.1.0.
+
 ---
 
 ## 5.7 Seed uses the example report
@@ -188,3 +198,5 @@ Rules:
 **Do:** update `seed.ts` so `demo-sales` uses the **built** `_example` HTML (build it inside the seed via `buildReport('_example')`). Then re-run the CSP check from step 3.9 with this real ECharts report — `npm run preview:hosting` (see step 3.9's note: this runs `vite preview`, not the Hosting emulator, since the emulator doesn't apply `firebase.json`'s headers) — and record the result.
 
 **Acceptance:** after `npm run seed`, Alice opens _Sales Overview_ in the app and sees the full example dashboard; `npm run preview:hosting` shows it with no CSP errors.
+
+> Note (2026-09-24): CSP verified by serving the built example inside a sandboxed `srcdoc` iframe with the exact `Content-Security-Policy` header from `firebase.json` and loading it in headless Chrome: the dashboard renders fully (ECharts from cdn.jsdelivr.net) and Chrome logs no CSP violations. The full app sign-in flow was not automated (Google popup) — do one manual pass with `npm run dev` as Alice. Seed also sets `METADATA_SERVER_DETECTION=none` in emulator mode (removes a slow metadata-probe warning from firebase-admin).
