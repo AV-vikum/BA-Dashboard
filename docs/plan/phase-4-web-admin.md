@@ -174,6 +174,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** add domain `example.org` → a user `x@example.org` assigned to a report can now open it; turning external sharing off → partner can't see Partner Summary; cleanup removes `demo-expired`'s entry.
 
+> Note (2026-09-24): removing yourself as the last-visible admin explicitly calls `signOut()` after the write, rather than relying on `isAdmin` to flip reactively — `AuthProvider`'s `isAdmin` comes from a one-time `getDoc` on `config/admins` (re-run only when `config/access` changes, per its own comment in `AuthProvider.tsx`), not a live subscription, so without a forced sign-out the confirmed "You'll lose admin access immediately" wouldn't actually be immediate. `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under 4.1).
+
 ---
 
 ## 4.10 View as user
