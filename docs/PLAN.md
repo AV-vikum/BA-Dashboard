@@ -114,7 +114,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 4.2  | Admin data layer                                  | ✅     |
 | 4.3  | Reports page                                      | ✅     |
 | 4.4  | Create / replace report from HTML                 | ✅     |
-| 4.5  | Report detail page (preview, details)             | ⬜     |
+| 4.5  | Report detail page (preview, details)             | ✅     |
 | 4.6  | Access panel (people, groups, external)           | ⬜     |
 | 4.7  | People page                                       | ⬜     |
 | 4.8  | Groups page                                       | ⬜     |

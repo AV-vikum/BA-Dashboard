@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MessagePage } from '@/components/MessagePage';
 import { RelativeDate } from '@/components/RelativeDate';
+import { ReportFrame } from '@/components/ReportFrame';
 import { useAuth } from '@/auth/AuthContext';
 import { useTheme } from '@/hooks/useTheme';
 import { getReportContent, subscribeReport } from '@/lib/firestore/reports';
-import { withTheme } from '@/lib/report-frame';
 
 type ViewState =
   | { kind: 'loading' }
@@ -209,11 +209,9 @@ export function ReportViewerPage() {
         </Button>
       </header>
 
-      <iframe
+      <ReportFrame
+        html={state.html}
         title={state.report.title}
-        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-        referrerPolicy="no-referrer"
-        srcDoc={withTheme(state.html, resolvedTheme)}
         className="h-[calc(100dvh-3rem)] w-full border-0"
       />
     </div>

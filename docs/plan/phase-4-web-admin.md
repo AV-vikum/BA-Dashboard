@@ -106,6 +106,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** edit title → saved → Alice's list shows the new title live.
 
+> Note (2026-09-24): extracted the sandboxed iframe out of `ReportViewerPage` into a shared `ReportFrame` component (as instructed) and reused it here for the preview. The Access tab is a placeholder pending step 4.6. Content (the report HTML) is fetched once per `reportId`, not on every live metadata update, and explicitly re-fetched after Replace HTML — admins can always read `content/main` per the security rules, so no access-gating wait is needed the way the viewer page needs one. The Details form is keyed by `report.id` so switching reports (or a live update after Save) doesn't fight with in-progress local edits, instead of resetting via a setState-in-effect (which `npm run lint` flags as a cascading-render risk). `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under 4.1).
+
 ---
 
 ## 4.6 Access panel
