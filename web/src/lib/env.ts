@@ -11,6 +11,7 @@ const envSchema = z.object({
   VITE_APP_NAME: z.string().min(1),
   VITE_APP_LOGO_URL: z.string(),
   VITE_APP_PRIMARY_COLOR: z.string(),
+  VITE_APP_HINT_DOMAIN: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

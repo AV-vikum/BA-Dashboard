@@ -55,6 +55,24 @@ account needed. Use this to test different users, e.g.:
 
 The full table prints every time you run `npm run seed`.
 
+### Email verification
+
+Security Rules require `request.auth.token.email_verified == true` (see
+[architecture.md §A6](plan/architecture.md#a6-security-rules-target--implemented-in-step-25)).
+Accounts created through the Auth emulator's **"Add new account"** flow are
+**not** verified by default — the app signs them straight back out with a
+toast ("Your Google account email is not verified"). To fix this for a test
+account:
+
+1. Open the Emulator UI → **Authentication** tab.
+2. Click the user → **Edit user**.
+3. Check **"Email verified"** → Save.
+4. Sign in again in the app.
+
+This is purely a quirk of the emulator's fake accounts — real Google
+accounts are always verified, and the rules are never weakened to work
+around it.
+
 ## Resetting data
 
 ```sh

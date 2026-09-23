@@ -71,7 +71,7 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 
 **Acceptance:** navigating to each path renders the right placeholder; unknown paths show Not Found.
 
-> Note (2026-09-23): `RequireAuth`/`RequireAdmin` and `AppShell` are built against the **final** `AuthContext` shape from step 3.4 (`status`, `user`, `accessConfig`, `isInternal`, `isAdmin`, `signIn`, `signOut`), but `AuthProvider.tsx` is currently a **stub** (no Firebase calls) — per the plan's step order, real auth lands in 3.4. The stub reads `?stubAuth=signedOut|user|admin` from the URL (default `user`) so every guard and the Admin link can be checked now; `AuthProvider.tsx` has a `TODO(3.4)` marking what to replace. react-router installed at **v8** (latest stable per conventions.md §3, not the plan's v7) — `createBrowserRouter`/`RouterProvider` data-mode API is unchanged between the two.
+> Note (2026-09-23): `RequireAuth`/`RequireAdmin` and `AppShell` are built against the **final** `AuthContext` shape from step 3.4 (`status`, `user`, `accessConfig`, `isInternal`, `isAdmin`, `signIn`, `signOut`). `AuthProvider.tsx` shipped in this step as a **stub** (no Firebase calls, switchable via `?stubAuth=signedOut|user|admin`) so every guard and the Admin link could be checked ahead of real auth; step 3.4 replaced it with the real Firebase implementation — see the note there. react-router installed at **v8** (latest stable per conventions.md §3, not the plan's v7) — `createBrowserRouter`/`RouterProvider` data-mode API is unchanged between the two.
 >
 > Verified via `tsc -b`, `eslint`, and `vite build --mode development` (2194 modules, no errors). No headless-browser tool was available in this session to screenshot each route (see the same note under step 3.2). **Manual check for the user:** `npm run dev -w web`, then visit `/`, `/r/test-id`, `/admin`, and an unknown path — each should render its placeholder heading; try `/?stubAuth=admin` to see the Admin link in the top bar, `/?stubAuth=signedOut` to see the redirect to `/login`.
 
@@ -105,6 +105,14 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 6. **Check `email_verified` in the emulator:** sign in via the emulator popup and inspect the ID token claims (`(await auth.currentUser.getIdTokenResult()).claims.email_verified`). If it is `false` for emulator Google accounts, add a **dev-only** workaround: when `VITE_USE_EMULATORS === 'true'` document in DEVELOPMENT.md how to mark the user verified in the Emulator UI (Auth tab → edit user → "Email verified"). Do **not** weaken the rules.
 
 **Acceptance (manual, emulator):** sign in as `alice@example.com` → lands on `/`; a `users/{uid}` doc exists; sign out → back to `/login`; opening `/r/demo-sales` while signed out redirects to login and back after sign-in; `admin@example.com` sees the Admin link, Alice does not.
+
+> Note (2026-09-24): `AuthProvider.tsx` replaces the step-3.3 stub with the real Firebase implementation. `email_verified` documented in `docs/DEVELOPMENT.md` per item 6. No headless browser was available in this session (same limitation as 3.2/3.3), so the popup-based sign-in UI itself wasn't clicked through — but the parts that matter for correctness were verified for real against the emulators (not mocked), using the Auth emulator's REST API to obtain ID tokens and the Firestore emulator's REST API to exercise the exact operations `AuthProvider.tsx` performs:
+>
+> - An unverified-email token is **rejected by the rules** on every read (`config/access` → 403) — confirms the client-side sign-out-on-unverified check is backed by a real server-side rule, not just a UI nicety.
+> - After marking the test account verified (Emulator UI's own mechanism, via its REST equivalent — see the new DEVELOPMENT.md section), the same token: reads `config/access` (200, any signed-in user), is denied `config/admins` (403, confirming a non-admin gets `isAdmin: false` the same way the app detects it), and successfully writes `users/{uid}` with exactly the four allowed fields (`email`, `displayName`, `photoURL`, `lastLoginAt`).
+> - Test account and document were removed and the emulators stopped without exporting, so no test data reached `.emulator-data/` or git.
+>
+> **Manual check for the user (the part that needs a real browser):** `npm run dev`, sign in via the Auth emulator's popup as `alice@example.com` (mark the account "Email verified" in the Emulator UI first — see DEVELOPMENT.md), confirm landing on `/`, sign out, confirm opening `/r/demo-sales` signed-out redirects through `/login` and back; sign in as `admin@example.com` and confirm the Admin link appears (Alice's session should not show it).
 
 ---
 
