@@ -1,5 +1,7 @@
+import { ShieldOff } from 'lucide-react';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { MessagePage } from '@/components/MessagePage';
 import { useAuth } from '@/auth/AuthContext';
 
 export function NoAccessPage() {
@@ -16,10 +18,12 @@ export function NoAccessPage() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
-      <h1 className="text-2xl font-bold">You don't have access to any reports</h1>
-      <p className="text-sm text-muted-foreground">Signed in as {user?.email}</p>
+    <MessagePage
+      icon={ShieldOff}
+      title="You don't have access to any reports"
+      text={`Signed in as ${user?.email}`}
+    >
       <Button onClick={handleSwitchAccount}>Use a different account</Button>
-    </div>
+    </MessagePage>
   );
 }

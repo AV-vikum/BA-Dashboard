@@ -1,6 +1,8 @@
+import { FileQuestion } from 'lucide-react';
 import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
+import { MessagePage } from '@/components/MessagePage';
 
 export function NotFoundPage() {
   const appName = import.meta.env.VITE_APP_NAME;
@@ -10,12 +12,14 @@ export function NotFoundPage() {
   }, [appName]);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
-      <h1 className="text-2xl font-bold">Page not found</h1>
-      <p className="text-sm text-muted-foreground">The page you're looking for doesn't exist.</p>
+    <MessagePage
+      icon={FileQuestion}
+      title="Page not found"
+      text="The page you're looking for doesn't exist."
+    >
       <Button asChild>
         <Link to="/">Back to my reports</Link>
       </Button>
-    </div>
+    </MessagePage>
   );
 }
