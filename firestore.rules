@@ -1,6 +1,90 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} { allow read, write: if false; }
+
+    // A signed-in Google account with a verified email. Every other
+    // function builds on this.
+    function signedIn() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email_verified == true;
+    }
+    function email() { return request.auth.token.email.lower(); }
+    function accessCfg() { return get(/databases/$(database)/documents/config/access).data; }
+    function adminEmails() { return get(/databases/$(database)/documents/config/admins).data.emails; }
+    // "Internal" = the user's email domain is in the org's allowed list.
+    function isInternal() { return signedIn() && email().split('@')[1] in accessCfg().allowedDomains; }
+    function isAdmin() { return signedIn() && email() in adminEmails(); }
+
+    // A published report the internal user has been assigned (directly or
+    // via a group — viewerEmails is precomputed, see computeViewerEmails).
+    function internalViewer(r) {
+      return isInternal() && r.status == 'published' && email() in r.viewerEmails;
+    }
+    // A published report shared with an outside email, only while the
+    // global external-sharing switch is on.
+    function externalViewer(r) {
+      return signedIn() && accessCfg().allowExternalSharing == true
+        && r.status == 'published' && email() in r.externalEmails;
+    }
+    // externalExpiry has no entry for internal viewers; null = never expires.
+    function externalNotExpired(r) {
+      let exp = r.externalExpiry.get(email(), null);
+      return exp == null || exp > request.time;
+    }
+    function reportData(id) { return get(/databases/$(database)/documents/reports/$(id)).data; }
+
+    // Allowed domains + the external-sharing switch. Any signed-in user can
+    // read it (the web app needs it to tell internal from external), but
+    // only admins can change it.
+    match /config/access {
+      allow read: if signedIn();
+      allow write: if isAdmin()
+        && request.resource.data.allowedDomains is list
+        && request.resource.data.allowedDomains.size() > 0
+        && request.resource.data.allowExternalSharing is bool;
+    }
+    // The admin email list itself — not exposed to non-admins, and an
+    // admin can never remove every admin (would lock everyone out).
+    match /config/admins {
+      allow read: if isAdmin();
+      allow write: if isAdmin()
+        && request.resource.data.emails is list
+        && request.resource.data.emails.size() > 0;
+    }
+    // A user's own profile, written on sign-in. Admins can read any
+    // profile; a user can only read/write their own, and only the
+    // allowed fields, with an email matching their token.
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['email', 'displayName', 'photoURL', 'lastLoginAt'])
+        && request.resource.data.email == email();
+      allow delete: if isAdmin();
+    }
+    // Groups are an admin-only concept — members never read them directly;
+    // their effect is baked into each report's viewerEmails.
+    match /groups/{groupId} {
+      allow read, write: if isAdmin();
+    }
+    match /reports/{reportId} {
+      // Admins see everything (including drafts); internal/external
+      // viewers only see published reports they were assigned/shared.
+      allow read: if isAdmin()
+        || internalViewer(resource.data)
+        || externalViewer(resource.data);
+      // All writes (create, publish, edit access, delete) go through the
+      // Admin SDK (CLI/MCP) or the admin web UI.
+      allow write: if isAdmin();
+
+      // The report HTML, split out so viewers can be granted this without
+      // being able to read it directly from list queries on /reports.
+      match /content/{docId} {
+        allow read: if isAdmin()
+          || internalViewer(reportData(reportId))
+          || (externalViewer(reportData(reportId)) && externalNotExpired(reportData(reportId)));
+        allow write: if isAdmin();
+      }
+    }
   }
 }
