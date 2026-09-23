@@ -1,0 +1,188 @@
+# Phase 3 — Web app: viewer experience
+
+## Context
+The React app that every user sees: Google sign-in, "My reports" list with search, and the report viewer. Runs against the emulators (`web/.env.development`). Reference: [architecture A5–A8](architecture.md#a5-data-model-firestore), [conventions §5](conventions.md#5-coding-rules).
+
+Demo accounts from the seed (step 1.5) are used for all manual checks. In the Auth emulator's Google popup, click **"Add new account"** and type the email.
+
+---
+
+## 3.1 Scaffold the web app + `npm run dev`
+**Do:**
+1. Remove the placeholder `web/package.json`, then from the repo root: `npm create vite@latest web -- --template react-ts`. Set the package name to `@ba/web`; add dependency `"@ba/shared": "*"`; run `npm install` from the root.
+2. Delete the Vite demo content (counter, logos, `App.css`).
+3. Make `web/tsconfig*.json` extend/align with `tsconfig.base.json` (keep Vite's `tsconfig.app.json` / `tsconfig.node.json` split).
+4. Tailwind v4: install `tailwindcss @tailwindcss/vite`, add the plugin to `vite.config.ts`, and put `@import "tailwindcss";` in `src/index.css`.
+5. Path alias `@/*` → `web/src/*` in `tsconfig.json`, `tsconfig.app.json` and `vite.config.ts` (`resolve.alias`; install `@types/node`).
+6. shadcn/ui: in `web/` run `npx shadcn@latest init` (follow the current Vite guide; base colour **neutral**, CSS variables **yes**). Then add: `button input label textarea card badge table dialog alert-dialog dropdown-menu select tabs sonner avatar command popover calendar switch separator skeleton tooltip sheet scroll-area checkbox`.
+7. Install `react-router lucide-react firebase`.
+8. Web scripts: `dev`, `build` (`tsc -b && vite build`), `build:emulator` (`tsc -b && vite build --mode development`), `preview`, `typecheck`, `test` (`vitest run --passWithNoTests`).
+9. Root scripts:
+   ```json
+   "dev": "concurrently -n emulators,web -c yellow,cyan \"npm run emulators\" \"npm run dev -w web\"",
+   "build": "npm run build --workspaces --if-present"
+   ```
+
+**Acceptance:** `npm run dev` starts both; http://localhost:5173 shows a blank page styled by Tailwind (e.g. a test `<h1 className="text-2xl font-bold">`); `npm run check` passes.
+
+---
+
+## 3.2 Firebase initialization and env validation
+**Do:**
+1. `web/src/vite-env.d.ts`: type all `VITE_*` variables (see [A4](architecture.md#environment-variables)).
+2. `web/src/lib/env.ts`: read + validate with zod; if invalid, export the list of problems.
+3. `web/src/lib/firebase.ts`:
+   - `initializeApp({ apiKey, authDomain, projectId, appId })`
+   - `auth = getAuth(app)`, `db = getFirestore(app)`
+   - If `VITE_USE_EMULATORS === 'true'`: `connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true })` and `connectFirestoreEmulator(db, '127.0.0.1', 8080)` — guarded so it runs once (HMR).
+4. `main.tsx`: if env is invalid, render a plain "Configuration error" screen listing the missing variables instead of the app.
+5. When using emulators, show a small fixed badge "Emulator mode" in the bottom-left corner.
+
+**Acceptance:** app loads with the dev env; temporarily removing `VITE_FIREBASE_PROJECT_ID` shows the configuration error screen (restore it afterwards).
+
+---
+
+## 3.3 Routing and app shell
+**Do:**
+1. `web/src/router.tsx` using React Router v7 **data mode** (`createBrowserRouter` + `RouterProvider`; check current docs for import paths):
+
+| Path | Component | Guard |
+|---|---|---|
+| `/login` | `LoginPage` | public (redirects to `/` if already signed in) |
+| `/` | `MyReportsPage` | `RequireAuth` |
+| `/r/:reportId` | `ReportViewerPage` | `RequireAuth` |
+| `/admin` | `AdminLayout` (Phase 4) | `RequireAuth` + `RequireAdmin` |
+| `*` | `NotFoundPage` | public |
+
+   Admin child routes are added in Phase 4 — for now `/admin` renders a placeholder.
+2. `AppShell` layout (for `/` and `/r/:id`): top bar with logo/app name (from env) linking to `/`, an **Admin** link (only if `isAdmin`), and a user menu (avatar, name, email, theme toggle, Sign out). The report viewer uses a slimmer bar (step 3.7).
+3. Add `<Toaster />` (sonner) once at the root.
+4. Set `document.title` per page (`<page> · <APP_NAME>`).
+
+**Acceptance:** navigating to each path renders the right placeholder; unknown paths show Not Found.
+
+---
+
+## 3.4 Authentication
+**Do:**
+1. `web/src/auth/AuthProvider.tsx` exposing via context:
+   ```ts
+   {
+     status: 'loading' | 'signedOut' | 'signedIn';
+     user: { uid, email, displayName, photoURL } | null;   // email normalized
+     accessConfig: AccessConfig | null;                     // live (onSnapshot)
+     isInternal: boolean;
+     isAdmin: boolean;                                      // true if config/admins is readable
+     signIn(): Promise<void>;
+     signOut(): Promise<void>;
+   }
+   ```
+2. On auth state change → signed in:
+   - If `email_verified` is false → sign out and show an error toast ("Your Google account email is not verified").
+   - Upsert `users/{uid}` with `{ email, displayName, photoURL, lastLoginAt: serverTimestamp() }` (`setDoc` merge). Only these four fields (rules reject others).
+   - Subscribe to `config/access`. `isInternal = isInternalEmail(email, allowedDomains)`.
+   - Try `getDoc(config/admins)` → success ⇒ `isAdmin = true`; `permission-denied` ⇒ `false`. Re-check when `config/access` changes.
+   - Status becomes `signedIn` only after these resolve (avoid flicker).
+3. `signIn()`: `signInWithPopup(auth, provider)` with `GoogleAuthProvider` and `setCustomParameters({ prompt: 'select_account', ...(domains.length === 1 ? { hd: domains[0] } : {}) })`. Domains aren't known before sign-in, so read them from `VITE_APP_HINT_DOMAIN` (optional env var — add it to `.env.example`, empty by default). `hd` is only a hint; rules are the real check. Handle `auth/popup-closed-by-user` silently; other errors → toast.
+4. `RequireAuth`: loading → full-page spinner; signed out → redirect to `/login?next=<current path>`.
+5. `LoginPage`: centred card — logo, app name, short text ("Sign in with your work Google account"), **Sign in with Google** button. After sign-in navigate to `next` or `/`.
+6. **Check `email_verified` in the emulator:** sign in via the emulator popup and inspect the ID token claims (`(await auth.currentUser.getIdTokenResult()).claims.email_verified`). If it is `false` for emulator Google accounts, add a **dev-only** workaround: when `VITE_USE_EMULATORS === 'true'` document in DEVELOPMENT.md how to mark the user verified in the Emulator UI (Auth tab → edit user → "Email verified"). Do **not** weaken the rules.
+
+**Acceptance (manual, emulator):** sign in as `alice@example.com` → lands on `/`; a `users/{uid}` doc exists; sign out → back to `/login`; opening `/r/demo-sales` while signed out redirects to login and back after sign-in; `admin@example.com` sees the Admin link, Alice does not.
+
+---
+
+## 3.5 "No access" page
+**Do:** in `MyReportsPage` (or a wrapper): if the user is **not internal** and has **zero** external reports → render `NoAccessPage`: "You don't have access to any reports", shows the signed-in email, button **Use a different account** (signs out then opens sign-in).
+
+**Acceptance:** `stranger@gmail.test` sees this page; `partner@outside.test` does not.
+
+---
+
+## 3.6 My reports page
+**Do:**
+1. `web/src/lib/firestore/reports.ts`:
+   - `subscribeMyReports(email, isInternal, cb)`:
+     - internal: `query(reports, where('viewerEmails','array-contains',email), where('status','==','published'), orderBy('updatedAt','desc'))`
+     - external: same with `externalEmails`
+   - `subscribeAllReports(cb)` (admins): all reports, `orderBy('updatedAt','desc')`.
+   - Map docs to `WithId<Report>`.
+2. `useMyReports()` hook: admins get **all published reports** on the home page (they manage everything anyway); others use the query above. External users: filter out entries where `isExternalActive` is false.
+3. Page layout:
+   - Heading "My reports" + count.
+   - Search input (placeholder "Search reports…", `/` keyboard shortcut focuses it, `Esc` clears).
+   - Tag chips (from `collectTags`) — click toggles; multiple = AND.
+   - Sort: "Recently updated" (default) / "Title A–Z".
+   - Search, tags and sort stored in the URL (`?q=&tags=a,b&sort=title`) so back/forward and sharing work.
+   - Responsive card grid (1 / 2 / 3 columns): title, description (2-line clamp), tags as badges, "Updated 3 days ago" (tooltip with the exact date). The whole card is a link to `/r/:id`.
+   - Loading: 6 skeleton cards. Empty states: *"No reports have been shared with you yet."* / *"No reports match your search."* + Clear button.
+4. Use `filterReports` from `@ba/shared` (no custom search code in the component).
+
+**Acceptance (emulator):** Alice sees exactly *Sales Overview* and *Partner Summary*; typing "sales" narrows to one; clicking a tag filters; the URL updates; reloading keeps the filter; `partner@outside.test` sees only *Partner Summary*.
+
+---
+
+## 3.7 Report viewer
+**Do:**
+1. `web/src/lib/firestore/reports.ts`: `subscribeReport(id, cb, onError)` (live metadata — so unpublishing takes effect) and `getReportContent(id)` (one-time `getDoc` of `content/main`).
+2. `web/src/lib/report-frame.ts`: `withTheme(html, theme)` — adds/replaces `data-theme="…"` on the first `<html` tag (string manipulation, handle missing `<html>` by wrapping). Unit-test it.
+3. `ReportViewerPage`:
+   - Slim top bar: back arrow (to `/`, keeping the previous list URL if available), report title, "Updated …", **Manage** button for admins (→ `/admin/reports/:id`), **Copy link** button, theme toggle.
+   - Body: `<iframe>` with the attributes from [A8](architecture.md#a8-report-rendering), `srcDoc={withTheme(html, theme)}`, filling the remaining height (`h-[calc(100dvh-<bar height>)]`, `w-full`, no border).
+   - Loading skeleton while content loads.
+   - Error states (step 3.8).
+4. Never render report HTML with `dangerouslySetInnerHTML` — only via the sandboxed iframe.
+
+**Acceptance (emulator):** Alice opens *Sales Overview* → the placeholder report renders and its inline script output is visible (scripts run); in DevTools, running `parent.document` inside the iframe console throws a cross-origin error (sandbox works); toggling the theme re-renders the report in dark mode.
+
+---
+
+## 3.8 Error pages
+**Do:** a shared `MessagePage` component (icon, title, text, actions). Cases in the viewer:
+
+| Situation | How detected | Message |
+|---|---|---|
+| Not found **or** no access | metadata read fails with `permission-denied` or doc missing | "Report not available — it doesn't exist or it hasn't been shared with you." + Back to my reports |
+| External access expired | metadata OK, user is external and `isExternalActive` is false (or content read denied) | "Your access to this report has expired. Contact the person who shared it." |
+| Report unpublished while open | live metadata changes to `status: 'draft'` (non-admin) | same as "not available" |
+| Network/other error | anything else | "Something went wrong" + Retry |
+
+**Acceptance (emulator):** Eve opening `/r/demo-sales` → "not available"; partner opening `/r/demo-expired` → "expired"; admin unpublishing `demo-sales` in the Emulator UI while Alice has it open → Alice sees "not available".
+
+---
+
+## 3.9 Security headers and CSP (tested on the Hosting emulator)
+**Why:** the `srcdoc` iframe inherits the app's CSP, so the policy must allow report needs. v1 trade-off (Decision log): `script-src` includes `'unsafe-inline'` and the chart CDNs. The app itself never injects HTML, and the report iframe is sandboxed, which limits the risk. Backlog B.7 removes the trade-off.
+
+**Do:**
+1. In `firebase.json` → `hosting.headers`, for `"source": "**"`:
+   - `Content-Security-Policy` (start from this and adjust **only** if something breaks — note any change):
+     ```
+     default-src 'self';
+     script-src 'self' 'unsafe-inline' https://apis.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
+     font-src 'self' data: https://fonts.gstatic.com;
+     img-src 'self' data: blob: https:;
+     connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com http://127.0.0.1:9099 http://127.0.0.1:8080;
+     frame-src 'self' https://*.firebaseapp.com https://*.web.app https://accounts.google.com http://127.0.0.1:9099;
+     object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+     ```
+     (The `127.0.0.1` entries let the hosting-emulator build talk to the emulators; they are harmless in production.)
+   - `X-Content-Type-Options: nosniff`
+   - `Referrer-Policy: strict-origin-when-cross-origin`
+   - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+   - For `"source": "/assets/**"`: `Cache-Control: public, max-age=31536000, immutable`; for `index.html`: `Cache-Control: no-cache`.
+2. Root script: `"preview:hosting": "npm run build:emulator -w web && node scripts/emulators.mjs --only auth,firestore,hosting"`.
+
+**Acceptance:** `npm run preview:hosting`, open http://localhost:5000: sign-in works, a report with an ECharts chart from `cdn.jsdelivr.net` renders (use a temporary seed report or wait for Phase 5 and re-check in 5.7), and the browser console shows **no CSP violations**. Record the result under this step.
+
+---
+
+## 3.10 Theme, responsiveness, accessibility
+**Do:**
+1. Theme: `light | dark | system`, stored in `localStorage` (wrapped in try/catch), applied as the `dark` class on `<html>` per shadcn's Vite dark-mode guide. The viewer passes the *resolved* theme to `withTheme`.
+2. Check every page at **375px** width: no horizontal scroll; the top bar collapses sensibly (user menu holds secondary actions).
+3. Keyboard: all actions reachable with Tab; visible focus; `Esc` closes dialogs/menus.
+4. Labels: search input has an accessible label; icon-only buttons have `aria-label`.
+
+**Acceptance:** manual pass at 375px and desktop in both themes; `npm run check` passes.
