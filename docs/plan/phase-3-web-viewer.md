@@ -71,6 +71,10 @@ Admin child routes are added in Phase 4 — for now `/admin` renders a placehold
 
 **Acceptance:** navigating to each path renders the right placeholder; unknown paths show Not Found.
 
+> Note (2026-09-23): `RequireAuth`/`RequireAdmin` and `AppShell` are built against the **final** `AuthContext` shape from step 3.4 (`status`, `user`, `accessConfig`, `isInternal`, `isAdmin`, `signIn`, `signOut`), but `AuthProvider.tsx` is currently a **stub** (no Firebase calls) — per the plan's step order, real auth lands in 3.4. The stub reads `?stubAuth=signedOut|user|admin` from the URL (default `user`) so every guard and the Admin link can be checked now; `AuthProvider.tsx` has a `TODO(3.4)` marking what to replace. react-router installed at **v8** (latest stable per conventions.md §3, not the plan's v7) — `createBrowserRouter`/`RouterProvider` data-mode API is unchanged between the two.
+>
+> Verified via `tsc -b`, `eslint`, and `vite build --mode development` (2194 modules, no errors). No headless-browser tool was available in this session to screenshot each route (see the same note under step 3.2). **Manual check for the user:** `npm run dev -w web`, then visit `/`, `/r/test-id`, `/admin`, and an unknown path — each should render its placeholder heading; try `/?stubAuth=admin` to see the Admin link in the top bar, `/?stubAuth=signedOut` to see the redirect to `/login`.
+
 ---
 
 ## 3.4 Authentication

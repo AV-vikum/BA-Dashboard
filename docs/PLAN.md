@@ -97,7 +97,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | ---- | ------------------------------------ | ------ |
 | 3.1  | Scaffold web app + `npm run dev`     | ✅     |
 | 3.2  | Firebase init and env validation     | ✅     |
-| 3.3  | Routing and app shell                | ⬜     |
+| 3.3  | Routing and app shell                | ✅     |
 | 3.4  | Authentication (Google sign-in)      | ⬜     |
 | 3.5  | "No access" page                     | ⬜     |
 | 3.6  | My reports page (list, search, tags) | ⬜     |
