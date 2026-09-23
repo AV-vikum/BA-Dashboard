@@ -160,6 +160,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance:** add `eve@example.com` to Finance → Eve sees Sales Overview and Partner Summary; delete Management → Carol loses HR Headcount.
 
+> Note (2026-09-24): `GroupDialog` initializes its form fields directly from props in a component keyed by `group?.id ?? 'new'` (remounts fresh on open/switch) instead of a setState-in-effect, same fix as steps 4.5/4.6. Members textarea accepts one-per-line or comma-separated (via `parseEmailList`); emails outside the allowed domains are silently dropped with a warning toast rather than rejecting the whole save, so a mostly-valid paste still goes through. `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under 4.1).
+
 ---
 
 ## 4.9 Settings page
