@@ -1,53 +1,44 @@
-# Docs (excluded from version control per project decision)
-docs/
-
-# Dependencies
+# Dependencies & builds
 node_modules/
-
-# Build output
 dist/
-build/
 *.tsbuildinfo
+coverage/
 
-# Environment & secrets
-.env
-.env.*
-!.env.example
-*.key.json
-serviceAccountKey*.json
+# Environment files — only examples and the demo dev file are committed.
+# The "!" lines must stay AFTER the ignore lines (the last matching rule wins).
+**/.env
+**/.env.*
+!**/.env.example
+!web/.env.development
 
 # Firebase
+.firebaserc
 .firebase/
-firebase-debug.log
-firebase-debug.*.log
-firestore-debug.log
-ui-debug.log
-pubsub-debug.log
-database-debug.log
-*.emulator-data/
-.runtimeconfig.json
+.emulator-data/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+database-debug.log*
+pubsub-debug.log*
 
-# Real report data (never goes into git — see CLAUDE.md)
+# Secrets (defence in depth — keys must live OUTSIDE the repo anyway)
+*service-account*.json
+*serviceAccount*.json
+*-firebase-adminsdk-*.json
+*.pem
+*.key
+
+# MCP client config (may contain local paths)
+.mcp.json
+
+# Reports: company data stays local. Only the example is committed.
 reports/*
-!reports/_example
-!reports/_example/**
+!reports/_example/
+reports/_example/dist/
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-*.log
-
-# Editor / OS
+# OS / editor
+.DS_Store
+Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
-.DS_Store
-Thumbs.db
-
-# Test / coverage
-coverage/
-.nyc_output/
-
-# Misc
-*.local
