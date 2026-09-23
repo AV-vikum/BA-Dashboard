@@ -159,8 +159,8 @@ The agent picks the next open step, does it, updates the status here, commits, a
 
 | #   | Step                              | Status |
 | --- | --------------------------------- | ------ |
-| 8.1 | Skill structure                   | ⬜     |
-| 8.2 | `SKILL.md` workflow               | ⬜     |
+| 8.1 | Skill structure                   | ✅     |
+| 8.2 | `SKILL.md` workflow               | ✅     |
 | 8.3 | Reference files                   | ⬜     |
 | 8.4 | End-to-end test                   | ⬜     |
 | 8.5 | Using the skill in Claude Desktop | ⬜     |
