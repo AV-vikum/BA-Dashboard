@@ -113,12 +113,12 @@ export function MyReportsPage() {
 
   return (
     <div className="flex flex-col gap-4 p-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">
           My reports <span className="text-muted-foreground">({reports.length})</span>
         </h1>
         <Select value={sort} onValueChange={(value) => updateParam('sort', value)}>
-          <SelectTrigger className="w-48" aria-label="Sort reports">
+          <SelectTrigger className="w-full sm:w-48" aria-label="Sort reports">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -129,7 +129,10 @@ export function MyReportsPage() {
       </div>
 
       <div className="relative max-w-sm">
-        <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Search
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground"
+        />
         <Input
           ref={searchInputRef}
           value={query}
@@ -142,16 +145,21 @@ export function MyReportsPage() {
 
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {tags.map(({ tag, count }) => (
-            <Badge
-              key={tag}
-              variant={activeTags.includes(tag) ? 'default' : 'outline'}
-              className="cursor-pointer"
-              onClick={() => toggleTag(tag)}
-            >
-              {tag} ({count})
-            </Badge>
-          ))}
+          {tags.map(({ tag, count }) => {
+            const active = activeTags.includes(tag);
+            return (
+              <Badge key={tag} variant={active ? 'default' : 'outline'} asChild>
+                <button
+                  type="button"
+                  onClick={() => toggleTag(tag)}
+                  aria-pressed={active}
+                  className="cursor-pointer"
+                >
+                  {tag} ({count})
+                </button>
+              </Badge>
+            );
+          })}
         </div>
       )}
 

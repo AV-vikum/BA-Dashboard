@@ -1,4 +1,4 @@
-import { Moon, Sun } from 'lucide-react';
+import { Laptop, Moon, Sun } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -8,11 +8,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/auth/AuthContext';
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme, type Theme } from '@/hooks/useTheme';
 
 function initials(name: string | null, email: string): string {
   if (name) {
@@ -24,7 +26,7 @@ function initials(name: string | null, email: string): string {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { user, isAdmin, signOut } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const appName = import.meta.env.VITE_APP_NAME;
   const logoUrl = import.meta.env.VITE_APP_LOGO_URL;
@@ -36,13 +38,13 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="flex h-14 shrink-0 items-center justify-between border-b px-4">
-        <Link to="/" className="flex items-center gap-2 font-semibold">
-          {logoUrl ? <img src={logoUrl} alt="" className="h-6 w-6" /> : null}
-          <span>{appName}</span>
+      <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b px-4">
+        <Link to="/" className="flex min-w-0 items-center gap-2 font-semibold">
+          {logoUrl ? <img src={logoUrl} alt="" className="h-6 w-6 shrink-0" /> : null}
+          <span className="truncate">{appName}</span>
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           {isAdmin && (
             <Button variant="ghost" size="sm" asChild>
               <Link to="/admin">Admin</Link>
@@ -73,17 +75,20 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={toggleTheme}>
-                {theme === 'dark' ? (
-                  <>
-                    <Sun /> Light mode
-                  </>
-                ) : (
-                  <>
-                    <Moon /> Dark mode
-                  </>
-                )}
-              </DropdownMenuItem>
+              <DropdownMenuLabel className="font-normal text-muted-foreground">
+                Theme
+              </DropdownMenuLabel>
+              <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as Theme)}>
+                <DropdownMenuRadioItem value="light">
+                  <Sun /> Light
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dark">
+                  <Moon /> Dark
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system">
+                  <Laptop /> System
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onSelect={handleSignOut}>Sign out</DropdownMenuItem>
             </DropdownMenuContent>

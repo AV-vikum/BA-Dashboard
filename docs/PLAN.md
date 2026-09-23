@@ -104,7 +104,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 3.7  | Report viewer (sandboxed iframe)     | ✅     |
 | 3.8  | Error pages                          | ✅     |
 | 3.9  | Security headers and CSP             | ✅     |
-| 3.10 | Theme, responsiveness, accessibility | ⬜     |
+| 3.10 | Theme, responsiveness, accessibility | ✅     |
 
 ### Phase 4 — Web app: admin · [details](plan/phase-4-web-admin.md)
 

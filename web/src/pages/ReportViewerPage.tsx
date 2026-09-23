@@ -46,7 +46,7 @@ type ContentResult = { html: string | null; error: unknown };
 export function ReportViewerPage() {
   const { reportId } = useParams();
   const { user, isAdmin, isInternal } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const appName = import.meta.env.VITE_APP_NAME;
@@ -199,8 +199,13 @@ export function ReportViewerPage() {
         <Button variant="ghost" size="icon" aria-label="Copy link" onClick={copyLink}>
           <Copy />
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Toggle theme" onClick={toggleTheme}>
-          {theme === 'dark' ? <Sun /> : <Moon />}
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Toggle theme"
+          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+        >
+          {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
         </Button>
       </header>
 
@@ -208,7 +213,7 @@ export function ReportViewerPage() {
         title={state.report.title}
         sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
         referrerPolicy="no-referrer"
-        srcDoc={withTheme(state.html, theme)}
+        srcDoc={withTheme(state.html, resolvedTheme)}
         className="h-[calc(100dvh-3rem)] w-full border-0"
       />
     </div>
