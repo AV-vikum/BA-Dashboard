@@ -64,7 +64,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 0.6  | `tools` package skeleton                            | ✅     |
 | 0.7  | Lint, format, typecheck, `npm run check`            | ✅     |
 | 0.8  | Example config files                                | ✅     |
-| 0.9  | Pre-commit secret scanning                          | ⬜     |
+| 0.9  | Pre-commit secret scanning                          | ✅     |
 | 0.10 | License and README skeleton 👤 confirm license      | ⬜     |
 
 ### Phase 1 — Local environment (emulators) · [details](plan/phase-1-local-environment.md)

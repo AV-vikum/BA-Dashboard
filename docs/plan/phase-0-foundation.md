@@ -209,6 +209,7 @@ And confirm `web/.env.development` **would** be tracked (`git check-ignore -v we
 **Acceptance:**
 
 1. Create `tmp-secret-test.txt` containing a fake private key block (a line `-----BEGIN PRIVATE KEY-----`, a line of random base64 text, a line `-----END PRIVATE KEY-----`), `git add` it, try to commit → the commit is **blocked**.
+   > Note (2026-09-23): `@secretlint/secretlint-rule-privatekey`'s PEM pattern requires the base64 body to be 100–10000 characters — a single short line of random text does not trigger it. Use several wrapped lines (~600+ bytes of base64) for the test body.
 2. `git reset tmp-secret-test.txt` and delete the file.
 3. `npm run secrets:scan` reports nothing.
 
