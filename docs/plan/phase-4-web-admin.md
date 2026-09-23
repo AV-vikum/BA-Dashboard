@@ -75,6 +75,8 @@ Unit-test the pure parts (validation, batch splitting) with Vitest; Firestore-to
 
 **Acceptance (emulator):** all 5 demo reports listed incl. the draft; filters work; unpublish → Alice's list updates live; delete a report → gone for everyone (re-seed afterwards).
 
+> Note (2026-09-24): the **New report** button opens `NewReportDialog`, a placeholder stub — the real dialog is step 4.4's scope per this step's own text. `npm run check` and the production build pass; the live emulator walk-through wasn't run this session (see the note under step 4.1 — no emulators running, and an existing dev server was already up on 5173). Please verify with `npm run dev` when convenient, ideally together with 4.4's check once the New report dialog is real.
+
 ---
 
 ## 4.4 Create / replace report from HTML
