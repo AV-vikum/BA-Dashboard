@@ -75,7 +75,7 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 1.2 | Emulator scripts with persistent data          | ✅     |
 | 1.3 | Tools: environment + firebase-admin connection | ✅     |
 | 1.4 | Setup script (allowed domains, admins)         | ✅     |
-| 1.5 | Seed script (demo data)                        | ⬜     |
+| 1.5 | Seed script (demo data)                        | ✅     |
 | 1.6 | `docs/DEVELOPMENT.md`                          | ⬜     |
 
 ### Phase 2 — Data model & security rules · [details](plan/phase-2-data-and-rules.md)

@@ -16,6 +16,7 @@
     "emulators:all": "node scripts/emulators.mjs",
     "emulators:reset": "node scripts/emulators-reset.mjs",
     "setup": "tsx tools/src/scripts/setup.ts",
+    "seed": "tsx tools/src/scripts/seed.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
