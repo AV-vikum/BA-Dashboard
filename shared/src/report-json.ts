@@ -15,7 +15,9 @@ const DATE = z
   .refine((s) => !Number.isNaN(Date.parse(`${s}T00:00:00`)), 'must be a real calendar date');
 
 export const ReportJsonSchema = z.object({
-  reportId: z.string().min(1).nullable().default(null),
+  // Firestore report ID per Firebase project, filled by publish: { "demo-ba-dashboard": "Ab12…" }.
+  // Keyed by project so the same folder can be published to the emulator and to production.
+  reportIds: z.record(z.string(), z.string().min(1)).default({}),
   title: z.string().trim().min(1, 'is required').max(LIMITS.titleMax),
   description: z.string().trim().max(LIMITS.descriptionMax).default(''),
   tags: z

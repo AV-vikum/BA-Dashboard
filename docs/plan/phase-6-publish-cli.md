@@ -27,6 +27,8 @@ CLI commands that talk to Firestore via `firebase-admin` (rules are bypassed —
 
 **Acceptance:** unit-level test against the emulator in 6.6.
 
+> Note (2026-09-24): `report.json` stores **`reportIds`** — a map of Firebase project id → report id — instead of a single `reportId`, so the same folder can be published to the emulator and to production without "not found" errors or cross-target mix-ups (Decision log). Firestore reads shared by all commands live in `core/store.ts`; result formatting for CLI and MCP in `core/format.ts`.
+
 ---
 
 ## 6.2 `report publish <slug> [--draft]`
@@ -43,6 +45,8 @@ CLI commands that talk to Firestore via `firebase-admin` (rules are bypassed —
 ```
 
 **Acceptance:** publishing `_example` twice creates once and updates once (same URL); Alice (member of Finance) sees it in the web app.
+
+> Note (2026-09-24): verified against the emulator with a copy of `_example`: create → update (same URL, `reportIds` written back). Steps 6.1–6.5 were committed together because they share one module set.
 
 ---
 
@@ -73,6 +77,8 @@ CLI commands that talk to Firestore via `firebase-admin` (rules are bypassed —
 
 **Acceptance:** add/remove person, group, external with expiry — verify in the web app's Access panel.
 
+> Note (2026-09-24): also warns when a removed person still has access through a group, and when an external expiry date is already in the past. Group names are case-insensitive.
+
 ---
 
 ## 6.5 `report pull <id> [--slug <name>]` and `report unpublish <slug|id>`
@@ -95,3 +101,5 @@ CLI commands that talk to Firestore via `firebase-admin` (rules are bypassed —
 3. Add `npm run test:tools:int` to the CI workflow (step 2.8 file).
 
 **Acceptance:** all tests pass locally.
+
+> Note (2026-09-24): `npm run test:tools:int` (`scripts/test-tools-int.mjs`) uses the emulator already running on :8080 if there is one — the tests use their own project `demo-ba-tools-int` and a temp reports dir, so dev data is untouched — otherwise it starts one with `emulators:exec`. Unit tests (`tools/vitest.config.ts`) exclude `*.int.test.ts`. Added to CI.

@@ -19,7 +19,7 @@ Reference: [A8 report rendering](architecture.md#a8-report-rendering), [A7 owner
 
 ```jsonc
 {
-  "reportId": null, // filled by the first publish — do not edit
+  "reportIds": {}, // filled by publish, one id per Firebase project — do not edit
   "title": "Sales Overview Q3 2026", // 1–120
   "description": "Revenue, orders and top products for Q3.", // 0–500
   "tags": ["sales", "quarterly"], // lower-case, max 10

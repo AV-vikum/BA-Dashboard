@@ -138,11 +138,11 @@ The agent picks the next open step, does it, updates the status here, commits, a
 
 | #   | Step                                 | Status |
 | --- | ------------------------------------ | ------ |
-| 6.1 | Publish core                         | ⬜     |
-| 6.2 | `report publish`                     | ⬜     |
-| 6.3 | `report list` and `report groups`    | ⬜     |
-| 6.4 | `report access`                      | ⬜     |
-| 6.5 | `report pull` and `report unpublish` | ⬜     |
+| 6.1 | Publish core                         | ✅     |
+| 6.2 | `report publish`                     | ✅     |
+| 6.3 | `report list` and `report groups`    | ✅     |
+| 6.4 | `report access`                      | ✅     |
+| 6.5 | `report pull` and `report unpublish` | ✅     |
 | 6.6 | Tests (unit + emulator integration)  | ⬜     |
 
 ### Phase 7 — MCP server · [details](plan/phase-7-mcp-server.md)
@@ -234,3 +234,4 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 2026-09-24 | Reports use the validated reference chart palette, thin-mark spec, no dual-axis charts, and an automatic Table view per chart         | Colour-blind-safe by construction; every value readable without hovering                                                                                                                                                                                                            |
 | 2026-09-24 | ECharts pinned to 6.1.0 on cdn.jsdelivr.net in the report template                                                                    | Reproducible reports; CDN already allowed by the CSP                                                                                                                                                                                                                                |
 | 2026-09-24 | `csv-parse` / `exceljs` are root devDependencies                                                                                      | Report folders' `build-data.mjs` resolve them from the repo root                                                                                                                                                                                                                    |
+| 2026-09-24 | `report.json` stores `reportIds` (Firebase project id → report id) instead of one `reportId`                                          | One folder can be published to the emulator and production without mix-ups                                                                                                                                                                                                          |

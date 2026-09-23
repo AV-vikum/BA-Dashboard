@@ -9,8 +9,11 @@ export function formatBytes(bytes: number): string {
   return bytes < 1024 ? `${bytes} B` : `${Math.round(bytes / 1024)} KB`;
 }
 
+/** Local calendar date, YYYY-MM-DD. */
 export function formatDate(date: Date | null | undefined): string {
-  return date ? date.toISOString().slice(0, 10) : '-';
+  if (!date) return '-';
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
 export function plural(count: number, word: string): string {

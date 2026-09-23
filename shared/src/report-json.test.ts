@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { expiryDateToDate, parseReportJson } from './report-json.js';
 
 const valid = {
-  reportId: null,
+  reportIds: {},
   title: 'Sales Overview Q3 2026',
   description: 'Revenue, orders and top products for Q3.',
   tags: ['sales', 'quarterly'],
@@ -27,7 +27,7 @@ describe('parseReportJson', () => {
   it('fills defaults for optional fields', () => {
     const parsed = parseReportJson(JSON.stringify({ title: 'Minimal' }));
     expect(parsed).toMatchObject({
-      reportId: null,
+      reportIds: {},
       description: '',
       tags: [],
       status: 'published',

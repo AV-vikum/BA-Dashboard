@@ -94,7 +94,7 @@ User follows **CP-4**.
 **Do:** with the user, walk through (record results under this step):
 
 1. Admin signs in with their real Google account → sees Admin.
-2. Publish `_example` to production: `BA_TARGET=production npm run report -- publish _example` (after asking). It creates a new production `reportId` — **don't commit** the changed `reports/_example/report.json`; revert that one line afterwards (`git checkout reports/_example/report.json`).
+2. Publish `_example` to production: `BA_TARGET=production npm run report -- publish _example` (after asking). It adds the production project's id to `reportIds` in `reports/_example/report.json` — **don't commit** that change (`git checkout reports/_example/report.json`).
 3. Assign a real colleague (internal) → they see it; an unassigned colleague does not.
 4. Share externally with a personal Gmail address with expiry → it works; set expiry to yesterday → content blocked.
 5. Open on a phone.

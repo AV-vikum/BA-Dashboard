@@ -2,6 +2,7 @@
 // Commands print one line per result (✓ / ! / ✗); exit code 1 on error.
 import { Command } from 'commander';
 import open from 'open';
+import { collectList as list, parseExternal } from './core/args.js';
 import { buildReportFolder, runBuildData } from './core/build.js';
 import { errorMessage, fail, formatBytes, ok, warn } from './core/output.js';
 import { createReportFolder, EDITABLE_FILES } from './core/report-folder.js';
@@ -93,6 +94,151 @@ program
     action(async (slug: string, opts: { data?: boolean }) => {
       const result = await build(slug, Boolean(opts.data));
       await open(result.outPath);
+    }),
+  );
+
+// ---- Firestore commands (target: emulator unless BA_TARGET=production) ----
+
+async function printTarget() {
+  const { targetLabel } = await import('./core/env.js');
+  console.log(`[target: ${targetLabel()}]`);
+}
+
+program
+  .command('publish')
+  .description('build reports/<slug>/ and create or update it in Firestore')
+  .argument('<slug>')
+  .option('--draft', 'publish as a draft (only admins can see it)')
+  .action(
+    action(async (slug: string, opts: { draft?: boolean }) => {
+      await printTarget();
+      const { publishReport } = await import('./core/publish.js');
+      const { publishLines } = await import('./core/format.js');
+      print(publishLines(await publishReport(slug, { draft: opts.draft })));
+    }),
+  );
+
+program
+  .command('list')
+  .description('list reports (id, status, folder, title, viewers/external, last update)')
+  .option('--search <query>', 'filter by title, description or tags')
+  .action(
+    action(async (opts: { search?: string }) => {
+      await printTarget();
+      const { listReports } = await import('./core/reports.js');
+      const { reportListLines } = await import('./core/format.js');
+      print(reportListLines(await listReports(opts.search)));
+    }),
+  );
+
+program
+  .command('groups')
+  .description('list groups and their members')
+  .action(
+    action(async () => {
+      await printTarget();
+      const { listGroups } = await import('./core/reports.js');
+      const { groupLines } = await import('./core/format.js');
+      print(groupLines(await listGroups()));
+    }),
+  );
+
+program
+  .command('access')
+  .description('show or change who can view a report')
+  .argument('<report>', 'report folder slug or report id')
+  .option('--add <emails>', 'add internal people (comma-separated, repeatable)', list)
+  .option('--remove <emails>', 'remove internal people', list)
+  .option('--add-group <names>', 'add groups by name', list)
+  .option('--remove-group <names>', 'remove groups by name', list)
+  .option('--add-external <email[:YYYY-MM-DD]>', 'share with outside people, optional expiry', list)
+  .option('--remove-external <emails>', 'remove outside people', list)
+  .option('--show', 'print current access')
+  .action(
+    action(
+      async (
+        ref: string,
+        opts: {
+          add?: string[];
+          remove?: string[];
+          addGroup?: string[];
+          removeGroup?: string[];
+          addExternal?: string[];
+          removeExternal?: string[];
+          show?: boolean;
+        },
+      ) => {
+        await printTarget();
+        const { getAccess, updateAccess } = await import('./core/access.js');
+        const { accessChangeLines, accessLines } = await import('./core/format.js');
+        const changing = [
+          opts.add,
+          opts.remove,
+          opts.addGroup,
+          opts.removeGroup,
+          opts.addExternal,
+          opts.removeExternal,
+        ].some((v) => v?.length);
+        if (!changing) {
+          print(accessLines(await getAccess(ref)));
+          return;
+        }
+        const result = await updateAccess(ref, {
+          addEmails: opts.add,
+          removeEmails: opts.remove,
+          addGroups: opts.addGroup,
+          removeGroups: opts.removeGroup,
+          addExternal: opts.addExternal?.map(parseExternal),
+          removeExternal: opts.removeExternal,
+        });
+        print(accessChangeLines(result));
+        if (opts.show) print(accessLines(result.view));
+      },
+    ),
+  );
+
+program
+  .command('pull')
+  .description('write reports/<slug>/report.json (details + live access) from Firestore')
+  .argument('<id>', 'report id')
+  .option('--slug <slug>', 'folder name (default: the stored slug or the title)')
+  .action(
+    action(async (id: string, opts: { slug?: string }) => {
+      await printTarget();
+      const { pullReport } = await import('./core/reports.js');
+      const r = await pullReport(id, opts.slug);
+      print(
+        ok(
+          r.created
+            ? `Pulled ${r.id} into new folder reports/${r.slug}/ (built HTML only — see README.txt)`
+            : `Updated reports/${r.slug}/report.json from ${r.id}`,
+        ),
+      );
+    }),
+  );
+
+program
+  .command('unpublish')
+  .description('turn a report back into a draft (viewers lose access; nothing is deleted)')
+  .argument('<report>', 'report folder slug or report id')
+  .option('--yes', 'confirm')
+  .action(
+    action(async (ref: string, opts: { yes?: boolean }) => {
+      await printTarget();
+      if (!opts.yes) {
+        const { resolveReport } = await import('./core/store.js');
+        const { report } = await resolveReport(ref);
+        print(
+          warn(
+            `Would unpublish "${report.title}" (${report.id}) — ${report.viewerEmails.length} ` +
+              `viewers and ${report.externalEmails.length} external lose access. Re-run with --yes.`,
+          ),
+        );
+        return;
+      }
+      const { unpublishReport } = await import('./core/reports.js');
+      const report = await unpublishReport(ref);
+      print(ok(`Unpublished "${report.title}" (${report.id}) — now a draft`));
     }),
   );
 
