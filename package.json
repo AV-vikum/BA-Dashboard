@@ -10,7 +10,9 @@
   "engines": {
     "node": ">=22"
   },
-  "scripts": {},
+  "scripts": {
+    "report": "tsx tools/src/cli.ts"
+  },
   "devDependencies": {
     "concurrently": "^10.0.5",
     "firebase-tools": "^15.30.2",

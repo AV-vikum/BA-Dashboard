@@ -1,0 +1,17 @@
+{
+  "name": "@ba/tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "echo tools build not configured yet"
+  },
+  "dependencies": {
+    "@ba/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2"
+  }
+}

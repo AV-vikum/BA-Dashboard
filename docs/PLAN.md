@@ -58,8 +58,8 @@ The agent picks the next open step, does it, updates the status here, commits, a
 | 0.2 | Check prerequisites (Node, Java, Git) 👤 if missing | ✅ |
 | 0.3 | Root npm workspace | ✅ |
 | 0.4 | `.gitignore` (secrets, env files, reports) | ✅ |
-| 0.5 | `shared` package skeleton | ⬜ |
-| 0.6 | `tools` package skeleton | ⬜ |
+| 0.5 | `shared` package skeleton | ✅ |
+| 0.6 | `tools` package skeleton | ✅ |
 | 0.7 | Lint, format, typecheck, `npm run check` | ⬜ |
 | 0.8 | Example config files | ⬜ |
 | 0.9 | Pre-commit secret scanning | ⬜ |
